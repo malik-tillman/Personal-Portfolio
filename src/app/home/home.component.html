@@ -1,0 +1,81 @@
+<div class="hero">
+  <three></three>
+
+  <div class="right-panel">
+    <swiper-showcase
+      [loop]="true"
+      [perPage]="1"
+      [ids]="[1,2,3,4]"
+      [spacing]="0"
+      [autoplay]="true"
+      [delay]="5000"
+      [hideTitle]="true"
+      [arrows]="false"
+      [width]="250"
+    ></swiper-showcase>
+
+    <contact-info alignment="end"></contact-info>
+  </div>
+
+  <div class="hero-copy">
+    <h2 class="welcome-text">
+      A full-stack e-commerce developer,<br>
+      crafting digital experiences with the Web.<br>
+
+      <span id="location">Based in NJ & NYC</span>
+    </h2>
+
+    <div class="ctas">
+      <a routerLink="/contact" class="outline">
+        <span>Contact Me</span>
+      </a>
+
+      <a routerLink="/works">
+        <span>View Works</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="showcase">
+  <h2>Recent Projects</h2>
+
+  <swiper-showcase
+    [loop]="true"
+    [perPage]="3"
+    [ids]="[1,2,3,4]"
+    [spacing]="15"
+    [autoplay]="false"
+    [hideTitle]="false"
+    [arrows]="true"
+  ></swiper-showcase>
+
+  <div class="ctas">
+    <a routerLink="/works" class="outline"><span>View All Projects</span></a>
+  </div>
+</div>
+
+<div class="toolbox" *ngIf="false">
+  <div class="toolbox-copy">
+    <h2>My Toolbox</h2>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat.
+    </p>
+  </div>
+
+  <app-toolbox></app-toolbox>
+</div>
+
+<div class="contact-form">
+  <h2>Get in Touch</h2>
+
+  <contact-form></contact-form>
+</div>
+
+
+
+
+

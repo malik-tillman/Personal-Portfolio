@@ -1,0 +1,286 @@
+h2 {
+  color: white;
+  font-family: Josefin Sans, sans-serif;
+}
+
+p {
+  font-size: 18px;
+  max-width: 750px;
+  text-align: center;
+  font-family: Lato Light, sans-serif;
+  line-height: 2;
+}
+
+.ctas {
+  display: flex;
+  gap: 15px;
+
+  justify-content: flex-end;
+
+  a {
+    background-color: #faedcd;
+    color: black;
+    padding: 15px 25px;
+    font-family: Lato bold, sans-serif;
+    text-decoration: none;
+
+    min-width: 115px;
+    text-align: center;
+
+    transition: background-color 500ms ease,
+    border-color 500ms ease,
+    color 500ms ease,
+    transform 250ms ease;
+
+    span {
+      position: relative;
+
+      &::before {
+        content: "";
+
+        position: absolute;
+        height: 2px;
+        width: 0;
+        left: 0;
+        bottom: -2px;
+        background: transparent;
+        border-bottom: 2px solid black;
+        border-radius: 5px;
+        display: block;
+
+        transition: width 500ms ease;
+      }
+    }
+
+    &.outline {
+      color: #faedcd;
+      background-color: transparent;
+      border: 1px solid #faedcd;
+
+      span {
+        &::before {
+          border-bottom: 2px solid #faedcd;
+        }
+      }
+
+      &:hover {
+        //background-color: #faedcd;
+        //color: black;
+        //border-color: transparent;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+
+      span {
+        &::before {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .showcase {
+    max-width: 300px;
+  }
+}
+
+.hero {
+  position: relative;
+  margin-top: 100px;
+
+  three {
+    display: flex;
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    z-index: 1;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 25px;
+
+    max-width: 250px;
+
+    contact-info {
+      max-height: 500px;
+    }
+  }
+
+  .hero-copy {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: flex-end;
+    //justify-content: space-between;
+    //min-height: 80vh;
+    padding: 35px 25px;
+    width: 100%;
+
+    position: absolute;
+    bottom: 0;
+
+    .welcome-text {
+      color: white;
+      font-size: 18px;
+      line-height: 2;
+
+      padding: 0;
+      margin-bottom: 0;
+      margin-top: 0;
+
+      font-family: Lato Light, sans-serif;
+      font-weight: 100;
+      z-index: 1;
+
+      #location {
+        font-size: 14px;
+        color: #d2c5b0;
+      }
+    }
+  }
+
+  @media (max-width: 630px) {
+    margin-top: 85px;
+
+    .right-panel {
+      display: none;
+    }
+
+    .hero-copy {
+      grid-template-columns: 1fr;
+      gap: 50px;
+
+      .welcome-text {
+        font-size: 14px;
+        position: relative;
+
+        text-align: center;
+      }
+
+      .ctas {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.showcase {
+  padding: 0 25px;
+
+  margin-top: 50px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  h2 {
+    margin: 0;
+  }
+
+  .ctas {
+    justify-content: center;
+  }
+
+  @media (max-width: 630px) {
+    //padding: 0;
+  }
+}
+
+.toolbox {
+  margin-top: 75px;
+  color: white;
+  font-family: Josefin Sans, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  padding: 0 25px;
+
+  display: none;
+
+  .toolbox-copy {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    max-width: 100%;
+    justify-content: space-around;
+
+    gap: 15px;
+
+    h2 {
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
+
+    p {
+      display: none;
+    }
+  }
+
+  app-toolbox {}
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  margin: 85px 0;
+
+  padding: 0 25px;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  contact-form {
+    max-width: 100%;
+  }
+
+  @media (max-width: 630px) {
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 630px) {
+  .showcase {
+    h2 {
+      text-align: center;
+    }
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  a {
+    padding: 10px 20px;
+  }
+
+  .toolbox {
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .ctas {
+    position: relative;
+    justify-content: flex-start;
+    font-size: 14px;
+  }
+}

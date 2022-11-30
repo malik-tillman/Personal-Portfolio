@@ -1,0 +1,50 @@
+<div class="container">
+  <form #contactForm [formGroup]="contactGroup" (ngSubmit)="onSubmit($event, contactGroup)" data-netlify="true" name="contact" method="post">
+    <div class="name">
+      <label #nameControl class="form-item">
+        <span>First Name <span class="required">*</span></span>
+        <input type="text" formControlName="_name" required>
+      </label>
+
+      <label #lastNameControl class="form-item">
+        <span>Last Name</span>
+        <input type="text" formControlName="_nameLast">
+      </label>
+    </div>
+
+    <label #emailControl class="form-item">
+      <span>Email <span class="required">*</span></span>
+      <input type="text" formControlName="_email" email required>
+    </label>
+
+    <label #bodyControl class="form-item">
+      <span>Message <span class="required">*</span></span>
+
+      <textarea rows="6" cols="50" formControlName="_body"></textarea>
+    </label>
+
+    <input type="button"  value="Submit" (click)="onClickSubmit(contactGroup)">
+  </form>
+
+  <div #errors class="error-copy hidden" *ngIf="contactGroup.invalid">
+    <p *ngIf="contactGroup.get('_name').errors?.required">
+      Please enter your name
+    </p>
+
+    <p *ngIf="contactGroup.get('_email').errors">
+      <span *ngIf="contactGroup.get('_email').errors?.required">
+        Please enter an email address
+      </span>
+
+      <span *ngIf="contactGroup.get('_email').errors?.email">
+        Email format not recognized
+      </span>
+    </p>
+
+    <p *ngIf="contactGroup.get('_body').errors?.required">
+      Please enter a message
+    </p>
+  </div>
+</div>
+
+

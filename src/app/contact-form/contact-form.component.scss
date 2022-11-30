@@ -1,0 +1,108 @@
+$error-red: #ff4343;
+
+.container {
+  width: 100%;
+  display: flex;
+
+  flex-direction: column;
+
+  color: white;
+  font-family: Lato, sans-serif;
+  font-size: 18px;
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    max-width: 100%;
+    width: 750px;
+
+    margin-bottom: 15px;
+
+    .name {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 15px;
+
+      label {
+        width: 100%;
+      }
+    }
+
+    label.form-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      max-width: 100%;
+      width: 100%;
+
+      span {
+        text-transform: uppercase;
+        font-size: 12px;
+        font-family: Lato bold, sans-serif;
+
+        .required {
+          color: $error-red;
+        }
+      }
+
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        background: #faedcd none;
+
+        outline: none;
+
+        border: 2px solid transparent;
+      }
+
+      &.errors {
+        input, textarea {
+          border: 2px solid $error-red;
+        }
+      }
+    }
+
+    input[type="button"] {
+      color: #faedcd;
+      font-size: 14px;
+      text-transform: uppercase;
+      background-color: transparent;
+
+      border: 1px solid #faedcd;
+      outline: none;
+      padding: 15px;
+
+      transition: transform 250ms ease;
+
+      margin-top: 15px;
+
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+  }
+
+  .error-copy {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+
+    font-size: 14px;
+    font-family: Lato bold, sans-serif;
+
+    color: $error-red;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
+

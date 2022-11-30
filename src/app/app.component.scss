@@ -1,0 +1,46 @@
+.page-container {
+  z-index: 1;
+
+  overflow: hidden;
+
+  &.loaded {
+    overflow: unset;
+  }
+}
+
+loader {
+  position: fixed;
+  top: 0;
+
+  opacity: 1;
+
+  pointer-events: none;
+  z-index: 100;
+
+  &.loaded {
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 1s ease;
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  z-index: 5;
+}
+
+.content {
+  grid-area: main;
+  z-index: 1;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  z-index: 2;
+}

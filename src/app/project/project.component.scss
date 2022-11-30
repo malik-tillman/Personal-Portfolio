@@ -1,0 +1,268 @@
+.container {
+  margin-bottom: 150px;
+  color: white;
+  font-family: Josefin Sans, sans-serif;
+
+  h2 {
+    font-size: 32px;
+    margin: 100px 0 0 0;
+    padding: 25px;
+    align-self: center;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: .9em;
+    color: #b4b4b4;
+    text-align: center;
+  }
+
+  .project-title {
+    margin: 10px 0 0 0;
+  }
+
+  .description-container {
+    padding: 0 25px;
+    max-width: 750px;
+    margin: auto;
+
+    p {
+      line-height: 1.5;
+      font-size: 1.1em;
+      text-align: center;
+    }
+  }
+
+  .thumb-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 100px);
+
+    margin-top: 100px;
+
+    picture {
+      align-self: center;
+      width: 35%;
+      max-width: 100%;
+
+      img {
+        max-width: 1000px;
+        width: 100%;
+        border-radius: 5px;
+      }
+    }
+
+    p {
+      align-self: center;
+      margin-bottom: 75px;
+    }
+
+    .down_arrow {
+      fill: white;
+      height: 10%;
+    }
+  }
+
+  .images-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    padding: 0 25px;
+
+    .images-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      flex-direction: column;
+
+      list-style: none;
+
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+
+      .image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        max-width: 100%;
+
+        cursor: pointer;
+
+        transform: translateY(0px);
+        transition: transform 200ms ease;
+
+        background-color: #76767617;
+        padding: 25px;
+
+        height: 100%;
+
+        img {
+          max-width: 100%;
+        }
+
+        &:hover {
+          transform: translateY(-10px);
+        }
+      }
+
+      @media (max-width: 630px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  }
+
+  .videos-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    margin-top: 50px;
+
+    position: relative;
+
+    video-js {
+      max-width: 100%;
+
+      video {
+        max-width: 100%;
+
+        outline: none;
+      }
+    }
+  }
+
+  .links-section {
+    margin-top: 50px;
+    padding: 0 25px;
+
+    overflow: hidden;
+
+    h2 {
+      margin: 0;
+    }
+
+    .project-link {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      margin-top: 25px;
+      text-decoration: none;
+      max-height: 25px;
+
+      transform: scale(1);
+      will-change: transform;
+      transition: transform .5s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &.small {
+        h2 {
+          font-size: 16px;
+        }
+
+        svg {
+          width: 15px;
+        }
+      }
+
+      h2 {
+        padding: 0;
+        margin: 0;
+        color: white;
+
+        font-size: 25px;
+        font-family: josefin Sans light, sans-serif;
+      }
+
+      svg {
+        width: 25px;
+        fill: white;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.not-found_container {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 25px;
+
+  text-align: center;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+
+  a {
+    padding: 15px 25px;
+    font-family: Lato bold, sans-serif;
+    text-decoration: none;
+
+    min-width: 115px;
+    text-align: center;
+
+    transition: background-color 500ms ease,
+    border-color 500ms ease,
+    color 500ms ease,
+    transform 250ms ease;
+
+    color: #faedcd;
+    background-color: transparent;
+    border: 1px solid #faedcd;
+
+    &:hover {
+      background-color: #faedcd;
+      color: black;
+      border-color: transparent;
+      transform: translateY(-5px);
+    }
+  }
+}
+
+@media (max-width: 630px) {
+  .container{
+    margin-bottom: 100px;
+
+    .images-section {
+      .images-container {
+        padding: 0;
+      }
+    }
+
+    .thumb-container {
+      height: calc(100vh - 85px);
+      margin-top: 85px;
+
+      picture {
+        width: 50%;
+      }
+    }
+
+    h2 {
+      font-size: 28px;
+    }
+
+    .icon-container {
+      grid-template-columns: repeat(3, minmax(20px, 1fr));
+    }
+  }
+}
+

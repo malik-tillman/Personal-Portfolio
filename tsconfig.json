@@ -1,0 +1,34 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
+{
+  "extends": "./tsconfig.json",
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+],
+  "compilerOptions": {
+    "paths": {
+      "swiper_angular": ["node_modules/swiper/angular"]
+    },
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "angularCompilerOptions": {
+    "enableIvy": true
+  }
+}

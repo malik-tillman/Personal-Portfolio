@@ -1,0 +1,69 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { routing } from './app.routing';
+import { HttpClientModule } from '@angular/common/http';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router'
+import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
+import { SwiperModule } from 'swiper/angular';
+
+import { AppComponent } from './app.component';
+import { ThreeComponent } from './three/three.component';
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
+import { ProjectComponent } from './project/project.component';
+import { WorksComponent } from './works/works.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { FooterComponent } from './footer/footer.component';
+import { LoaderComponent } from './loader/loader.component';
+import { SocialIconsComponent } from './social-icons/social-icons.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ShowcaseComponent } from './showcase/showcase.component';
+import { ToolboxComponent } from './toolbox/toolbox.component';
+import { SwiperToolboxComponent } from './swiper-toolbox/toolbox.component';
+import { ContactFormComponent } from './contact-form/contact-form.component';
+import { ContactInfoComponent } from './contact-info/contact-info.component';
+import { SwiperShowcaseComponent } from './swiper-showcase/swiper-showcase.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ThreeComponent,
+    HeaderComponent,
+    HomeComponent,
+    ProjectComponent,
+    WorksComponent,
+    AboutComponent,
+    ContactComponent,
+    FooterComponent,
+    LoaderComponent,
+    SocialIconsComponent,
+    NotFoundComponent,
+    ShowcaseComponent,
+    ToolboxComponent,
+    SwiperToolboxComponent,
+    ContactFormComponent,
+    ContactInfoComponent,
+    SwiperShowcaseComponent
+  ],
+  imports: [
+    BrowserModule,
+    routing,
+    HttpClientModule,
+    LazyLoadImageModule,
+    LoadingBarModule,
+    ReactiveFormsModule,
+    SwiperModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+
+export class AppModule { }

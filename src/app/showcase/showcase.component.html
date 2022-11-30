@@ -1,0 +1,42 @@
+<div class="container" #container>
+  <div class="showcase__container">
+    <section #images_container class="splide">
+      <div class="splide__track">
+        <ul class="splide__list" *ngIf="worksList">
+          <li class="splide__slide" *ngFor="let work of worksList">
+            <a #images [routerLink]="['/works', 'project']" [queryParams]="{ id: work.id }">
+              <picture>
+                <source srcset="{{ resolveURL(work.thumbnail, 'webp') }}" type="image/webp" />
+                <source srcset="{{ resolveURL(work.thumbnail, 'jpeg') }}" type="image/jpeg" />
+                <img class="thumbnail"
+                     title="{{ work.name }}"
+                     src="{{ resolveURL(work.thumbnail, 'jpeg') }}"
+                     alt="{{ work.name }} thumbnail image"
+                />
+              </picture>
+
+              <h3 class="works-name" *ngIf="!this.hideTitle">{{ work.name }}</h3>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="splide__arrows" #arrows>
+        <button class="splide__arrow splide__arrow--prev">
+          <svg width="1200pt" height="1200pt" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+            <path d="m900 600-600-292.8 145.2 292.8-145.2 292.8zm-547.2-240 492 240-492 240 118.8-240z"/>
+          </svg>
+        </button>
+
+        <button class="splide__arrow splide__arrow--next">
+          <svg width="1200pt" height="1200pt" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+            <path d="m900 600-600-292.8 145.2 292.8-145.2 292.8zm-547.2-240 492 240-492 240 118.8-240z"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+

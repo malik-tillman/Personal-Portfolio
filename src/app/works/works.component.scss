@@ -1,0 +1,361 @@
+.container {
+  margin: 100px 0 50px;
+  padding: 50px 100px 0;
+}
+
+.title-container {
+  font-family: Josefin Sans, sans-serif;
+  color: white;
+
+  h2 {
+    font-size: 24px;
+    position: relative;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 630px) {
+  .container {
+    padding: 0;
+    margin: 100px 0;
+  }
+}
+
+@mixin top-bottom($direction, $height) {
+  position: absolute;
+
+  will-change: #{$direction};
+  #{$direction}: #{$height};
+  transition: #{$direction} .5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin icons-fade {
+  opacity: 0;
+
+  will-change: opacity;
+  transition: opacity 1.5s ease;
+}
+
+.filter-container {
+  color: white;
+  font-family: Josefin Sans, sans-serif;
+
+  width: 100%;
+  margin-top: 25px;
+
+  button {
+    display: flex;
+    align-items: center;
+
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    text-decoration: none;
+    background: #eaeaea;
+    cursor: pointer;
+    text-align: center;
+    will-change: background, tranform, color;
+    transition: background .5s ease, transform .5s ease, color .3s ease;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:hover, &:focus {
+      background: #282828;
+      color: white;
+
+      svg {
+        fill: white;
+      }
+    }
+
+    &:active {
+      transform: scale(.95);
+    }
+
+    &:focus {
+      outline: 1px solid #fff;
+      outline-offset: -4px;
+    }
+
+    svg {
+      width: 25px;
+      fill: black;
+
+      will-change: fill;
+      transition: fill .3s ease;
+    }
+  }
+
+  .filter_input-container {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+
+    height: 0;
+    opacity: 0;
+
+    will-change: height, opacity;
+    transition: height .5s ease-in-out, opacity 1.5s ease;
+
+    overflow: hidden;
+
+    select {
+      font-family: Josefin Sans, sans-serif;
+    }
+
+    &.open {
+      height: 100px;
+      opacity: 1;
+    }
+  }
+}
+
+.works-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
+  grid-gap: 5px;
+
+  color: white;
+}
+
+.work-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 20vw;
+
+  overflow: hidden;
+
+  .works-info_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, .2);
+    will-change: background-color;
+    transition: background-color 1s ease;
+
+    z-index: 1;
+
+    .works-info {
+      display: grid;
+      width: 100%;
+
+      background-color: rgba(0, 0, 0, .2);
+      backdrop-filter: blur(3px);
+      box-shadow: 0 0 10px 0 rgb(0 0 0 / 25%);
+
+      &.top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        @include top-bottom(top, -59px);
+
+        .catagory-container {
+          padding-left: 15px;
+
+          h3 {
+            color: white;
+            font-family: Josefin Sans Thin, sans-serif;
+            font-size: 14px;
+          }
+        }
+
+        .external-link-container {
+          display: flex;
+          justify-content: flex-end;
+
+          padding: 15px 15px;
+
+          @include icons-fade;
+
+          .logo {
+            width: 25px;
+            fill: white;
+            z-index: 10;
+            margin-left: 25px;
+
+            transform: scale(1);
+            will-change: transform;
+            transition: transform .5s ease;
+
+            &:hover {
+              transform: scale(1.15);
+            }
+          }
+        }
+      }
+
+      &.bottom {
+        grid-template-rows: 1fr 2fr;
+        align-items: center;
+        position: absolute;
+        height: 35%;
+        padding: 0 15px;
+
+        @include top-bottom(bottom, -20%);
+
+        .works-title {
+          text-decoration: none;
+          font-family: Josefin Sans, sans-serif;
+          color: white;
+          margin: 0;
+
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .works-tags {
+          display: flex;
+          flex-direction: row;
+
+          @include icons-fade;
+
+          img {
+            height: 40px;
+            padding-right: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .thumbnail {
+    display: block;
+    z-index: 0;
+    max-width: 100%;
+    transform: scale(1);
+    will-change: transform;
+    transition: transform 0.5s ease;
+  }
+}
+
+.work-card:hover {
+  .works-info_container {
+    background-color: rgba(0, 0, 0, 0);
+
+    .top {
+      top: 0;
+
+      .external-link-container {
+        opacity: 1;
+      }
+    }
+
+    .bottom {
+      bottom: 0;
+
+      .works-tags {
+        opacity: 1;
+      }
+    }
+  }
+
+  .thumbnail {
+    transform: scale(1.05);
+  }
+}
+
+.loading-logo_container {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .loading-logo {
+    max-width: 25%;
+  }
+}
+
+.results_container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  h2 {
+    color: white;
+    font-size: 32px;
+    font-family: Josefin Sans, sans-serif;
+  }
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+
+  a {
+    padding: 15px 25px;
+    font-family: Lato bold, sans-serif;
+    text-decoration: none;
+
+    min-width: 115px;
+    text-align: center;
+
+    transition: background-color 500ms ease,
+    border-color 500ms ease,
+    color 500ms ease,
+    transform 250ms ease;
+
+    color: #faedcd;
+    background-color: transparent;
+    border: 1px solid #faedcd;
+
+    &:hover {
+      background-color: #faedcd;
+      color: black;
+      border-color: transparent;
+      transform: translateY(-5px);
+    }
+  }
+}
+
+@media (max-width: 630px) {
+  .container {
+    padding: 25px 10px 0;
+  }
+
+  .works-container {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    grid-gap: 10px;
+  }
+
+  .work-card {
+    border-radius: 0;
+    min-height: 50vw;
+
+    .works-info_container {
+      .works-info {
+        &.bottom {
+          height: 40%;
+          bottom: -25%;
+        }
+      }
+    }
+  }
+
+  .work-card:hover {
+    .works-info_container {
+      .bottom {
+        bottom: 0;
+      }
+    }
+  }
+}
+
+@media (min-width: 1920px) {
+  .works-container {
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  }
+
+  .work-card {
+    min-height: 15vw;
+  }
+}

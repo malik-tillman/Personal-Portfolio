@@ -1,0 +1,187 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+body, p {
+  margin: 0;
+  padding: 0 !important;
+}
+
+body {
+  background-color: #0c0c0c;
+}
+
+h1 {
+  margin: 0;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(assets/fonts/Lato-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Lato Black;
+  src: url(assets/fonts/Lato-Black.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Lato Bold;
+  src: url(assets/fonts/Lato-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Lato Light;
+  src: url(assets/fonts/Lato-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Lato Thin;
+  src: url(assets/fonts/Lato-Thin.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Josefin Sans Light;
+  src: url(assets/fonts/JosefinSans-Thin.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Josefin Sans Bold;
+  src: url(assets/fonts/JosefinSans-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Josefin Sans Thin;
+  src: url(assets/fonts/JosefinSans-Thin.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Erica One;
+  src: url(assets/fonts/EricaOne-Regular.ttf) format("truetype");
+}
+
+.swiper-container {
+  .swiper-wrapper {
+    position: relative;
+
+    font-family: Lato Light, sans-serif;
+
+    a {
+      display: block;
+      text-decoration: none;
+
+      picture {
+        display: block;
+
+        img {
+          max-width: 100%;
+        }
+      }
+
+      h3.works-name {
+        position: absolute;
+
+        bottom: 0;
+        margin: 0;
+        padding: 10px 0;
+        width: 100%;
+
+        font-weight: bold;
+
+        font-size: 14px;
+
+        background-color: #faedcd;
+
+        text-align: center;
+        color: black;
+      }
+    }
+  }
+}
+
+.toolbox-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+
+  swiper {
+    position: relative;
+    max-width: 100%;
+
+    .swiper-wrapper {
+      -webkit-transition-timing-function:linear!important;
+      transition-timing-function:linear!important;
+    }
+
+    .swiper-slide {
+      position: relative;
+      max-width: 100px;
+      width: 100%;
+
+      background-color: #ffffff;
+      border: 3px solid #767676;
+
+      padding: 15px;
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        width: 100%;
+        height: 100%;
+
+        img {
+          max-width:100%;
+          width: 100%;
+        }
+      }
+    }
+
+    &::before,
+    &::after {
+      pointer-events: none;
+
+      content: "";
+
+      background: rgb(0,0,0);
+      background: linear-gradient(90deg, #0c0c0c 0%, rgba(12, 12, 12, 0) 100%);
+
+      height: 100%;
+      width: 150px;
+
+      position: absolute;
+      bottom: 0;
+      top: 0;
+
+      z-index: 1;
+    }
+
+    &::before {
+      right: 0;
+      background: linear-gradient(90deg, rgba(12, 12, 12, 0) 0%, #0c0c0c 100%);
+
+      z-index: 10;
+    }
+  }
+
+  @media (max-width: 630px) {
+    swiper {
+      .splide__list {
+        .splide__slide {
+          max-width: 75px;
+          padding: 10px;
+        }
+      }
+
+      &::before,
+      &::after {
+        width: 100px;
+      }
+    }
+  }
+}

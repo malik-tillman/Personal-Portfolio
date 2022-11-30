@@ -1,0 +1,31 @@
+.logo_container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  gap: 25px;
+
+  padding: 0;
+
+  a {
+    display: inline-block;
+
+    .logo {
+      width: 20px;
+
+      fill: white;
+    }
+  }
+}
+
+@media (max-width: 630px) {
+  .logo_container {
+
+    a {
+
+      .logo {
+
+      }
+    }
+  }
+}

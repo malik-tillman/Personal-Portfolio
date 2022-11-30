@@ -1,0 +1,15 @@
+<ngx-loading-bar [color]="'#ffffff'" [height]="'4px'" [includeSpinner]="false" [fixed]="true"></ngx-loading-bar>
+
+<loader [class.loaded]="loaded"></loader>
+
+<div class="page-container" [class.loaded]="loaded">
+  <app-header class="header"></app-header>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer></footer>
+</div>
+
+

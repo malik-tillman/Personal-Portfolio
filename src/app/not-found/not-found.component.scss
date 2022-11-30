@@ -1,0 +1,26 @@
+.container {
+  margin-top: 50px;
+
+h2 {
+  color: white;
+  font-size: 32px;
+  font-family: Josefin Sans, sans-serif;
+}
+
+a {
+  padding: 10px;
+  border-radius: 3px;
+  background-color: white;
+  color: black;
+  font-family: Josefin Sans, sans-serif;
+  text-decoration: none;
+
+  will-change: background-color, color;
+  transition: background-color .5s ease, color .3s ease;
+}
+
+a:hover {
+  background-color: #0f4e00;
+  color: #ffffff;
+}
+}
