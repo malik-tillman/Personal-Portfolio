@@ -1,0 +1,75 @@
+.links__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 25px auto auto;
+
+  a.project-link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-decoration: none;
+    max-height: 25px;
+
+    transform: scale(1);
+    will-change: transform;
+    transition: transform .5s ease;
+
+    svg {
+      width: 25px;
+      height: unset;
+      fill: white;
+      margin-right: 10px;
+      padding: 0 0 5px;
+    }
+
+    h2 {
+      margin: 0;
+      color: white;
+
+      position: relative;
+      padding: 0 0 3px;
+
+      font-size: 18px;
+      font-family: josefin Sans light, sans-serif;
+
+      &::before {
+        content: "";
+
+        position: absolute;
+        height: 2px;
+        width: 0;
+        left: 0;
+        bottom: 0;
+        background: transparent;
+        border-bottom: 2px solid #ffffff;
+        border-radius: 5px;
+        display: block;
+
+        transition: width 500ms ease;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.05);
+
+      h2::before {
+        width: 100%;
+      }
+    }
+
+    &.small {
+      h2 {
+        font-size: 16px;
+      }
+
+      svg {
+        width: 15px;
+      }
+    }
+  }
+}
+

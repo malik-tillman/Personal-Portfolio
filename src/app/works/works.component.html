@@ -1,4 +1,8 @@
 <div class="container">
+  <div class="title-container">
+    <h2>Web Projects</h2>
+  </div>
+
   <div class="works-list">
     <div class="filter-container" *ngIf="false">
       <button (click)="toggleFilter()">
@@ -119,7 +123,7 @@
             </div>
 
             <div class="works-info bottom">
-              <h3 class="works-title">{{ works.name }}</h3>
+              <span class="works-title">{{ works.name }}</span>
 
               <div class="works-tags">
                 <ng-container *ngIf="works.tags.split(',').includes('html')">
@@ -287,9 +291,9 @@
 
   <not-found *ngIf="isProjectNotFound"></not-found>
 
-  <div class="cta">
-    <a routerLink="/contact" class="outline">Contact Me</a>
-  </div>
+  <swiper-toolbox></swiper-toolbox>
+
+  <links [contact]="true" [projects]="false" [about]="true"></links>
 </div>
 
 

@@ -31,6 +31,7 @@ import { SwiperToolboxComponent } from './swiper-toolbox/toolbox.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { SwiperShowcaseComponent } from './swiper-showcase/swiper-showcase.component';
+import { LinksComponent } from './links/links.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { SwiperShowcaseComponent } from './swiper-showcase/swiper-showcase.compo
     SwiperToolboxComponent,
     ContactFormComponent,
     ContactInfoComponent,
-    SwiperShowcaseComponent
+    SwiperShowcaseComponent,
+    LinksComponent
   ],
   imports: [
     BrowserModule,

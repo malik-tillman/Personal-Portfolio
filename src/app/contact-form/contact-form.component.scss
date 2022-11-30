@@ -3,6 +3,7 @@ $error-red: #ff4343;
 .container {
   width: 100%;
   display: flex;
+  align-items: center;
 
   flex-direction: column;
 
@@ -16,8 +17,8 @@ $error-red: #ff4343;
     flex-direction: column;
     gap: 15px;
 
-    max-width: 100%;
-    width: 750px;
+    width : 100%;
+    max-width: 750px;
 
     margin-bottom: 15px;
 

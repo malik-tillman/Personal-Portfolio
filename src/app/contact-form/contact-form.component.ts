@@ -10,6 +10,7 @@ import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
 export class ContactFormComponent implements OnInit {
   @ViewChild('contactForm') private form:ElementRef;
   @ViewChild('nameControl') private name:ElementRef;
+  @ViewChild('lastNameControl') private nameL:ElementRef;
   @ViewChild('emailControl') private email:ElementRef;
   @ViewChild('bodyControl') private body:ElementRef;
 
@@ -35,14 +36,11 @@ export class ContactFormComponent implements OnInit {
       this.errors.nativeElement.classList.remove('hidden');
 
     const _name = this.name.nativeElement;
+    const _nameL = this.nameL.nativeElement;
     const _email = this.email.nativeElement;
     const _body = this.body.nativeElement;
 
     const _errorClass = "errors";
-
-    group.get('_name').errors?
-      console.log("Add error"):
-      console.log("Remove error");
 
     group.get('_name').errors?
       _name.classList.add(_errorClass):
@@ -59,7 +57,22 @@ export class ContactFormComponent implements OnInit {
     if (group.invalid) {
 
     } else {
-      this.form.nativeElement.submit();
+      const metaForm = <HTMLFormElement>document.querySelector("form[name='contact']");
+      const metaName = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='firstName']");
+      const metaNameL = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='lastName']");
+      const metaEmail = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='email']");
+      const metaBody = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='body']");
+
+      console.log(metaBody);
+
+      metaName.value = _name.querySelector("input").value;
+      metaNameL.value = _nameL.querySelector("input").value;
+      metaEmail.value = _email.querySelector("input").value;
+      metaBody.value = _body.querySelector("textarea").value;
+
+      metaForm.submit();
+
+      // this.form.nativeElement.submit();
     }
   }
 
@@ -67,6 +80,7 @@ export class ContactFormComponent implements OnInit {
     e.preventDefault();
     e.stopPropagation();
 
+    console.log(document.querySelector("form[name='contact']"));
 
     console.log("submit");
     console.log(data);

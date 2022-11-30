@@ -1,9 +1,8 @@
-import {Component, ElementRef, AfterViewInit, OnInit, ViewChild} from '@angular/core';
+import {Component, AfterViewInit, OnInit} from '@angular/core';
 
-import SwiperCore, { Autoplay, SwiperOptions } from 'swiper';
-import {BehaviorSubject} from 'rxjs';
-import {Project} from '../fetch-works.service';
-SwiperCore.use([  Autoplay]);
+import SwiperCore, { Autoplay, SwiperOptions, FreeMode } from 'swiper';
+import {config} from 'rxjs';
+SwiperCore.use([Autoplay, FreeMode]);
 
 @Component({
   selector: 'swiper-toolbox',
@@ -11,9 +10,11 @@ SwiperCore.use([  Autoplay]);
   styleUrls: ['./toolbox.component.scss']
 })
 export class SwiperToolboxComponent implements AfterViewInit, OnInit {
-  @ViewChild('toolbox') private toolboxRef:ElementRef;
+  public toolbox: object[] = [];
+  public config: SwiperOptions;
 
-  public toolbox =  new BehaviorSubject<{}>({
+  private __dupeFactor__ = 2
+  private __toolbox__ = {
     shopify: {
       title: "Shopify",
       url: "https://www.shopify.com/",
@@ -63,27 +64,44 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
       title: "Adobe CC",
       url: "https://www.adobe.com/products/catalog.html#category=creativity-design&types=desktop",
       image: "assets/tag-icons/adobe.png"
-    },
-  });
-
-  public config: SwiperOptions;
+    }
+  };
 
   constructor() {
-
+    for (let i = 0; i <= this.__dupeFactor__; i++)
+      for (const [handle, tool] of Object.entries(this.__toolbox__))
+        this.toolbox.push(tool);
   }
 
   ngOnInit() {
     this.config = {
       autoplay: {
-        delay: 0
+        delay: 0,
+        pauseOnMouseEnter: false,
+        disableOnInteraction: false,
+        reverseDirection: false
       },
-      speed: 2000,
+      noSwiping: true,
+      speed: 5000,
       loop: true,
-      width: 250,
-      slidesPerView: 'auto'
+      loopedSlides: this.toolbox?.length || null,
+      loopFillGroupWithBlank: false,
+      loopedSlidesLimit: false,
+      slidesPerView: "auto",
+      slidesPerGroup: 1,
+      centeredSlides: true,
+      simulateTouch : false,
+      spaceBetween: 25,
+      freeMode: false,
+      width: 80,
+      observer: true,
+      breakpoints: {
+        630: {
+          width: 100
+        }
+      }
     }
   }
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void { }
 }

@@ -5,28 +5,18 @@
 
   <contact-info></contact-info>
 
-  <h2>My Toolbox</h2>
+  <swiper-showcase
+    [loop]="true"
+    [perPage]="3"
+    [ids]="[1,2,3,4]"
+    [spacing]="15"
+    [autoplay]="false"
+    [delay]="1000"
+    [hideTitle]="false"
+    [arrows]="true"
+  ></swiper-showcase>
 
   <swiper-toolbox></swiper-toolbox>
 
-  <div class="showcase">
-    <swiper-showcase
-      [loop]="true"
-      [perPage]="3"
-      [ids]="[1,2,3,4]"
-      [spacing]="15"
-      [autoplay]="false"
-      [hideTitle]="false"
-      [arrows]="true"
-    ></swiper-showcase>
-  </div>
-
-  <a class="project-link small" routerLink="/works">
-    <svg viewBox="0 0 1151.2498 959.99999">
-      <g transform="translate(10150.158,-772.95808)">
-        <path d="m -10150.158,1349.2081 0,-383.75006 128.125,0 128.1247,0 0,-96.25001 0,-96.25001 320.0001,0 320,0 0,96.25001 0,96.25001 127.5,0 127.5,0 0,383.75006 0,383.75 -575.6251,0 -575.6247,0 0,-383.75 z m 1058.7498,0 0,-293.75 -484.3751,0 -484.3747,0 0,293.75 0,293.75 484.3747,0 484.3751,0 0,-293.75 z m -252.5,-435.00006 0,-51.25001 -230,0 -230.0001,0 0,51.25001 0,51.25 230.0001,0 230,0 0,-51.25 z"></path>
-      </g>
-    </svg>
-    <h2>View more projects</h2>
-  </a>
+  <links [contact]="false" [projects]="true" [about]="true"></links>
 </div>

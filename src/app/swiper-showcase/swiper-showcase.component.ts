@@ -11,6 +11,7 @@ SwiperCore.use([ Navigation, Autoplay, Pagination]);
   styleUrls: ['./swiper-showcase.component.scss']
 })
 export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
+  @ViewChild('container') private containerRef:ElementRef;
   @ViewChild('next') private nextRef:ElementRef;
   @ViewChild('prev') private prevRef:ElementRef;
 
@@ -60,7 +61,10 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
 
       speed: this.speed != undefined ? this.speed : 250,
       autoplay: this.autoplay ? {
-        delay: this.delay != undefined ? this.delay : 2000
+        delay: this.delay != undefined ? this.delay : 2000,
+        pauseOnMouseEnter: false,
+        disableOnInteraction: false,
+        reverseDirection: false
       } : false,
       breakpoints: {
         630: {
@@ -76,11 +80,13 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.arrows)
+    if (this.arrows) {
       this.config.navigation = {
-      nextEl: this.nextRef.nativeElement,
-      prevEl: this.prevRef.nativeElement
-    };
+        nextEl: this.nextRef.nativeElement,
+        prevEl: this.prevRef.nativeElement
+      };
+    } else
+      this.containerRef.nativeElement.classList.add("no-nav")
 
     this.updateSwiper();
   }

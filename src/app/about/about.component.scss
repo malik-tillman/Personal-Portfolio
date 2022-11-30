@@ -8,7 +8,22 @@
   color: white;
   font-family: Josefin Sans, sans-serif;
 
-  margin: 125px 0;
+  margin: 125px 0 50px;
+
+  h2 {
+    color: white;
+    font-family: Josefin Sans, sans-serif;
+    margin-top: 25px;
+  }
+
+  p {
+    padding: 5px;
+    line-height: 1.5;
+  }
+
+  img {
+    max-width: 100%;
+  }
 
   .text-container {
     max-width: 750px;
@@ -16,18 +31,16 @@
     flex-direction: column;
 
     .headshot {
-      max-width: 50%;
+      max-width: 750px;
       align-self: center;
     }
   }
 
-  img {
-    max-width: 100%;
+  swiper-toolbox {
   }
 
-  p {
-    padding: 5px;
-    line-height: 1.5;
+  contact-info {
+    margin-top: 25px;
   }
 
   .toolbox-container {
@@ -70,12 +83,6 @@
     }
   }
 
-  h2 {
-    color: white;
-    font-family: Josefin Sans, sans-serif;
-    margin-top: 25px;
-  }
-
   .item {
     display: flex;
     align-items: center;
@@ -97,33 +104,67 @@
     }
   }
 
-  .project-link {
+  .links__container {
     display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    flex-direction: row;
-    margin-top: 25px;
-    text-decoration: none;
-    max-height: 25px;
+    width: 100%;
 
-    &.small {
+    .project-link {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      margin-top: 25px;
+      text-decoration: none;
+      max-height: 25px;
+
       h2 {
-        font-size: 16px;
+        padding: 0;
+        margin: 0;
+        color: white;
+
+        font-size: 25px;
+        font-family: josefin Sans light, sans-serif;
+
+        position: relative;
+
+        &::before {
+          content: "";
+
+          position: absolute;
+          height: 2px;
+          width: 0;
+          left: 0;
+          bottom: -3px;
+          background: transparent;
+          border-bottom: 2px solid #ffffff;
+          border-radius: 5px;
+          display: block;
+
+          transition: width 500ms ease;
+        }
       }
-    }
 
-    h2 {
-      padding: 0;
-      margin: 0;
-      color: white;
+      svg {
+        width: 25px;
+        fill: white;
+        margin-right: 10px;
+      }
 
-      font-size: 25px;
-      font-family: josefin Sans light, sans-serif;
-    }
+      &.small {
+        h2 {
+          font-size: 16px;
+        }
+      }
 
-    svg {
-      width: 25px;
-      fill: white;
-      margin-right: 10px;
+      &:hover {
+        h2 {
+          &::before {
+            width: 100%;
+          }
+        }
+      }
     }
   }
 }

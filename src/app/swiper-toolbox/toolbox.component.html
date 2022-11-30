@@ -1,8 +1,8 @@
 <div class="toolbox-container">
-  <swiper #toolbox [config]="config">
+  <swiper [config]="config">
     <ng-template swiperSlide *ngFor="let tool of toolbox">
       <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer" >
-        <img src="{{ tool.image }}" alt="{{ tool.title }} Icon">
+        <img src="{{ tool.image }}" alt="{{ tool.title }} Icon" title="{{ tool.title }}">
       </a>
     </ng-template>
   </swiper>

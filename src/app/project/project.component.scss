@@ -1,11 +1,11 @@
 .container {
-  margin-bottom: 150px;
+  margin-bottom: 75px;
   color: white;
   font-family: Josefin Sans, sans-serif;
 
   h2 {
     font-size: 32px;
-    margin: 100px 0 0 0;
+    margin: 50px 0 0 0;
     padding: 25px;
     align-self: center;
     text-align: center;
@@ -123,18 +123,16 @@
     align-items: center;
     width: 100%;
 
-    margin-top: 50px;
+    padding: 0 25px;
+
+    margin-top: 15px;
 
     position: relative;
 
-    video-js {
-      max-width: 100%;
-
-      video {
-        max-width: 100%;
-
-        outline: none;
-      }
+    video {
+      max-width: 1500px;
+      width: 100%;
+      outline: none;
     }
   }
 
@@ -148,12 +146,20 @@
       margin: 0;
     }
 
-    .project-link {
+    .links__container {
+      display: flex;
+      flex-direction: column;
+      max-width: 500px;
+      margin: 25px auto auto;
+    }
+
+    a.project-link {
       display: flex;
       flex-direction: row;
       justify-content: center;
 
-      margin-top: 25px;
+      margin-bottom: 15px;
+      margin-top: 15px;
       text-decoration: none;
       max-height: 25px;
 
@@ -161,8 +167,47 @@
       will-change: transform;
       transition: transform .5s ease;
 
+      svg {
+        width: 25px;
+        height: unset;
+        fill: white;
+        margin-right: 10px;
+        padding: 0 0 5px;
+      }
+
+      h2 {
+        margin: 0;
+        color: white;
+
+        position: relative;
+        padding: 0 0 3px;
+
+        font-size: 18px;
+        font-family: josefin Sans light, sans-serif;
+
+        &::before {
+          content: "";
+
+          position: absolute;
+          height: 2px;
+          width: 0;
+          left: 0;
+          bottom: 0;
+          background: transparent;
+          border-bottom: 2px solid #ffffff;
+          border-radius: 5px;
+          display: block;
+
+          transition: width 500ms ease;
+        }
+      }
+
       &:hover {
         transform: scale(1.05);
+
+        h2::before {
+          width: 100%;
+        }
       }
 
       &.small {
@@ -173,21 +218,6 @@
         svg {
           width: 15px;
         }
-      }
-
-      h2 {
-        padding: 0;
-        margin: 0;
-        color: white;
-
-        font-size: 25px;
-        font-family: josefin Sans light, sans-serif;
-      }
-
-      svg {
-        width: 25px;
-        fill: white;
-        margin-right: 10px;
       }
     }
   }

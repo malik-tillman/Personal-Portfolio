@@ -2,7 +2,7 @@
   .item {
     display: flex;
     align-items: center;
-    margin-bottom: 25px;
+    margin: 0px;
     justify-content: center;
 
     svg {
@@ -77,5 +77,14 @@
       }
     }
   }
+}
+
+.container, .info_container, .link_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 25px;
 }
 
