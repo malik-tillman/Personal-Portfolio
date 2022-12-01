@@ -25,7 +25,7 @@
     <form name="contact" netlify netlify-honeypot="bot-field" hidden>
       <input type="text" name="firstName"/>
       <input type="text" name="lastName"/>
-      <input type="text" name="email"/>
+      <input type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
       <input type="text" name="body"/>
     </form>
 

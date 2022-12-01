@@ -26,7 +26,8 @@
       "swiper_angular": ["node_modules/swiper/angular"]
     },
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "experimentalDecorators": true
   },
   "angularCompilerOptions": {
     "enableIvy": true

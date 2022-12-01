@@ -1,5 +1,5 @@
 <div class="container">
-  <form #contactForm [formGroup]="contactGroup" (ngSubmit)="onSubmit($event, contactGroup)" data-netlify="true" name="contact" method="post">
+  <form #contactForm [formGroup]="contactGroup" (ngSubmit)="onSubmit($event, contactGroup)" data-netlify-recaptcha="true" data-netlify="true" name="contact" method="post">
     <div class="name">
       <label #nameControl class="form-item">
         <span>First Name <span class="required">*</span></span>
@@ -14,7 +14,7 @@
 
     <label #emailControl class="form-item">
       <span>Email <span class="required">*</span></span>
-      <input type="text" formControlName="_email" email required>
+      <input type="email"  formControlName="_email" email required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
     </label>
 
     <label #bodyControl class="form-item">
@@ -24,6 +24,8 @@
     </label>
 
     <input type="button"  value="Submit" (click)="onClickSubmit(contactGroup)">
+
+    <div data-netlify-recaptcha="true"></div>
   </form>
 
   <div #errors class="error-copy hidden" *ngIf="contactGroup.invalid">
