@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
-import { UntypedFormGroup, UntypedFormControl, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { NetlifyFormsService } from '../netify-forms/netlify-forms.service';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +17,8 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   @ViewChild('bodyControl') private body:ElementRef;
 
   @ViewChild('errors') private errors:ElementRef;
+
+  @ViewChild('container') private containerRef:ElementRef;
 
   contactGroup = new FormGroup({
     _name: new FormControl('', Validators.required),
@@ -39,7 +41,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     this.formStatus ? this.formStatus.unsubscribe() : null;
   }
 
-  onClickSubmit(form) {
+  onSubmit(form) {
     if (this.errors)
       this.errors.nativeElement.classList.remove('hidden');
 
@@ -75,6 +77,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       this.netlifyForms.submitEntry(data).subscribe(
         (res) => {
           console.log("Form Sent!!!");
+          this.containerRef.nativeElement.classList.add("form-sent");
         },
         (err) => {
           console.log("Form failed to send...");
@@ -96,16 +99,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
       // this.form.nativeElement.submit();
     }
-  }
-
-  onSubmit(e, data) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    console.log(document.querySelector("form[name='contact']"));
-
-    console.log("submit");
-    console.log(data);
   }
 }
 

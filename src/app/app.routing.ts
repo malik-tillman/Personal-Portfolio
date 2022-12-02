@@ -59,5 +59,5 @@ const appRoutes: Routes = [
  */
 export const routing = RouterModule.forRoot(appRoutes, {
     onSameUrlNavigation: 'reload',
-    useHash: true
+    // useHash: true
 });

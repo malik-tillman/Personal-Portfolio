@@ -1,5 +1,5 @@
-<div class="container">
-  <form #contactForm [formGroup]="contactGroup" (ngSubmit)="onSubmit($event, contactGroup)" data-netlify-recaptcha="true" data-netlify="true" name="contact" method="post">
+<div class="container" #container>
+  <form #contactForm [formGroup]="contactGroup" data-netlify-recaptcha="true" data-netlify="true" name="contact" method="post">
     <div class="name">
       <label #nameControl class="form-item">
         <span>First Name <span class="required">*</span></span>
@@ -23,7 +23,7 @@
       <textarea rows="6" cols="50" formControlName="_body"></textarea>
     </label>
 
-    <input type="button"  value="Submit" (click)="onClickSubmit(contactGroup)">
+    <input type="button"  value="Submit" (click)="onSubmit(contactGroup)">
 
     <div data-netlify-recaptcha="true"></div>
   </form>
@@ -46,6 +46,11 @@
     <p *ngIf="contactGroup.get('_body').errors?.required">
       Please enter a message
     </p>
+  </div>
+
+  <div class="success">
+    <h2>Success!!</h2>
+    <p>Your inquiry has been received</p>
   </div>
 </div>
 
