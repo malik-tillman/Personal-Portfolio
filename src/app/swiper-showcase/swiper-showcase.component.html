@@ -1,15 +1,17 @@
-<div class="swiper-container" #container>
+<div class="swiper-container" #container *ngIf="!DISABLED">
   <swiper [config]="config" (swiper)="onSwiper($event)">
-    <ng-template swiperSlide *ngFor="let work of _worksList | async; index as i">
+    <ng-template swiperSlide *ngFor="let work of worksList">
       <a [routerLink]="['/works', 'project']" [queryParams]="{ id: work.id }">
         <picture>
-          <source srcset="{{ resolve(work.thumbnail, 'webp') }}" type="image/webp" />
-          <source srcset="{{ resolve(work.thumbnail, 'jpeg') }}" type="image/jpeg" />
-
-          <img class="thumbnail" title="{{ work.name }}" src="{{ resolve(work.thumbnail, 'jpeg') }}" alt="{{ work.name }} thumbnail image" />
+          <img
+            class="thumbnail"
+            title="{{ work.title }}"
+            src="{{ work.thumbnail_src.url }}"
+            alt="{{ work.thumbnail_src.alt ? work.thumbnail_src.alt : work.title + ' thumbnail image' }}"
+          />
         </picture>
 
-        <h3 class="works-name" *ngIf="!this.hideTitle">{{ work.name }}</h3>
+        <h3 class="works-name" *ngIf="!this.hideTitle">{{ work.title }}</h3>
       </a>
     </ng-template>
   </swiper>
@@ -28,4 +30,3 @@
     </button>
   </div>
 </div>
-

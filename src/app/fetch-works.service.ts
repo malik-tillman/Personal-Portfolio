@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 /* Determine environment */
-const production:boolean = true;
+const production:boolean = false;
 
 @Injectable({providedIn: 'root'})
 export class FetchWorksService {

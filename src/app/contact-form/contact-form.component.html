@@ -48,10 +48,41 @@
     </p>
   </div>
 
-  <div class="success">
-    <h2>Success!!</h2>
-    <p>Your inquiry has been received</p>
+  <div class="success" (click)="toggleSuccess()">
+    <div class="copy-container">
+      <h2>Thanks for getting in touch!</h2>
+    </div>
+
+    <div class="image-container">
+      <img src="{{ success_media.url }}" alt="{{ success_media.id }}">
+    </div>
+
+    <div class="copy-container bottom">
+      <p>Form received successfully.</p>
+    </div>
+  </div>
+
+  <div class="error" (click)="toggleFail()">
+    <div class="copy-container">
+      <h2>Something went wrong</h2>
+    </div>
+
+    <div class="image-container">
+      <img src="{{ error_media.url }}" alt="{{ error_media.id }}">
+    </div>
+
+    <div class="copy-container bottom">
+      <p>This form unable to be received</p>
+    </div>
   </div>
 </div>
+
+<button (click)="toggleSuccess()" *ngIf="false">
+  toggle Success
+</button>
+
+<button (click)="toggleFail()" *ngIf="false">
+  toggle Fail
+</button>
 
 

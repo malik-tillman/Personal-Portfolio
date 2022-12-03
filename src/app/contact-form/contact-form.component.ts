@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from '@angular/co
 
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { NetlifyFormsService } from '../netify-forms/netlify-forms.service';
+import { CMSService, _File } from '../cms.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,9 +31,22 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     _body: new FormControl('', Validators.required)
   });
 
+  public success_media: _File = {
+    url: "",
+    alt: ""
+  };
+
+  public error_media: _File = {
+    url: "",
+    alt: ""
+  };
+
   private formStatus: Subscription;
 
-  constructor(private netlifyForms: NetlifyFormsService) {}
+  constructor(
+    private netlifyForms: NetlifyFormsService,
+    private cms: CMSService
+  ) {}
 
   ngOnInit(): void {
   }
@@ -67,38 +81,34 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     if (form.invalid) {
 
     } else {
-      const data = {
+      this.netlifyForms.submitEntry({
         firstName: _name.querySelector("input").value,
         lastName: _nameL.querySelector("input").value,
         email: _email.querySelector("input").value,
         body: _body.querySelector("textarea").value
-      } as Contact;
-
-      this.netlifyForms.submitEntry(data).subscribe(
-        (res) => {
-          console.log("Form Sent!!!");
-          this.containerRef.nativeElement.classList.add("form-sent");
-        },
-        (err) => {
-          console.log("Form failed to send...");
-        }
+      } as Contact).subscribe(
+        () => this.toggleSuccess(),
+        () => this.toggleFail()
       );
-
-      // const metaForm = <HTMLFormElement>document.querySelector("form[name='contact']");
-      // const metaName = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='firstName']");
-      // const metaNameL = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='lastName']");
-      // const metaEmail = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='email']");
-      // const metaBody = <HTMLInputElement>document.querySelector("form[name='contact'] input[name='body']");
-      //
-      // metaName.value = _name.querySelector("input").value;
-      // metaNameL.value = _nameL.querySelector("input").value;
-      // metaEmail.value = _email.querySelector("input").value;
-      // metaBody.value = _body.querySelector("textarea").value;
-      //
-      // metaForm.submit();
-
-      // this.form.nativeElement.submit();
     }
+  }
+
+  toggleSuccess() {
+    this.containerRef.nativeElement.classList.add("form-sent");
+    this.containerRef.nativeElement.classList.remove("form-fail");
+
+    this.cms.fetchSuccessMedia().then(media => {
+      this.success_media = media[Math.floor(Math.random() * (media.length))];
+    });
+  }
+
+  toggleFail() {
+    this.containerRef.nativeElement.classList.remove("form-sent");
+    this.containerRef.nativeElement.classList.add("form-fail");
+
+    this.cms.fetchErrorMedia().then(media => {
+      this.error_media = media[Math.floor(Math.random() * (media.length))];
+    });
   }
 }
 

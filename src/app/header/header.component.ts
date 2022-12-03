@@ -2,43 +2,37 @@
  * header.component
  * @author Malik Tillman
  *
- * 2020
+ * 2022
  * */
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { FetchWorksService, MetaProject, CDN, FavoritesId } from '../fetch-works.service';
+import { CMSService, ProjectAttributes } from '../cms.service';
 import Typed from 'typed.js';
 
-@Component({selector: 'app-header', templateUrl: './header.component.html', styleUrls: ['./header.component.scss']})
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
+})
 export class HeaderComponent implements AfterViewInit {
-  /* Dynamic CDN URL */
-  public cdnUrl:string = CDN;
+  @ViewChild("typedName") private typedName: ElementRef;
 
   /* Handles opening and closing menu */
   public menuToggle:boolean = false;
 
-  /* Favorite projects ID */
-  public favoritesId:number[] = FavoritesId;
+  public worksList: ProjectAttributes[];
 
-  /* Caches favorites projects */
-  public worksList:MetaProject[] = [];
+  constructor(private projectService: CMSService, private router: Router) {
+    projectService.fetchListByID(this.projectService.DEFAULTS)
+      .then( (projects: ProjectAttributes[]) => {
+        this.worksList = projects;
+    })
 
-  constructor(
-    private fetchWorksService: FetchWorksService,
-    private router:Router
-  ) {
-    /* Fetch data for favorite works */
-    fetchWorksService.getWorksListByIds(this.favoritesId).then(( data:MetaProject[] ) => {
-      this.worksList = data;
-    });
-
-    /* When route changes, close menu and scroll to top */
+    // When route changes, close menu and scroll to top
     router.events.subscribe(event => {
-      if(event instanceof NavigationStart){
-        /* Close menu */
+      if(event instanceof NavigationStart) {
         this.menuToggle = false;
 
-        /* Scroll to top */
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
@@ -48,8 +42,7 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    /* Initiate typed header text (the naughty way) */
-    new Typed('#name', {
+    new Typed(this.typedName.nativeElement, {
       strings: ['Malik_Tillman'],
       typeSpeed: 100,
       startDelay: 5000,
@@ -59,17 +52,6 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   /**
-   * ToggleMenu
    * Toggles menu state by reversing boolean value */
   toggleMenu() { this.menuToggle = !this.menuToggle }
-
-  /**
-   * ResolveURL
-   * Appends image type to image URI */
-  resolveURL(uri, type) {
-    if(type == 'webp')
-      return `https://${this.cdnUrl}/images/${uri}.webp`;
-
-    return `https://${this.cdnUrl}/images/${uri}.jpg`;
-  }
 }

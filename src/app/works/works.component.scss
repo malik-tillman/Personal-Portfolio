@@ -30,81 +30,6 @@
   transition: opacity 1.5s ease;
 }
 
-.filter-container {
-  color: white;
-  font-family: Josefin Sans, sans-serif;
-
-  width: 100%;
-  margin-top: 25px;
-
-  button {
-    display: flex;
-    align-items: center;
-
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    text-decoration: none;
-    background: #eaeaea;
-    cursor: pointer;
-    text-align: center;
-    will-change: background, tranform, color;
-    transition: background .5s ease, transform .5s ease, color .3s ease;
-
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    &:hover, &:focus {
-      background: #282828;
-      color: white;
-
-      svg {
-        fill: white;
-      }
-    }
-
-    &:active {
-      transform: scale(.95);
-    }
-
-    &:focus {
-      outline: 1px solid #fff;
-      outline-offset: -4px;
-    }
-
-    svg {
-      width: 25px;
-      fill: black;
-
-      will-change: fill;
-      transition: fill .3s ease;
-    }
-  }
-
-  .filter_input-container {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    align-items: center;
-
-    height: 0;
-    opacity: 0;
-
-    will-change: height, opacity;
-    transition: height .5s ease-in-out, opacity 1.5s ease;
-
-    overflow: hidden;
-
-    select {
-      font-family: Josefin Sans, sans-serif;
-    }
-
-    &.open {
-      height: 100px;
-      opacity: 1;
-    }
-  }
-}
-
 .works-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
@@ -269,18 +194,6 @@
 
   .loading-logo {
     max-width: 25%;
-  }
-}
-
-.results_container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-
-  h2 {
-    color: white;
-    font-size: 32px;
-    font-family: Josefin Sans, sans-serif;
   }
 }
 
