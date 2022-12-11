@@ -184,8 +184,22 @@ p {
   flex-direction: column;
   gap: 25px;
 
-  h2 {
-    margin: 0;
+  .copy-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    gap: 15px;
+
+    h2 {
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    p {
+      color: white;
+      text-align: start;
+    }
   }
 
   .ctas {
@@ -198,39 +212,35 @@ p {
 }
 
 .toolbox {
-  margin-top: 75px;
+  margin-top: 25px;
   color: white;
   font-family: Josefin Sans, sans-serif;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
   padding: 0 25px;
-
-  display: none;
 
   .toolbox-copy {
     display: flex;
     position: relative;
     flex-direction: column;
+    align-items: end;
     max-width: 100%;
     justify-content: space-around;
+
+    margin-bottom: 25px;
 
     gap: 15px;
 
     h2 {
       width: 100%;
-      text-align: center;
+      text-align: end;
       margin: 0;
+      text-transform: uppercase;
     }
 
     p {
-      display: none;
+      text-align: end;
     }
   }
-
-  app-toolbox {}
 }
 
 .contact-form {
@@ -245,7 +255,11 @@ p {
   padding: 0 25px;
 
   h2 {
+    width: 100%;
+    max-width: 750px;
     margin-top: 0;
+    text-align: end;
+    text-transform: uppercase;
   }
 
   contact-form {
@@ -254,7 +268,7 @@ p {
   }
 
   @media (max-width: 630px) {
-    margin-bottom: 25px;
+    margin: 25px 0;
   }
 }
 

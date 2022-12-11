@@ -30,7 +30,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "./node_modules/@splidejs/splide/dist/css/splide.min.css",
               "./node_modules/viewerjs/dist/viewer.min.css",
               "./node_modules/swiper/swiper-bundle.min.css"
             ],

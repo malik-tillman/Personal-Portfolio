@@ -22,7 +22,6 @@
     "@ngx-loading-bar/core": "^5.1.2",
     "@ngx-loading-bar/http-client": "^5.1.2",
     "@ngx-loading-bar/router": "^5.1.2",
-    "@splidejs/splide": "^2.4.21",
     "ajv-errors": "^1.0.1",
     "http-server": "^0.12.3",
     "lottie-web": "^5.9.6",

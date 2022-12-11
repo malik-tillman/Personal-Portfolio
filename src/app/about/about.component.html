@@ -5,12 +5,12 @@
     <div class="about-copy__container">
       <h2>About Me</h2>
 
-      <ng-container *ngFor="let paragraph of aboutCopy">
+      <ng-container *ngFor="let paragraph of aboutCopy; let last = last">
         <p class="about-copy">
           {{ paragraph }}
         </p>
 
-        <br>
+        <br *ngIf="!last">
       </ng-container>
     </div>
 

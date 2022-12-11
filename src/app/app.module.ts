@@ -25,8 +25,6 @@ import { FooterComponent } from './footer/footer.component';
 import { LoaderComponent } from './loader/loader.component';
 import { SocialIconsComponent } from './social-icons/social-icons.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ShowcaseComponent } from './showcase/showcase.component';
-import { ToolboxComponent } from './toolbox/toolbox.component';
 import { SwiperToolboxComponent } from './swiper-toolbox/toolbox.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
@@ -47,8 +45,6 @@ import { LinksComponent } from './links/links.component';
     LoaderComponent,
     SocialIconsComponent,
     NotFoundComponent,
-    ShowcaseComponent,
-    ToolboxComponent,
     SwiperToolboxComponent,
     ContactFormComponent,
     ContactInfoComponent,

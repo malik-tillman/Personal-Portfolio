@@ -91,13 +91,14 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
       slidesPerGroup: 1,
       centeredSlides: true,
       simulateTouch : false,
-      spaceBetween: 25,
+      spaceBetween: 15,
       freeMode: false,
       width: 80,
       observer: true,
       breakpoints: {
         630: {
-          width: 100
+          width: 100,
+          spaceBetween: 50,
         }
       }
     }
