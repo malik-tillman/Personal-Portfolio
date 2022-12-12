@@ -5,7 +5,7 @@
  * 2020
  * */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { environment } from '../environments/environment';
 import quote from 'ajv/dist/runtime/quote';
 
@@ -37,6 +37,15 @@ export class CMSService {
     'https://cms.maliktillman.com/api/quotes' :
     'http://localhost:5000/api/quotes';
 
+  private backup_quotes: _FormattedQuote[] = [
+    { text: 'Welcome to MalikTillman.com!' },
+    { text: "What's science to a man that can't apply it?", author: 'Roc Marciano' },
+    { text: 'This site was designed and developed by Malik Tillman' },
+    { text: 'A Leek Production' }
+  ]
+
+  private backup_about = ['I\'m a 24 year old full-stack developer, graphic designer, and technical expert based in the NJ and greater NYC area. I strive to craft meaningful digital experiences and enable life-changing creative concepts through the mediums of web development, mobile app development, and photography. I am proficient in a plethora of programming languages, frameworks, and design software, but my best trait as a professional is my ability to adapt to any problem and rise to the occasion. My ability to apply core technical and design methodologies to a range of conditions allow me to effectively craft industry standard digital experiences.'];
+
   private _ids: number[] = [];
   private _projects: Project[] = [];
   private _about: string[];
@@ -56,14 +65,21 @@ export class CMSService {
           this.__formatSingle__(this._projects.find((project: Project) => project.id === id), true)
         );
 
-      this.http.get(`${ this.api_projects }/${ id }?populate=%2A`).subscribe((strapi: SingularStrapi) => {
-        this._projects.push(strapi.data);
-        this._ids.push(strapi.data.id);
+      this.http.get(`${ this.api_projects }/${ id }?populate=%2A`).subscribe(
+        (strapi: SingularStrapi) => {
+          this._projects.push(strapi.data);
+          this._ids.push(strapi.data.id);
 
-        resolve(
-          this.__formatSingle__(strapi.data, true)
-        );
-      });
+          resolve(
+            this.__formatSingle__(strapi.data, true)
+          );
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.message);
+
+          resolve(null);
+        }
+      );
 
       this.__fetchAll__().then();
     })
@@ -117,6 +133,10 @@ export class CMSService {
       this.http.get(`${ this.api_site }?fields[0]=about`).subscribe((strapi: About) => {
         this._about = strapi.data.attributes.about.split("\n").filter(_p => _p !== "");
         resolve(this._about);
+      }, (error: HttpErrorResponse) => {
+        console.log(error.message);
+
+        resolve(this.backup_about);
       })
     })
   }
@@ -126,17 +146,23 @@ export class CMSService {
       if (this._quotes)
         return resolve(this._quotes);
 
-      this.http.get(`${ this.api_quotes }?populate=%2A`).subscribe((strapi: QuoteMetaData) => {
-        this._quotes = strapi.data.map((quote: Quote) => {
-          return {
-            text: quote.attributes.text,
-            author: quote.attributes.author
-          }
-        });
-        resolve(this._quotes);
-      })
-    })
+      this.http.get(`${this.api_quotes}?populate=%2A`).subscribe(
+        (strapi: QuoteMetaData) => {
+          this._quotes = strapi.data.map((quote: Quote) => {
+            return {
+              text: quote.attributes.text,
+              author: quote.attributes.author
+            };
+          });
+          resolve(this._quotes);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.message);
 
+          resolve(this.backup_quotes);
+        }
+      );
+    })
   }
 
   public fetchSuccessMedia(): Promise<_File[]> {
@@ -147,6 +173,10 @@ export class CMSService {
       this.http.get(`${ this.api_site }?populate=%2A`).subscribe((strapi: SingleTypeStrapi) => {
         this._successMedia = this.__generateFileSources__(strapi.data.attributes.success_media);
         return  resolve(this._successMedia);
+      },(error: HttpErrorResponse) => {
+        console.log(error.message);
+
+        resolve(null);
       })
     })
   }
@@ -159,6 +189,10 @@ export class CMSService {
       this.http.get(`${ this.api_site }?populate=%2A`).subscribe((strapi: SingleTypeStrapi) => {
         this._errorMedia = this.__generateFileSources__(strapi.data.attributes.error_media);
         return  resolve(this._errorMedia);
+      },(error: HttpErrorResponse) => {
+        console.log(error.message);
+
+        resolve(null);
       })
     })
   }
@@ -172,6 +206,10 @@ export class CMSService {
         })
 
         resolve(strapi.data);
+      }, (error: HttpErrorResponse) => {
+        console.log(error.message);
+
+        resolve([]);
       })
     })
   }
@@ -309,7 +347,7 @@ interface Quote {
 
 interface _FormattedQuote {
   "text": string,
-  "author": string
+  "author"?: string
 }
 
 

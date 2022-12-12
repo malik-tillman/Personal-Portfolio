@@ -12,23 +12,13 @@ import { CMSService } from '../cms.service';
 export class FooterComponent implements OnInit {
   @ViewChild("typedFooter") typedFooterRef: ElementRef;
 
-  private quote_backup = [
-    'Welcome to MalikTillman.com!',
-    '"What\'s science to a man that can\'t apply it?" - Roc Marciano',
-    'This site was designed and developed by Malik Tillman',
-    'A Leek Production'
-  ]
-
   constructor(private cms: CMSService) {}
 
   ngOnInit(): void {
     this.cms.fetchQuotes().then(quotes => {
       /* Initiate typed text */
       new Typed(this.typedFooterRef.nativeElement, {
-        strings: quotes.length > 0 ?
-          quotes.map(quote => `${quote.text} ${quote.author ? " - " + quote.author : ""}`.trim()) :
-          this.quote_backup
-        ,
+        strings: quotes.map(quote => `${quote.text} ${quote.author ? " - " + quote.author : ""}`.trim()),
         typeSpeed: 25,
         backSpeed: 50,
         backDelay: 15000,

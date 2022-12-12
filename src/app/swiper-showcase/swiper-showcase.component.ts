@@ -46,6 +46,10 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
 
         this.DISABLED = !(this.worksList.length > 0);
 
+        this._swiperRef_.slideTo(this.worksList.length - 1, 1000);
+
+        this.config.initialSlide = this.worksList.length - 1;
+
         this.updateSwiper()
     });
 

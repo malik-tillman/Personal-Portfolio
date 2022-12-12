@@ -22,8 +22,17 @@ export class WorksComponent implements AfterViewInit {
 
   public worksList:ProjectAttributes[];
 
+  public emptyProjects: Boolean;
+
   constructor(private projectService: CMSService) {
-    this.projectService.fetchList().then( projects => this.worksList = projects )
+    this.emptyProjects = false;
+
+    this.projectService.fetchList().then( projects => {
+      this.worksList = projects;
+
+      if (this.worksList.length === 0)
+        this.emptyProjects = true;
+    })
   }
 
   ngAfterViewInit() {
