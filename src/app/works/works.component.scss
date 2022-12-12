@@ -6,6 +6,7 @@
 .title-container {
   font-family: Josefin Sans, sans-serif;
   color: white;
+  text-transform: uppercase;
 
   h2 {
     font-size: 24px;
@@ -33,7 +34,7 @@
 .works-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
-  grid-gap: 5px;
+  grid-gap: 25px;
 
   color: white;
 }
