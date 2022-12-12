@@ -2,14 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { routing } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
-import { LazyLoadImageModule } from 'ng-lazyload-image';
 
-import { LoadingBarModule } from '@ngx-loading-bar/core';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router'
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 
 import { SwiperModule } from 'swiper/angular';
 
@@ -55,8 +49,6 @@ import { LinksComponent } from './links/links.component';
     BrowserModule,
     routing,
     HttpClientModule,
-    LazyLoadImageModule,
-    LoadingBarModule,
     ReactiveFormsModule,
     SwiperModule
   ],

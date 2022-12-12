@@ -26,8 +26,6 @@ export class ThreeComponent implements AfterViewInit {
     return this._canvas.nativeElement;
   }
 
-  constructor() {}
-
   ngAfterViewInit(): void {
     /* Create renderer and scene */
     let renderer = new WebGLRenderer({
