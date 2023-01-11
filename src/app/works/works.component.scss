@@ -33,7 +33,7 @@
 
 .works-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(calc(33% - 50px), 1fr));
   grid-gap: 25px;
 
   color: white;
@@ -269,7 +269,7 @@ swiper-toolbox {
 
 @media (min-width: 1920px) {
   .works-container {
-    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax((25% - 75px), 1fr));
   }
 
   .work-card {
