@@ -33,7 +33,7 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
     react: {
       title: "React",
       url: "https://reactjs.org/",
-      image: "assets/tag-icons/react.png"
+      image: "assets/tag-icons/react-1.png"
     },
     sass: {
       title: "SASS",
@@ -44,6 +44,11 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
       title: "Python",
       url: "https://www.python.org/",
       image: "assets/tag-icons/python.png"
+    },
+    php: {
+      title: "PHP",
+      url: "https://www.php.net/",
+      image: "assets/tag-icons/php.png"
     },
     csharp: {
       title: "C#",
@@ -64,6 +69,11 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
       title: "Adobe CC",
       url: "https://www.adobe.com/products/catalog.html#category=creativity-design&types=desktop",
       image: "assets/tag-icons/adobe.png"
+    },
+    figma: {
+      title: "Figma",
+      url: "https://www.figma.com/",
+      image: "assets/tag-icons/figma.png"
     }
   };
 
@@ -82,6 +92,7 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
         reverseDirection: false
       },
       noSwiping: true,
+      allowTouchMove: false,
       speed: 5000,
       loop: true,
       loopedSlides: this.toolbox?.length || null,

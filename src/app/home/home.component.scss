@@ -1,3 +1,5 @@
+
+
 h2 {
   color: white;
   font-family: Josefin Sans, sans-serif;
@@ -18,11 +20,13 @@ p {
   justify-content: flex-end;
 
   a {
-    background-color: #faedcd;
+    background-color: var(--primary-color);
     color: black;
     padding: 15px 25px;
-    font-family: Lato bold, sans-serif;
+    font-family: Lato Light, sans-serif;
     text-decoration: none;
+
+    border-radius: 5px;
 
     min-width: 115px;
     text-align: center;
@@ -30,7 +34,10 @@ p {
     transition: background-color 500ms ease,
     border-color 500ms ease,
     color 500ms ease,
-    transform 250ms ease;
+    transform 250ms ease,
+    box-shadow 500ms ease;
+
+    //box-shadow:  0px 0px 20px 5px rgb(250 237 205 / 30%);
 
     span {
       position: relative;
@@ -39,7 +46,7 @@ p {
         content: "";
 
         position: absolute;
-        height: 2px;
+        height: 1px;
         width: 0;
         left: 0;
         bottom: -2px;
@@ -71,12 +78,21 @@ p {
     }
 
     &:hover {
-      transform: translateY(-5px);
+      transform: translateY(-2px);
+      background-color: #cccccc;
+
+      //box-shadow:  0px 0px 20px 5px rgb(250 237 205 / 15%);
 
       span {
         &::before {
           width: 100%;
         }
+      }
+
+      &.outline {
+        background-color: #cccccc26;
+
+
       }
     }
   }
@@ -88,7 +104,11 @@ p {
 
 .hero {
   position: relative;
-  margin-top: 100px;
+
+  //display: none;
+
+  max-width: var(--max-width);
+  margin: 100px auto auto;
 
   three {
     display: flex;
@@ -109,7 +129,7 @@ p {
     position: absolute;
     right: 0;
     top: 0;
-    padding-right: 25px;
+    //padding-right: 25px;
 
     max-width: 250px;
 
@@ -124,7 +144,8 @@ p {
     align-items: flex-end;
     //justify-content: space-between;
     //min-height: 80vh;
-    padding: 35px 25px;
+    //padding: 35px 25px;
+    padding: 35px 0;
     width: 100%;
 
     position: absolute;
@@ -177,13 +198,14 @@ p {
 }
 
 .showcase {
-  padding: 0 25px;
-
-  margin-top: 50px;
+  //padding: 0 25px;
 
   display: flex;
   flex-direction: column;
   gap: 25px;
+
+  margin: 40px auto 100px;
+  max-width: var(--max-width);
 
   .copy-container {
     display: flex;
@@ -200,11 +222,13 @@ p {
     p {
       color: white;
       text-align: start;
+
+      display: none;
     }
   }
 
   .ctas {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   @media (max-width: 630px) {
@@ -213,33 +237,35 @@ p {
 }
 
 .toolbox {
-  margin-top: 25px;
   color: white;
   font-family: Josefin Sans, sans-serif;
 
-  padding: 0 25px;
+  //padding: 0 25px;
+
+  max-width: var(--max-width);
+  margin: 25px auto auto;
 
   .toolbox-copy {
     display: flex;
     position: relative;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-start;
     max-width: 100%;
     justify-content: space-around;
 
-    margin-bottom: 25px;
+    margin-bottom: 100px;
 
     gap: 15px;
 
     h2 {
       width: 100%;
-      text-align: end;
+      text-align: start;
       margin: 0;
       text-transform: uppercase;
     }
 
     p {
-      text-align: end;
+      text-align: start;
     }
   }
 }
@@ -247,29 +273,38 @@ p {
 .contact-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 
   position: relative;
 
-  margin: 85px 0;
+  padding: 35px;
 
-  padding: 0 25px;
+  max-width: 750px;
+
+  margin: 100px auto;
+  background-color: var(--primary-color);
+  border-radius: 15px;
 
   h2 {
     width: 100%;
     max-width: 750px;
     margin-top: 0;
-    text-align: end;
-    text-transform: uppercase;
+    text-align: start;
+    color: black;
+
+    font-family: Lato, sans-serif;
   }
 
   contact-form {
     max-width: 100%;
     width: 100%;
+
+    --primary-color: #cfcfcf;
   }
 
   @media (max-width: 630px) {
-    margin: 25px 0;
+    //margin: 25px 0;
+    padding: 25px;
   }
 }
 

@@ -63,6 +63,12 @@ export class ThreeComponent implements AfterViewInit {
 
     /* Create Lights */
     RectAreaLightUniformsLib.init();
+    // let rectLight = new RectAreaLight("rgb(0,13,61)", 40, 1000, 1000);
+    // rectLight.position.set(10,50,-200);
+    // rectLight.rotation.y = MathUtils.degToRad(150);
+    // let mainRectLight = new RectAreaLight("rgb(218,227,255)", 2.5, 100, 100);
+    // mainRectLight.position.set(10,50,100);
+
     let rectLight = new RectAreaLight("rgb(0,13,61)", 40, 1000, 1000);
     rectLight.position.set(10,50,-200);
     rectLight.rotation.y = MathUtils.degToRad(150);

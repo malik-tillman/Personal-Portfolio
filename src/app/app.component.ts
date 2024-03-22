@@ -1,4 +1,4 @@
-/**
+/*
  * app.component
  * @author Malik Tillman
  *
@@ -14,8 +14,8 @@ export class AppComponent {
   public loaded = false;
 
   constructor(
-    private router:Router,
-    private loader:LoadingBarService
+    private router: Router,
+    private loader: LoadingBarService
   ) {
     /* Subscribe to routing service */
     this.router.events.subscribe(async (event) => {
@@ -26,7 +26,7 @@ export class AppComponent {
       document.body.style.overflow = !this.loaded ? 'hidden' : 'unset';
 
       /* Start loading bar */
-      if(event instanceof NavigationStart) {
+      if (event instanceof NavigationStart) {
         this.loader.useRef().start();
       }
 
@@ -47,7 +47,7 @@ export class AppComponent {
         /* Allow scroll */
         document.body.style.overflow = 'unset';
       }
-    })
+    });
 
     /* Console log ascii art */
     const asciiTitle = `

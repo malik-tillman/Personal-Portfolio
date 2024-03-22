@@ -25,6 +25,8 @@
     </a>
   </div>
 
+  <a routerLink="works" class="view_all">View All</a>
+
   <div class="menu-footer">
     <div class="nav-links">
       <a routerLink="about" class="small">About</a>
@@ -36,33 +38,36 @@
 </nav>
 
 <div class="container">
-  <a routerLink="home" class="logo-name-container">
-    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-      <path d="M0,365.116H131l227-241.86v241.86H500V0H323.4ZM64,469.767H50V365.116H0V500H103V459.3H64v10.465ZM212,365.116H103V500H212V472.093H151V444.186h33V415l-33,.116V395.349h61V365.116Zm106,0H212V500H318V470.93H259V444.186h32V413.953H259V394.186h59v-29.07ZM368,500V365.116H318V500h50ZM500,365.116H439L375,437l64,63h61l-72-67Z"></path>
-    </svg>
+  <div class="wrapper">
+    <a routerLink="home" class="logo-name-container">
+      <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+        <path d="M0,365.116H131l227-241.86v241.86H500V0H323.4ZM64,469.767H50V365.116H0V500H103V459.3H64v10.465ZM212,365.116H103V500H212V472.093H151V444.186h33V415l-33,.116V395.349h61V365.116Zm106,0H212V500H318V470.93H259V444.186h32V413.953H259V394.186h59v-29.07ZM368,500V365.116H318V500h50ZM500,365.116H439L375,437l64,63h61l-72-67Z"></path>
+      </svg>
 
-    <h1 id="name" #typedName></h1>
-  </a>
+      <h1 id="name" #typedName></h1>
+    </a>
 
-  <ul class="nav-menu">
-    <li>
-      <a routerLink="works">Works</a>
-    </li>
+    <ul class="nav-menu">
+      <li>
+        <a routerLink="works">Works</a>
+      </li>
 
-    <li>
-      <a routerLink="contact">Contact</a>
-    </li>
+      <li>
+        <a routerLink="contact">Contact</a>
+      </li>
 
-    <li>
-      <a routerLink="about">About</a>
-    </li>
-  </ul>
+      <li>
+        <a routerLink="about">About</a>
+      </li>
+    </ul>
 
-  <button class="menu-button button" type="button" (click)="toggleMenu()">
-    <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" xml:space="preserve"
-         fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+    <button class="menu-button button" type="button" (click)="toggleMenu()">
+      <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" xml:space="preserve"
+           fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
     <g transform="matrix(1,0,0,1,-390,-30)"><path d="M410,38L410,42L390,42L390,38L410,38ZM410,46L410,50L390,50L390,46L410,46ZM410,30L410,34L390,34L390,30L410,30Z"></path></g></svg>
-  </button>
+    </button>
+  </div>
+
 </div>
 
 

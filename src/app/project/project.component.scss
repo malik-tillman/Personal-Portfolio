@@ -1,7 +1,7 @@
 .container {
   margin-bottom: 75px;
   color: white;
-  font-family: Josefin Sans, sans-serif;
+  font-family: "Lato", sans-serif;
 
   h2 {
     font-size: 32px;
@@ -73,6 +73,9 @@
 
     padding: 0 25px;
 
+    max-width: var(--max-width);
+    margin: auto;
+
     .images-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -100,6 +103,8 @@
         padding: 25px;
 
         height: 100%;
+
+        border-radius: 15px;
 
         img {
           max-width: 100%;
@@ -130,17 +135,19 @@
     position: relative;
 
     video {
-      max-width: 1500px;
+      max-width: var(--max-width);
       width: 100%;
       outline: none;
     }
   }
 
   .links-section {
-    margin-top: 50px;
     padding: 0 25px;
 
     overflow: hidden;
+
+    max-width: var(--max-width);
+    margin: 50px auto auto;
 
     h2 {
       margin: 0;

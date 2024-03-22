@@ -94,6 +94,11 @@
               <span class="works-title">{{ work.title }}</span>
 
               <div class="works-tags">
+                <ng-container *ngIf="work.tags?.split(',').includes('react')">
+                  <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                    <img src="assets/tag-icons/react-1.png" alt="React Icon">
+                  </a>
+                </ng-container>
                 <ng-container *ngIf="work.tags?.split(',').includes('html')">
                   <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
                     <img src="assets/tag-icons/html.png" alt="HTML Icon">
@@ -222,6 +227,21 @@
                 <ng-container *ngIf="work.tags?.split(',').includes('shopify')">
                   <a href="https://www.shopify.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
                     <img src="assets/tag-icons/shopify-logo.png" alt="Shopify Icon">
+                  </a>
+                </ng-container>
+                <ng-container *ngIf="work.tags?.split(',').includes('php')">
+                  <a href="https://www.php.net/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                    <img src="assets/tag-icons/php.png" alt="PHP Icon">
+                  </a>
+                </ng-container>
+                <ng-container *ngIf="work.tags?.split(',').includes('figma')">
+                  <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                    <img src="assets/tag-icons/figma.png" alt="Figma Icon">
+                  </a>
+                </ng-container>
+                <ng-container *ngIf="work.tags?.split(',').includes('python')">
+                  <a href="https://www.python.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                    <img src="assets/tag-icons/python.png" alt="Python Icon">
                   </a>
                 </ng-container>
               </div>

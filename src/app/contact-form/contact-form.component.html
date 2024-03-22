@@ -3,24 +3,26 @@
     <div class="name">
       <label #nameControl class="form-item">
         <span>First Name <span class="required">*</span></span>
-        <input type="text" formControlName="_name" required>
+        <input type="text" formControlName="_name" required
+               placeholder="First Name"
+        >
       </label>
 
       <label #lastNameControl class="form-item">
         <span>Last Name</span>
-        <input type="text" formControlName="_nameLast">
+        <input type="text" formControlName="_nameLast" placeholder="Last Name">
       </label>
     </div>
 
     <label #emailControl class="form-item">
       <span>Email <span class="required">*</span></span>
-      <input type="email"  formControlName="_email" email required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+      <input type="email"  formControlName="_email" email required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Email">
     </label>
 
     <label #bodyControl class="form-item">
       <span>Message <span class="required">*</span></span>
 
-      <textarea rows="6" cols="50" formControlName="_body"></textarea>
+      <textarea rows="6" cols="50" formControlName="_body" placeholder="Message"></textarea>
     </label>
 
     <input type="button"  value="Submit" (click)="onSubmit(contactGroup)">

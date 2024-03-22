@@ -12,6 +12,7 @@
   color: white;
 
   h2 {
+    //display: none;
     color: white;
     font-family: Josefin Sans, sans-serif;
     text-align: center;
@@ -40,17 +41,43 @@
   }
 
   contact-form {
+    --primary-color: #cfcfcf;
+
+    padding: 35px;
+
+    max-width: 750px;
+
+    background-color: #eaeaea;
+    border-radius: 15px;
+
+    width: 100%;
+
+    margin-bottom: 50px;
+
+    @media screen and (max-width: 630px) {
+      padding: 25px;
+    }
+  }
+
+  contact-info {
     width: 100%;
   }
 
   swiper-toolbox {
-    max-width: 100%;
-    margin-top: 25px;
+    //max-width: 100%;
+    //margin-top: 25px;
+
+    max-width: var(--max-width);
+    width: 100%;
+    margin: 50px auto auto;
   }
 
   swiper-showcase {
-    margin-top: 25px;
-    max-width: 100%;
+    //max-width: 100%;
+
+    max-width: var(--max-width);
+    width: 100%;
+    margin: 50px auto auto;
   }
 
   .project-link {

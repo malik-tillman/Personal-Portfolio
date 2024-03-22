@@ -1,22 +1,27 @@
 <div class="container">
   <div class="text-container">
-    <img src="/assets/headshot.jpg" alt="headshot" class="headshot">
+    <div class="image-copy__container">
+      <div class="image--container">
+        <img src="/assets/headshot.jpg" alt="headshot" class="headshot">
+      </div>
 
-    <div class="about-copy__container">
-      <h2>About Me</h2>
 
-      <ng-container *ngFor="let paragraph of aboutCopy; let last = last">
-        <p class="about-copy">
-          {{ paragraph }}
-        </p>
+      <div class="about-copy__container">
+        <h2>About Me</h2>
 
-        <br *ngIf="!last">
-      </ng-container>
+        <ng-container *ngFor="let paragraph of aboutCopy; let last = last">
+          <p class="about-copy">
+            {{ paragraph }}
+          </p>
+
+          <br *ngIf="!last">
+        </ng-container>
+      </div>
     </div>
 
     <contact-info></contact-info>
 
-    <h2>My Toolbox</h2>
+<!--    <h2>My Toolbox</h2>-->
 
     <swiper-toolbox></swiper-toolbox>
 

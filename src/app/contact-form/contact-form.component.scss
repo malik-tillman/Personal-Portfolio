@@ -17,9 +17,7 @@ $error-red: #ff4343;
     gap: 15px;
 
     width : 100%;
-    max-width: 750px;
-
-    margin-bottom: 15px;
+    max-width: 100%;
 
     .name {
       display: grid;
@@ -29,6 +27,10 @@ $error-red: #ff4343;
 
       label {
         width: 100%;
+      }
+
+      @media screen and (max-width: 630px) {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -47,6 +49,7 @@ $error-red: #ff4343;
         text-transform: uppercase;
         font-size: 12px;
         font-family: Lato bold, sans-serif;
+        display: none;
 
         .required {
           color: $error-red;
@@ -56,11 +59,13 @@ $error-red: #ff4343;
       input, textarea {
         width: 100%;
         padding: 10px;
-        background: #faedcd none;
+        background: var(--primary-color) none;
 
         outline: none;
 
         border: 2px solid transparent;
+
+        border-radius: 5px;
       }
 
       &.errors {
@@ -71,20 +76,25 @@ $error-red: #ff4343;
     }
 
     input[type="button"] {
-      color: #faedcd;
+      color: black;
       font-size: 14px;
-      text-transform: uppercase;
+      //text-transform: uppercase;
       background-color: transparent;
 
-      border: 1px solid #faedcd;
+      border: none;
       outline: none;
-      padding: 15px;
+      padding: 15px 40px;
 
       transition: transform 250ms ease;
 
       margin-top: 15px;
 
       cursor: pointer;
+      border-radius: 5px;
+      width: fit-content;
+
+      background: #0d0d0d;
+      color: #ebebeb;
 
       &:hover {
         transform: translateY(-5px);
@@ -102,6 +112,8 @@ $error-red: #ff4343;
     font-family: Lato bold, sans-serif;
 
     color: $error-red;
+
+    width: 100%;
 
     &.hidden {
       display: none;

@@ -20,6 +20,9 @@ export class CMSService {
   /**
    * Dynamic CDN based on environment
    * */
+  // private readonly CDN = environment.production && false ? // TODO: Remove false before pushing to production
+  //   'cdn.maliktillman.com/file/maliktillman-cms-light' :
+  //   'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';
   private readonly CDN = environment.production ?
     'cdn.maliktillman.com/file/maliktillman-cms-light' :
     'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';

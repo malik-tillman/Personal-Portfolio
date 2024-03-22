@@ -1,4 +1,5 @@
-$bg-color: #0c0c0c;
+$bg-color: rgb(12, 12, 12);
+$bg-color-transparent: rgba(12, 12, 12, 0.67);
 $text-color: #ffffff;
 $menu-text-color: #ffffff;
 $icon-color: #ffffff;
@@ -31,7 +32,9 @@ $font-family: Josefin Sans Light, sans-serif;
   right: -425px;
   width: 375px;
   height: 100vh;
-  padding: 25px;
+  padding: 25px 25px 50px;
+
+  z-index: 99;
 
   // background: linear-gradient(-145deg, #0d0d0d 0%, #070707 100%);
   background-color: $bg-color;
@@ -42,6 +45,12 @@ $font-family: Josefin Sans Light, sans-serif;
 
   will-change: right;
   transition: right 1s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @supports (-webkit-backdrop-filter: blur(15px) ) or ( backdrop-filter: blur(15px) ) {
+    background-color: $bg-color-transparent;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+  }
 
   a {
     display: flex;
@@ -55,6 +64,8 @@ $font-family: Josefin Sans Light, sans-serif;
     transition: transform .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
     max-height: 35px;
+
+    margin: 0;
 
     svg {
       width: 35px;
@@ -89,6 +100,25 @@ $font-family: Josefin Sans Light, sans-serif;
     margin: 0 0 25px;
   }
 
+  a.view_all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+    padding: 10px;
+    border: 1px solid $menu-text-color;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-family: Josefin Sans, sans-serif;
+    color: $menu-text-color;
+    text-decoration: none;
+
+    text-transform: uppercase;
+
+    max-height: unset;
+  }
+
   .menu-footer {
     display: flex;
     flex-direction: column;
@@ -113,15 +143,26 @@ $font-family: Josefin Sans Light, sans-serif;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
-  grid-template-areas: "logo menu-button";
-
   //padding: 25px 25px 0 25px;
   padding: 25px;
 
   background-color: $bg-color;
+
+  @supports (-webkit-backdrop-filter: blur(15px) ) or ( backdrop-filter: blur(15px) ) {
+    background-color: $bg-color-transparent;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "logo menu-button";
+
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
 }
 
 .logo-name-container {
@@ -132,6 +173,7 @@ $font-family: Josefin Sans Light, sans-serif;
 }
 
 .logo {
+  //display: none;
   height: 45px;
 
   fill: $icon-color;
@@ -143,7 +185,7 @@ $font-family: Josefin Sans Light, sans-serif;
   padding-left: 20px;
   color: $text-color;
   font-size: 28px;
-  margin-top: 5px;
+  margin-top: 2px;
 
   font-family: Josefin Sans Thin, sans-serif;
 }
@@ -174,6 +216,8 @@ $font-family: Josefin Sans Light, sans-serif;
       border-radius: 5px;
       display: block;
       content: "";
+
+      display: none;
 
       transition: width 500ms ease;
     }
@@ -296,7 +340,7 @@ $font-family: Josefin Sans Light, sans-serif;
     }
 
     a {
-      margin-bottom: 10px;
+      //margin-bottom: 10px;
 
       svg {
         width: 20px;
@@ -309,7 +353,7 @@ $font-family: Josefin Sans Light, sans-serif;
   }
 
   .favorite-container {
-    grid-gap: 5px;
+    grid-gap: 15px;
   }
 
   .favorites-title {
