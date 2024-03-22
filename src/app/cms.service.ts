@@ -15,17 +15,17 @@ export class CMSService {
    *
    * todo: Make dynamic based on recency.
    * */
-  public readonly DEFAULTS = [1,2,3,4];
+  public readonly DEFAULTS = [1,22,23,4];
 
   /**
    * Dynamic CDN based on environment
    * */
-  // private readonly CDN = environment.production && false ? // TODO: Remove false before pushing to production
-  //   'cdn.maliktillman.com/file/maliktillman-cms-light' :
-  //   'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';
-  private readonly CDN = environment.production ?
+  private readonly CDN = environment.production && false ? // TODO: Remove false before pushing to production
     'cdn.maliktillman.com/file/maliktillman-cms-light' :
     'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';
+  // private readonly CDN = environment.production ?
+  //   'cdn.maliktillman.com/file/maliktillman-cms-light' :
+  //   'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';
 
   private api_projects: string = environment.production ?
     'https://cms.maliktillman.com/api/projects' :
