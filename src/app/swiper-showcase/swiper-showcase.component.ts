@@ -37,8 +37,9 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
   constructor(private projectService: CMSService) {}
 
   ngOnInit() {
-    if (this.omitID && this.ids)
+    if (this.omitID && this.ids) {
       this.ids.splice(this.ids.indexOf(this.omitID), 1);
+    }
 
     this.projectService.fetchListByID(this.ids ? this.ids : this.projectService.DEFAULTS)
       .then((projects) => {
@@ -46,11 +47,13 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
 
         this.DISABLED = !(this.worksList.length > 0);
 
-        this._swiperRef_.slideTo(this.worksList.length - 1, 1000);
+        if (this._swiperRef_) {
+          this._swiperRef_.slideTo(this.worksList.length - 1, 1000);
+        }
 
         this.config.initialSlide = this.worksList.length - 1;
 
-        this.updateSwiper()
+        this.updateSwiper();
     });
 
     this.config = {

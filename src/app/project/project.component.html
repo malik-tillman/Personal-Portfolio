@@ -103,7 +103,7 @@
   </ng-container>
 
   <!-- Image Gallery -->
-  <ng-container *ngIf="work.image_src.length > 0">
+  <ng-container *ngIf="work.image_src && work.image_src.length > 0">
     <div class="images-section">
       <h2 *ngIf="work.image_src.length > 1">Gallery</h2>
       <h2 *ngIf="work.image_src.length === 1">Media</h2>
