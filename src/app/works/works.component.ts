@@ -30,6 +30,8 @@ export class WorksComponent implements AfterViewInit {
     this.projectService.fetchList().then( projects => {
       this.worksList = projects;
 
+      this.shuffle(this.worksList);
+
       if (this.worksList.length === 0)
         this.emptyProjects = true;
     })
@@ -50,5 +52,17 @@ export class WorksComponent implements AfterViewInit {
 
       _loaderSubscription.unsubscribe();
     })
+  }
+
+  shuffle(array) {
+    let currentIndex = array.length;
+
+    while (currentIndex != 0) {
+
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
   }
 }
