@@ -1,27 +1,45 @@
-# AngularRoot
+# Personal Portfolio v4
 
-This _projectCache was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.3.
+Repository for the v4 of my Personal Portfolio built with Angular.
 
-## Development server
+## Todo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- [ ] Migrate to latest Angular version 
+- [ ] Migrate from Strapi --> Sanity.io
+- [ ] Implement SSG
+- [ ] Implement better SEO/SEM 
+- [ ] Performance audit (Core Web Vitals)
+- [ ] Add new features
+  - [ ] Better value proposition and project showcasing
+  - [ ] Testimonials (social proof)
+  - [ ] Case Studies
+  - [ ] Metric
+  - [ ] Better "wow factor" (animations, etc.)
+  - [ ] Dark mode
+  - [ ] Blog
+  - [ ] Filtering
+  - [ ] Search (lite semantic search)
+  - [ ] Availability status
 
-## Code scaffolding
+## Roadmap
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Ordered by dependency and conversion impact. Complete infrastructure items first before building new features on top.
 
-## Build
+### Infrastructure (do in order — each unblocks the next)
 
-Run `ng build` to build the _projectCache. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+1. **Migrate to latest Angular** — foundation for everything; SSG requires modern Angular (`@angular/ssr`)
+2. **Migrate Strapi → Sanity** — switch CMS before building new features so content schema is stable
+3. **Implement SSG** — requires Angular migration; dramatically improves load time and crawlability
+4. **Implement better SEO/SEM** — pairs with SSG; add meta tags, Open Graph, structured data, sitemap
 
-## Running unit tests
+### New Features (ordered by conversion impact)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+5. **Better value proposition + metrics** — homepage first impression; high impact, low dev effort
+6. **Testimonials (social proof)** — trust signal for freelance clients; quick win
+7. **Better wow factor (animations)** — polish pass; scroll-triggered animations, micro-interactions
+8. **Dark mode** — self-contained UI feature; persist via localStorage
+9. **Case Studies** — deeper project storytelling; requires Sanity schema work + content effort
+10. **Filtering** — project discoverability; requires stable project data from Sanity first
+11. **Search (lite semantic)** — builds on top of filtering
+12. **Availability status** — small feature; can bundle with dark mode or filtering pass
+13. **Blog** — standalone concern; good for SEO long-term but lowest immediate conversion ROI
