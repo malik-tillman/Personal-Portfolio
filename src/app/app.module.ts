@@ -1,11 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { routing } from './app.routing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { SwiperModule } from 'swiper/angular';
 
 import { AppComponent } from './app.component';
 import { ThreeComponent } from './three/three.component';
@@ -46,7 +44,6 @@ import { LinksComponent } from './links/links.component';
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         routing,
-        ReactiveFormsModule,
-        SwiperModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())], schemas: [CUSTOM_ELEMENTS_SCHEMA] })
 
 export class AppModule { }

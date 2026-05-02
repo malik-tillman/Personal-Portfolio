@@ -1,6 +1,24 @@
 <div class="swiper-container" #container *ngIf="!DISABLED">
-  <swiper [config]="config" (swiper)="onSwiper($event)">
-    <ng-template swiperSlide *ngFor="let work of worksList">
+  <swiper-container
+    #swiperEl
+    [loop]="loop && worksList.length >= 4"
+    [slides-per-view]="1"
+    [space-between]="spacing_m != undefined ? spacing_m : 0"
+    [width]="width != undefined ? width : null"
+    [speed]="speed != undefined ? speed : 250"
+    [autoplay]="autoplay ? { delay: delay != undefined ? delay : 2000, pauseOnMouseEnter: false, disableOnInteraction: false, reverseDirection: false } : false"
+    [breakpoints]='{
+      "630": {
+        "slidesPerView": perPage != undefined && perPage < 3 ? perPage : 2,
+        "spaceBetween": spacing != undefined ? spacing : 25
+      },
+      "1200": {
+        "slidesPerView": perPage != undefined ? perPage : 4,
+        "spaceBetween": spacing != undefined ? spacing : 25
+      }
+    }'
+  >
+    <swiper-slide *ngFor="let work of worksList">
       <a class="showcase--slide" [routerLink]="['/works', 'project']" [queryParams]="{ id: work.id }">
         <picture>
           <img
@@ -13,8 +31,8 @@
 
         <h3 class="works-name" *ngIf="!this.hideTitle">{{ work.title }}</h3>
       </a>
-    </ng-template>
-  </swiper>
+    </swiper-slide>
+  </swiper-container>
 
   <div class="navigation">
     <button class="prev" #prev (click)="prevSlide()">

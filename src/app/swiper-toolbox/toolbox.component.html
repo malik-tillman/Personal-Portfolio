@@ -1,9 +1,23 @@
 <div class="toolbox-container">
-  <swiper [config]="config">
-    <ng-template swiperSlide *ngFor="let tool of toolbox">
+  <swiper-container
+    slides-per-view="auto"
+    space-between="15"
+    centered-slides="true"
+    speed="5000"
+    [loop]="toolbox.length >= 4"
+    width="80"
+    autoplay-delay="0"
+    autoplay-pause-on-mouse-enter="false"
+    autoplay-disable-on-interaction="false"
+    autoplay-reverse-direction="false"
+    allow-touch-move="false"
+    simulate-touch="false"
+    breakpoints='{"630":{"width":100,"space-between":50}}'
+  >
+    <swiper-slide *ngFor="let tool of toolbox">
       <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer" class="{{ tool.title.replace(' ', '--').replace('++', 'plusplus') }}">
         <img src="{{ tool.image }}" alt="{{ tool.title }} Icon" title="{{ tool.title }}">
       </a>
-    </ng-template>
-  </swiper>
+    </swiper-slide>
+  </swiper-container>
 </div>

@@ -13,8 +13,8 @@ import {
   MathUtils,
   MeshPhysicalMaterial
 } from 'three';
-import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 @Component({
     selector: 'three', templateUrl: './three.component.html', styleUrls: ['./three.component.scss'],
@@ -66,20 +66,15 @@ export class ThreeComponent implements AfterViewInit {
 
     /* Create Lights */
     RectAreaLightUniformsLib.init();
-    // let rectLight = new RectAreaLight("rgb(0,13,61)", 40, 1000, 1000);
-    // rectLight.position.set(10,50,-200);
-    // rectLight.rotation.y = MathUtils.degToRad(150);
-    // let mainRectLight = new RectAreaLight("rgb(218,227,255)", 2.5, 100, 100);
-    // mainRectLight.position.set(10,50,100);
 
-    let rectLight = new RectAreaLight("rgb(0,13,61)", 40, 1000, 1000);
+    let rectLight = new RectAreaLight(0x000d3d, 40, 1000, 1000);
     rectLight.position.set(10,50,-200);
     rectLight.rotation.y = MathUtils.degToRad(150);
 
-    let secRectLight = new RectAreaLight("rgb(0,31,199)", 15, 100, 100);
+    let secRectLight = new RectAreaLight(0x001fc7, 15, 100, 100);
     secRectLight.position.set(0,30,100);
 
-    let mainRectLight = new RectAreaLight("rgb(218,227,255)", 2.5, 100, 100);
+    let mainRectLight = new RectAreaLight(0xdae3ff, 2.5, 100, 100);
     mainRectLight.position.set(10,50,100);
 
     /* Load GLTF Object */
