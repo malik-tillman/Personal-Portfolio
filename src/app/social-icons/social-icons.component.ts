@@ -6,5 +6,8 @@
  * */
 import { Component } from '@angular/core';
 
-@Component({selector: 'social-icons', templateUrl: './social-icons.component.html', styleUrls: ['./social-icons.component.scss']})
+@Component({
+    selector: 'social-icons', templateUrl: './social-icons.component.html', styleUrls: ['./social-icons.component.scss'],
+    standalone: false
+})
 export class SocialIconsComponent { }

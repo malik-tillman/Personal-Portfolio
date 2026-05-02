@@ -7,7 +7,10 @@
 import { Component } from '@angular/core';
 import { CMSService } from '../cms.service';
 
-@Component({selector: 'about', templateUrl: './about.component.html', styleUrls: ['./about.component.scss']})
+@Component({
+    selector: 'about', templateUrl: './about.component.html', styleUrls: ['./about.component.scss'],
+    standalone: false
+})
 export class AboutComponent {
   public aboutCopy: string[];
 

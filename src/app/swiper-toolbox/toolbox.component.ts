@@ -5,9 +5,10 @@ import {config} from 'rxjs';
 SwiperCore.use([Autoplay, FreeMode]);
 
 @Component({
-  selector: 'swiper-toolbox',
-  templateUrl: './toolbox.component.html',
-  styleUrls: ['./toolbox.component.scss']
+    selector: 'swiper-toolbox',
+    templateUrl: './toolbox.component.html',
+    styleUrls: ['./toolbox.component.scss'],
+    standalone: false
 })
 export class SwiperToolboxComponent implements AfterViewInit, OnInit {
   public toolbox: object[] = [];

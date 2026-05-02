@@ -7,7 +7,10 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import Lottie from 'lottie-web';
 
-@Component({selector: 'loader', templateUrl: './loader.component.html', styleUrls: ['./loader.component.scss']})
+@Component({
+    selector: 'loader', templateUrl: './loader.component.html', styleUrls: ['./loader.component.scss'],
+    standalone: false
+})
 export class LoaderComponent implements AfterViewInit {
   /* Loader Reference */
   @ViewChild('loader') loader_container:ElementRef;

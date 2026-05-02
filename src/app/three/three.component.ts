@@ -16,7 +16,10 @@ import {
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-@Component({selector: 'three', templateUrl: './three.component.html', styleUrls: ['./three.component.scss']})
+@Component({
+    selector: 'three', templateUrl: './three.component.html', styleUrls: ['./three.component.scss'],
+    standalone: false
+})
 export class ThreeComponent implements AfterViewInit {
   /* 3d Canvas Reference */
   @ViewChild("main") _canvas: ElementRef;

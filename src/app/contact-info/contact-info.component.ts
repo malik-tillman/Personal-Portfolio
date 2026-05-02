@@ -1,9 +1,10 @@
 import {Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 
 @Component({
-  selector: 'contact-info',
-  templateUrl: './contact-info.component.html',
-  styleUrls: ['./contact-info.component.scss']
+    selector: 'contact-info',
+    templateUrl: './contact-info.component.html',
+    styleUrls: ['./contact-info.component.scss'],
+    standalone: false
 })
 export class ContactInfoComponent implements AfterViewInit {
   @ViewChild('container')

@@ -10,9 +10,10 @@ import { CMSService, ProjectAttributes } from '../cms.service';
 import Typed from 'typed.js';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements AfterViewInit {
   @ViewChild("typedName") private typedName: ElementRef;

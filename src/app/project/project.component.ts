@@ -11,7 +11,10 @@ import { Subscription } from 'rxjs';
 
 import Viewer from "viewerjs"
 
-@Component({selector: 'project', templateUrl: './project.component.html', styleUrls: ['./project.component.scss']})
+@Component({
+    selector: 'project', templateUrl: './project.component.html', styleUrls: ['./project.component.scss'],
+    standalone: false
+})
 export class ProjectComponent implements OnDestroy, AfterViewInit {
   /* Unsubscribe when component destroys */
   public activatedRouterSubscription: Subscription;

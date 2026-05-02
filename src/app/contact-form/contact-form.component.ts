@@ -6,9 +6,10 @@ import { CMSService, _File } from '../cms.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'contact-form',
-  templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss']
+    selector: 'contact-form',
+    templateUrl: './contact-form.component.html',
+    styleUrls: ['./contact-form.component.scss'],
+    standalone: false
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   @ViewChild('contactForm') private form:ElementRef;

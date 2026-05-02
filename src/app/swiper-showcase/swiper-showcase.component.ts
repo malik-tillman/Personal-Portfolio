@@ -5,9 +5,10 @@ import SwiperCore, { Navigation, Autoplay, SwiperOptions, Pagination } from 'swi
 SwiperCore.use([ Navigation, Autoplay, Pagination ]);
 
 @Component({
-  selector: 'swiper-showcase',
-  templateUrl: './swiper-showcase.component.html',
-  styleUrls: ['./swiper-showcase.component.scss']
+    selector: 'swiper-showcase',
+    templateUrl: './swiper-showcase.component.html',
+    styleUrls: ['./swiper-showcase.component.scss'],
+    standalone: false
 })
 export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
   @ViewChild('container') private containerRef: ElementRef;

@@ -8,7 +8,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Typed from 'typed.js';
 import { CMSService } from '../cms.service';
 
-@Component({selector: 'footer', templateUrl: './footer.component.html', styleUrls: ['./footer.component.scss']})
+@Component({
+    selector: 'footer', templateUrl: './footer.component.html', styleUrls: ['./footer.component.scss'],
+    standalone: false
+})
 export class FooterComponent implements OnInit {
   @ViewChild("typedFooter") typedFooterRef: ElementRef;
 
