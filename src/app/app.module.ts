@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { routing } from './app.routing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -25,35 +25,28 @@ import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { SwiperShowcaseComponent } from './swiper-showcase/swiper-showcase.component';
 import { LinksComponent } from './links/links.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    ThreeComponent,
-    HeaderComponent,
-    HomeComponent,
-    ProjectComponent,
-    WorksComponent,
-    AboutComponent,
-    ContactComponent,
-    FooterComponent,
-    LoaderComponent,
-    SocialIconsComponent,
-    NotFoundComponent,
-    SwiperToolboxComponent,
-    ContactFormComponent,
-    ContactInfoComponent,
-    SwiperShowcaseComponent,
-    LinksComponent
-  ],
-  imports: [
-    BrowserModule,
-    routing,
-    HttpClientModule,
-    ReactiveFormsModule,
-    SwiperModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        ThreeComponent,
+        HeaderComponent,
+        HomeComponent,
+        ProjectComponent,
+        WorksComponent,
+        AboutComponent,
+        ContactComponent,
+        FooterComponent,
+        LoaderComponent,
+        SocialIconsComponent,
+        NotFoundComponent,
+        SwiperToolboxComponent,
+        ContactFormComponent,
+        ContactInfoComponent,
+        SwiperShowcaseComponent,
+        LinksComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        routing,
+        ReactiveFormsModule,
+        SwiperModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 
 export class AppModule { }
