@@ -10,7 +10,6 @@ import {
   Scene,
   PerspectiveCamera,
   RectAreaLight,
-  AmbientLight,
   MathUtils,
   MeshPhysicalMaterial
 } from 'three';
@@ -68,10 +67,15 @@ export class ThreeComponent implements AfterViewInit {
     /* Create Lights */
     RectAreaLightUniformsLib.init();
 
-    let ambientLight = new AmbientLight(0xffffff, 0.5);
-    
-    let rectLight = new RectAreaLight(0xffffff, 2, 100, 100);
-    rectLight.position.set(10,50,100);
+    let rectLight = new RectAreaLight(0x000d3d, 40, 1000, 1000);
+    rectLight.position.set(10,50,-200);
+    rectLight.rotation.y = MathUtils.degToRad(150);
+
+    let secRectLight = new RectAreaLight(0x001fc7, 15, 100, 100);
+    secRectLight.position.set(0,30,100);
+
+    let mainRectLight = new RectAreaLight(0xdae3ff, 2.5, 100, 100);
+    mainRectLight.position.set(10,50,100);
 
     /* Load GLTF Object */
     const gltfLoader = new GLTFLoader();
@@ -87,10 +91,8 @@ export class ThreeComponent implements AfterViewInit {
 
       /* create material */
       let material = new MeshPhysicalMaterial({
-        color: "rgb(150,0,0)",
-        flatShading: false,
-        roughness: 0.5,
-        metalness: 0.1
+        color: "rgb(237,0,0)",
+        flatShading: true
       });
 
       /* Apply material */
@@ -112,8 +114,9 @@ export class ThreeComponent implements AfterViewInit {
 
       /* Add object and lights */
       scene.add(gltfObj);
-      scene.add(ambientLight);
       scene.add(rectLight);
+      scene.add(mainRectLight);
+      scene.add(secRectLight);
     }))
 
     /* Render animation frames */

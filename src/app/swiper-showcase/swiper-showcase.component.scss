@@ -1,36 +1,3 @@
-swiper-container {
-  display: block;
-  overflow: hidden;
-  width: 100%;
-}
-
-swiper-slide {
-  height: auto;
-  max-width: 500px;
-  border-radius: 16px;
-  overflow: hidden;
-
-  .showcase--slide {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    background: white;
-
-    img.thumbnail {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    .works-name {
-      margin: 0;
-      padding: 12px;
-      background: white;
-    }
-  }
-}
-
 .swiper-container {
   position: relative;
 

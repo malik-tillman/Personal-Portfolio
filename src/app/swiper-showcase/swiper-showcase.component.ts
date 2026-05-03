@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CMSService, ProjectAttributes } from '../cms.service';
 
 @Component({
@@ -9,9 +9,9 @@ import { CMSService, ProjectAttributes } from '../cms.service';
 })
 export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
   @ViewChild('container') private containerRef: ElementRef;
-  @ViewChild('swiperEl') private swiperElRef: ElementRef;
   @ViewChild('next') private nextRef: ElementRef;
   @ViewChild('prev') private prevRef: ElementRef;
+  @ViewChild('swiperEl') private swiperElRef: ElementRef;
 
   public worksList: ProjectAttributes[] = [];
 
@@ -30,7 +30,7 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
 
   public DISABLED = false;
 
-  constructor(private projectService: CMSService, private cdr: ChangeDetectorRef) {}
+  constructor(private projectService: CMSService) {}
 
   ngOnInit() {
     if (this.omitID && this.ids) {
@@ -41,24 +41,34 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
       .then((projects) => {
         this.worksList = projects;
         this.DISABLED = !(this.worksList.length > 0);
-        this.cdr.detectChanges();
-
-        if (!this.DISABLED) {
-          setTimeout(() => this.initSwiper(), 0);
-        }
     });
   }
 
   ngAfterViewInit() {
-    if (!this.arrows) {
-      this.containerRef?.nativeElement.classList.add("no-arrows");
+    if (this.arrows) {
+      const swiperEl = this.swiperElRef.nativeElement as any;
+      swiperEl.addEventListener('swiperinit', () => {
+        const swiper = swiperEl.swiper;
+        swiper.params.navigation.nextEl = this.nextRef.nativeElement;
+        swiper.params.navigation.prevEl = this.prevRef.nativeElement;
+        swiper.navigation.update();
+      });
+    } else {
+      this.containerRef.nativeElement.classList.add("no-arrows")
     }
   }
 
-  private initSwiper() {
-    const swiperEl = this.swiperElRef?.nativeElement;
-    if (!swiperEl) return;
+  nextSlide() {
+    const swiperEl = this.swiperElRef.nativeElement as any;
+    if (swiperEl.swiper) {
+      swiperEl.swiper.slideNext();
+    }
+  }
 
-    swiperEl.initialize();
+  prevSlide() {
+    const swiperEl = this.swiperElRef.nativeElement as any;
+    if (swiperEl.swiper) {
+      swiperEl.swiper.slidePrev();
+    }
   }
 }

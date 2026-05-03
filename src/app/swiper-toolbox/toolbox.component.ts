@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {Component, AfterViewInit, OnInit} from '@angular/core';
 
 @Component({
     selector: 'swiper-toolbox',
@@ -7,10 +7,9 @@ import {Component, AfterViewInit, OnInit, ElementRef, ViewChild} from '@angular/
     standalone: false
 })
 export class SwiperToolboxComponent implements AfterViewInit, OnInit {
-  @ViewChild('swiperEl') swiperElRef: ElementRef;
   public toolbox: object[] = [];
 
-  private __dupeFactor__ = 4
+  private __dupeFactor__ = 2
   private __toolbox__ = {
     shopify: {
       title: "Shopify",
@@ -82,10 +81,5 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {}
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      const swiperEl = this.swiperElRef.nativeElement;
-      swiperEl.initialize();
-    }, 100);
-  }
+  ngAfterViewInit(): void { }
 }

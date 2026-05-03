@@ -1,15 +1,12 @@
 <div class="swiper-container" #container *ngIf="!DISABLED">
   <swiper-container
     #swiperEl
-    [init]="false"
-    [loop]="loop"
-    slides-per-view="1"
+    [loop]="loop && worksList.length >= 4"
+    [slides-per-view]="1"
     [space-between]="spacing_m != undefined ? spacing_m : 0"
     [width]="width != undefined ? width : null"
     [speed]="speed != undefined ? speed : 250"
     [autoplay]="autoplay ? { delay: delay != undefined ? delay : 2000, pauseOnMouseEnter: false, disableOnInteraction: false, reverseDirection: false } : false"
-    navigation-next-el=".next"
-    navigation-prev-el=".prev"
     [breakpoints]='{
       "630": {
         "slidesPerView": perPage != undefined && perPage < 3 ? perPage : 2,
@@ -38,13 +35,13 @@
   </swiper-container>
 
   <div class="navigation">
-    <button class="prev" #prev>
+    <button class="prev" #prev (click)="prevSlide()">
       <svg width="1200pt" height="1200pt" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
         <path d="m900 600-600-292.8 145.2 292.8-145.2 292.8zm-547.2-240 492 240-492 240 118.8-240z"/>
       </svg>
     </button>
 
-    <button class="next" #next>
+    <button class="next" #next (click)="nextSlide()">
       <svg width="1200pt" height="1200pt" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
         <path d="m900 600-600-292.8 145.2 292.8-145.2 292.8zm-547.2-240 492 240-492 240 118.8-240z"/>
       </svg>
