@@ -1,5 +1,9 @@
 import {Component, AfterViewInit, OnInit} from '@angular/core';
 
+import SwiperCore, { Autoplay, SwiperOptions, FreeMode } from 'swiper';
+import {config} from 'rxjs';
+SwiperCore.use([Autoplay, FreeMode]);
+
 @Component({
     selector: 'swiper-toolbox',
     templateUrl: './toolbox.component.html',
@@ -8,6 +12,7 @@ import {Component, AfterViewInit, OnInit} from '@angular/core';
 })
 export class SwiperToolboxComponent implements AfterViewInit, OnInit {
   public toolbox: object[] = [];
+  public config: SwiperOptions;
 
   private __dupeFactor__ = 2
   private __toolbox__ = {
@@ -79,7 +84,37 @@ export class SwiperToolboxComponent implements AfterViewInit, OnInit {
         this.toolbox.push(tool);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.config = {
+      autoplay: {
+        delay: 0,
+        pauseOnMouseEnter: false,
+        disableOnInteraction: false,
+        reverseDirection: false
+      },
+      noSwiping: true,
+      allowTouchMove: false,
+      speed: 5000,
+      loop: true,
+      loopedSlides: this.toolbox?.length || null,
+      loopFillGroupWithBlank: false,
+      loopedSlidesLimit: false,
+      slidesPerView: "auto",
+      slidesPerGroup: 1,
+      centeredSlides: true,
+      simulateTouch : false,
+      spaceBetween: 15,
+      freeMode: false,
+      width: 80,
+      observer: true,
+      breakpoints: {
+        630: {
+          width: 100,
+          spaceBetween: 50,
+        }
+      }
+    }
+  }
 
   ngAfterViewInit(): void { }
 }
