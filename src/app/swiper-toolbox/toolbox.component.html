@@ -1,18 +1,21 @@
 <div class="toolbox-container">
   <swiper-container
-    slides-per-view="auto"
-    space-between="15"
-    centered-slides="true"
-    speed="5000"
-    [loop]="toolbox.length >= 4"
-    width="80"
+    #swiperEl
+    [init]="false"
+    slides-per-view="3"
+    space-between="10"
+    speed="2000"
+    loop="false"
+    [breakpoints]='{
+      "640": { "slidesPerView": 4 },
+      "1024": { "slidesPerView": 6 }
+    }'
     autoplay-delay="0"
     autoplay-pause-on-mouse-enter="false"
     autoplay-disable-on-interaction="false"
-    autoplay-reverse-direction="false"
+    autoplay-reverse-direction="true"
     allow-touch-move="false"
     simulate-touch="false"
-    breakpoints='{"630":{"width":100,"space-between":50}}'
   >
     <swiper-slide *ngFor="let tool of toolbox">
       <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer" class="{{ tool.title.replace(' ', '--').replace('++', 'plusplus') }}">
