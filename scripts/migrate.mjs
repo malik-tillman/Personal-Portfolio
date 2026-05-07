@@ -1,12 +1,33 @@
-import { createClient } from '@sanity/client';
+/**
+ * Strapi to Sanity Migration Script
+ * 
+ * Usage: 
+ *   1. Create .env file from .env.example
+ *   2. Set SANITY_TOKEN with write access
+ *   3. Run: node scripts/migrate.mjs
+ */
 
-const STRAPI_URL = 'https://cms.maliktillman.com/api';
-const SANITY_PROJECT_ID = 'yn76jr12';
-const SANITY_DATASET = 'production';
+import { createClient } from '@sanity/client';
+import { config } from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Load .env from project root
+const __dirname = dirname(fileURLToPath(import.meta.url));
+config({ path: join(__dirname, '..', '.env') });
+
+const STRAPI_URL = process.env.STRAPI_URL || 'https://cms.maliktillman.com/api';
+const SANITY_PROJECT_ID = process.env.SANITY_PROJECT_ID;
+const SANITY_DATASET = process.env.SANITY_DATASET || 'production';
 const SANITY_TOKEN = process.env.SANITY_TOKEN;
 
+if (!SANITY_PROJECT_ID) {
+  console.error('Please set SANITY_PROJECT_ID in .env file');
+  process.exit(1);
+}
+
 if (!SANITY_TOKEN) {
-  console.error('Please set SANITY_TOKEN environment variable');
+  console.error('Please set SANITY_TOKEN in .env file');
   process.exit(1);
 }
 
@@ -40,7 +61,6 @@ async function uploadAsset(url, filename, type = 'image') {
 
 async function migrateProjects() {
   console.log('Fetching projects from Strapi...');
-  // Explicitly populate all media fields
   const response = await fetch(`${STRAPI_URL}/projects?populate[0]=thumbnail&populate[1]=images&populate[2]=videos`);
   const { data } = await response.json();
 
@@ -100,7 +120,7 @@ async function migrateProjects() {
         current: attr.title.toLowerCase().replace(/\s+/g, '-').slice(0, 96),
       },
       description: attr.description,
-      year: attr.date, // Strapi date field was actually a string for the year
+      year: attr.date,
       publishedAt: attr.publishedAt || attr.createdAt,
       categories: attr.category ? [attr.category] : [],
       tags: attr.tags || undefined,

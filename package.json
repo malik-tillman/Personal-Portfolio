@@ -45,6 +45,7 @@
     "@types/node": "^18.19.130",
     "ajv": "^7.2.4",
     "codelyzer": "^6.0.2",
+    "dotenv": "^17.4.2",
     "jasmine-core": "^5.1.2",
     "jasmine-spec-reporter": "^7.0.0",
     "karma": "~6.4.1",
