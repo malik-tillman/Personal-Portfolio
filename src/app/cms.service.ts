@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { SanityService } from './sanity.service';
 
 @Injectable({providedIn: 'root'})
 export class CMSService {
@@ -23,9 +24,6 @@ export class CMSService {
   private readonly CDN = environment.production && false ? // TODO: Remove false before pushing to production
     'cdn.maliktillman.com/file/maliktillman-cms-light' :
     'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';
-  // private readonly CDN = environment.production ?
-  //   'cdn.maliktillman.com/file/maliktillman-cms-light' :
-  //   'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';
 
   private api_projects: string = environment.production ?
     'https://cms.maliktillman.com/api/projects' :
@@ -55,18 +53,74 @@ export class CMSService {
   private _errorMedia: _File[];
   private _successMedia: _File[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private sanity: SanityService) {}
+
+  private __formatSanityProject__(sanityProject: any, processCollections: boolean = false): ProjectAttributes {
+    const project: ProjectAttributes = {
+      title: sanityProject.title,
+      date: sanityProject.publishedAt,
+      description: sanityProject.description,
+      category: sanityProject.categories ? sanityProject.categories[0] : '',
+      tags: sanityProject.tags || '',
+      github: sanityProject.github || '',
+      website: sanityProject.website || '',
+      createdAt: sanityProject._createdAt || sanityProject.publishedAt,
+      updatedAd: sanityProject._updatedAt || sanityProject.publishedAt,
+      id: parseInt(sanityProject._id.replace('project-', '')) || 0,
+      thumbnail: null,
+      images: null,
+      videos: null,
+      fromSanity: true
+    };
+
+    if (sanityProject.mainImage) {
+      project.thumbnail_src = {
+        url: this.sanity.getImageUrl(sanityProject.mainImage).url(),
+        alt: sanityProject.title,
+        id: 0
+      };
+    }
+
+    // todo: Handle gallery images and videos from Sanity if they are added to schema
+    if (processCollections) {
+       project.image_src = (sanityProject.gallery || []).map(img => ({
+         url: this.sanity.getImageUrl(img).url(),
+         alt: project.title,
+         id: 0
+       }));
+       project.video_src = (sanityProject.videos || []).map(vid => ({
+         url: this.sanity.getFileUrl(vid),
+         alt: project.title,
+         id: 0
+       }));
+    }
+
+    return project;
+  }
 
   /**
    * Returns project data, querying using specified ID
    * */
   public fetchProject(id: number): Promise<ProjectAttributes> {
-    return new Promise( resolve => {
-      if(this._ids.includes(id))
-        return resolve(
-          this.__formatSingle__(this._projects.find((project: Project) => project.id === id), true)
-        );
+    return new Promise( async resolve => {
+      // Check cache first
+      if(this._ids.includes(id)) {
+        const cached = this._projects.find((project: Project) => project.id === id);
+        if (cached) return resolve(this.__formatSingle__(cached, true));
+      }
 
+      // Try Sanity first
+      try {
+        const sanityId = `project-${id}`;
+        const data = await this.sanity.fetch<any>(`*[_type == "project" && _id == $id][0]`, { id: sanityId });
+        if (data) {
+          return resolve(this.__formatSanityProject__(data, true));
+        }
+      } catch (error) {
+        console.error('Sanity fetchProject error:', error);
+      }
+
+      // Fallback to Strapi
       this.http.get(`${ this.api_projects }/${ id }?populate=%2A`).subscribe(
         (strapi: SingularStrapi) => {
           this._projects.push(strapi.data);
@@ -128,10 +182,21 @@ export class CMSService {
   }
 
   public fetchAbout(): Promise<string[]> {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       if (this._about)
         return resolve(this._about);
 
+      try {
+        const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{about}');
+        if (data && data.about) {
+          this._about = data.about.split("\n").filter(_p => _p !== "");
+          return resolve(this._about);
+        }
+      } catch (error) {
+        console.error('Sanity fetchAbout error:', error);
+      }
+
+      // Fallback to Strapi while transitioning
       this.http.get(`${ this.api_site }?fields[0]=about`).subscribe((strapi: About) => {
         this._about = strapi.data.attributes.about.split("\n").filter(_p => _p !== "");
         resolve(this._about);
@@ -144,10 +209,24 @@ export class CMSService {
   }
 
   public fetchQuotes(): Promise<_FormattedQuote[]> {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       if (this._quotes)
         return resolve(this._quotes);
 
+      try {
+        const data = await this.sanity.fetch<any[]>('*[_type == "quote"]{text, author}');
+        if (data && data.length > 0) {
+          this._quotes = data.map(quote => ({
+            text: quote.text,
+            author: quote.author
+          }));
+          return resolve(this._quotes);
+        }
+      } catch (error) {
+        console.error('Sanity fetchQuotes error:', error);
+      }
+
+      // Fallback to Strapi
       this.http.get(`${this.api_quotes}?populate=%2A`).subscribe(
         (strapi: QuoteMetaData) => {
           this._quotes = strapi.data.map((quote: Quote) => {
@@ -168,10 +247,25 @@ export class CMSService {
   }
 
   public fetchSuccessMedia(): Promise<_File[]> {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       if (this._successMedia)
         return resolve(this._successMedia)
 
+      try {
+        const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{successMedia}');
+        if (data && data.successMedia) {
+          this._successMedia = data.successMedia.map(item => ({
+            url: this.sanity.getImageUrl(item).url(),
+            alt: 'Success Media',
+            id: 0
+          }));
+          return resolve(this._successMedia);
+        }
+      } catch (error) {
+        console.error('Sanity fetchSuccessMedia error:', error);
+      }
+
+      // Fallback to Strapi
       this.http.get(`${ this.api_site }?populate=%2A`).subscribe((strapi: SingleTypeStrapi) => {
         this._successMedia = this.__generateFileSources__(strapi.data.attributes.success_media);
         return  resolve(this._successMedia);
@@ -184,10 +278,25 @@ export class CMSService {
   }
 
   public fetchErrorMedia(): Promise<_File[]> {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       if (this._errorMedia)
         return resolve(this._errorMedia)
 
+      try {
+        const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{errorMedia}');
+        if (data && data.errorMedia) {
+          this._errorMedia = data.errorMedia.map(item => ({
+            url: this.sanity.getImageUrl(item).url(),
+            alt: 'Error Media',
+            id: 0
+          }));
+          return resolve(this._errorMedia);
+        }
+      } catch (error) {
+        console.error('Sanity fetchErrorMedia error:', error);
+      }
+
+      // Fallback to Strapi
       this.http.get(`${ this.api_site }?populate=%2A`).subscribe((strapi: SingleTypeStrapi) => {
         this._errorMedia = this.__generateFileSources__(strapi.data.attributes.error_media);
         return  resolve(this._errorMedia);
@@ -200,7 +309,25 @@ export class CMSService {
   }
 
   private __fetchAll__ = (): Promise<Project[]> => {
-    return new Promise( resolve => {
+    return new Promise( async resolve => {
+      // Try Sanity first
+      try {
+        const sanityData = await this.sanity.fetch<any[]>('*[_type == "project"] | order(publishedAt desc)');
+        if (sanityData && sanityData.length > 0) {
+          // We don't store in this._projects for now as it's a different structure,
+          // but we can map it on the fly in fetchList methods.
+          // For compatibility with __fetchAll__ return type:
+          const mapped = sanityData.map(sp => ({
+             id: parseInt(sp._id.replace('project-', '')) || 0,
+             attributes: this.__formatSanityProject__(sp)
+          }));
+          return resolve(mapped as unknown as Project[]);
+        }
+      } catch (error) {
+        console.error('Sanity fetchAll error:', error);
+      }
+
+      // Fallback to Strapi
       this.http.get(`${ this.api_projects }?populate=%2A`).subscribe((strapi: PluralStrapi) => {
         this._projects = strapi.data;
         this._projects.forEach(_project => {
@@ -217,7 +344,13 @@ export class CMSService {
   }
 
   private __formatList__(projects: Project[], processCollections: boolean = false): ProjectAttributes[] {
-    return projects.map((project: Project) => this.__formatSingle__(project, processCollections))
+    return projects.map((project: Project) => {
+      // If it's a Sanity project, it's already been formatted by __formatSanityProject__
+      if (project.attributes && (project.attributes as any).fromSanity) {
+        return project.attributes;
+      }
+      return this.__formatSingle__(project, processCollections);
+    })
   }
 
   private __formatSingle__(project: Project, processCollections: boolean = false): ProjectAttributes {
@@ -225,12 +358,18 @@ export class CMSService {
 
     _formatted.id = project.id;
 
-    _formatted.thumbnail_src = this.__generateFileSource__(project.attributes.thumbnail.data);
+    if (project.attributes.thumbnail && project.attributes.thumbnail.data) {
+      _formatted.thumbnail_src = this.__generateFileSource__(project.attributes.thumbnail.data);
+    }
 
     if (processCollections) {
-      _formatted.image_src = this.__generateFileSources__(project.attributes.images);
+      if (project.attributes.images) {
+        _formatted.image_src = this.__generateFileSources__(project.attributes.images);
+      }
 
-      _formatted.video_src = this.__generateFileSources__(project.attributes.videos);
+      if (project.attributes.videos) {
+        _formatted.video_src = this.__generateFileSources__(project.attributes.videos);
+      }
     }
 
     return _formatted;
@@ -267,6 +406,7 @@ export interface ProjectAttributes {
   updatedAd: string,
 
   id?: number,
+  fromSanity?: boolean,
   thumbnail_src?: _File
   image_src?: _File[],
   video_src?: _File[]

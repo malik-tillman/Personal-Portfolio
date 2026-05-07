@@ -37,4 +37,16 @@ export class SanityService {
   getImageUrl(source: any) {
     return this.builder.image(source);
   }
+
+  /**
+   * Get file URL for non-image assets
+   * @param source Sanity file source object
+   */
+  getFileUrl(source: any): string {
+    if (!source || !source.asset || !source.asset._ref) return '';
+    // Format: file-assetid-extension
+    const ref = source.asset._ref;
+    const [_file, id, extension] = ref.split('-');
+    return `https://cdn.sanity.io/files/${environment.sanity.projectId}/${environment.sanity.dataset}/${id}.${extension}`;
+  }
 }

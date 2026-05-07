@@ -29,6 +29,18 @@ export const projectType = defineType({
       },
     }),
     defineField({
+      name: 'gallery',
+      type: 'array',
+      of: [{type: 'image'}],
+      title: 'Project Gallery'
+    }),
+    defineField({
+      name: 'videos',
+      type: 'array',
+      of: [{type: 'file'}],
+      title: 'Project Videos'
+    }),
+    defineField({
       name: 'categories',
       type: 'array',
       of: [{type: 'string'}],

@@ -23,6 +23,18 @@ export const siteSettingsType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'successMedia',
+      type: 'array',
+      of: [{type: 'image'}, {type: 'file'}],
+      title: 'Success Media'
+    }),
+    defineField({
+      name: 'errorMedia',
+      type: 'array',
+      of: [{type: 'image'}, {type: 'file'}],
+      title: 'Error Media'
+    }),
+    defineField({
         name: 'socialLinks',
         type: 'array',
         of: [

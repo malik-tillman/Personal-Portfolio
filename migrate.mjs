@@ -18,22 +18,22 @@ const client = createClient({
   apiVersion: '2023-05-03',
 });
 
-async function uploadImage(url, filename) {
+async function uploadAsset(url, filename, type = 'image') {
   try {
     const response = await fetch(url);
     const buffer = await response.arrayBuffer();
-    const asset = await client.assets.upload('image', Buffer.from(buffer), {
+    const asset = await client.assets.upload(type, Buffer.from(buffer), {
       filename: filename
     });
     return {
-      _type: 'image',
+      _type: type === 'image' ? 'image' : 'file',
       asset: {
         _type: 'reference',
         _ref: asset._id,
       },
     };
   } catch (error) {
-    console.error(`Failed to upload image ${url}:`, error);
+    console.error(`Failed to upload ${type} ${url}:`, error);
     return null;
   }
 }
@@ -50,9 +50,28 @@ async function migrateProjects() {
     let mainImage = null;
     if (attr.thumbnail && attr.thumbnail.data) {
       const thumb = attr.thumbnail.data.attributes;
-      // Construct URL based on cms.service.ts logic
       const imageUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${thumb.hash}${thumb.ext}`;
-      mainImage = await uploadImage(imageUrl, `${thumb.hash}${thumb.ext}`);
+      mainImage = await uploadAsset(imageUrl, `${thumb.hash}${thumb.ext}`, 'image');
+    }
+
+    const gallery = [];
+    if (attr.images && attr.images.data) {
+      for (const img of attr.images.data) {
+        const imgAttr = img.attributes;
+        const imageUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${imgAttr.hash}${imgAttr.ext}`;
+        const asset = await uploadAsset(imageUrl, `${imgAttr.hash}${imgAttr.ext}`, 'image');
+        if (asset) gallery.push(asset);
+      }
+    }
+
+    const videos = [];
+    if (attr.videos && attr.videos.data) {
+      for (const vid of attr.videos.data) {
+        const vidAttr = vid.attributes;
+        const vidUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${vidAttr.hash}${vidAttr.ext}`;
+        const asset = await uploadAsset(vidUrl, `${vidAttr.hash}${vidAttr.ext}`, 'file');
+        if (asset) videos.push(asset);
+      }
     }
 
     const doc = {
@@ -70,6 +89,8 @@ async function migrateProjects() {
       github: attr.github || undefined,
       website: attr.website || undefined,
       mainImage: mainImage || undefined,
+      gallery: gallery.length > 0 ? gallery : undefined,
+      videos: videos.length > 0 ? videos : undefined,
     };
 
     await client.createOrReplace(doc);
@@ -100,15 +121,36 @@ async function migrateQuotes() {
 
 async function migrateSiteSettings() {
   console.log('Fetching site settings from Strapi...');
-  const response = await fetch(`${STRAPI_URL}/site-setting`);
+  const response = await fetch(`${STRAPI_URL}/site-setting?populate=*`);
   const { data } = await response.json();
   const attr = data.attributes;
+
+  const successMedia = [];
+  if (attr.success_media && attr.success_media.data) {
+    for (const img of attr.success_media.data) {
+      const imgAttr = img.attributes;
+      const imageUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${imgAttr.hash}${imgAttr.ext}`;
+      const asset = await uploadAsset(imageUrl, `${imgAttr.hash}${imgAttr.ext}`, 'image');
+      if (asset) successMedia.push(asset);
+    }
+  }
+
+  const errorMedia = [];
+  if (attr.error_media && attr.error_media.data) {
+    for (const img of attr.error_media.data) {
+      const imgAttr = img.attributes;
+      const imageUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${imgAttr.hash}${imgAttr.ext}`;
+      const asset = await uploadAsset(imageUrl, `${imgAttr.hash}${imgAttr.ext}`, 'image');
+      if (asset) errorMedia.push(asset);
+    }
+  }
 
   const doc = {
     _type: 'siteSettings',
     _id: 'siteSettings',
     about: attr.about,
-    // Add other fields as needed
+    successMedia: successMedia.length > 0 ? successMedia : undefined,
+    errorMedia: errorMedia.length > 0 ? errorMedia : undefined,
   };
 
   await client.createOrReplace(doc);
