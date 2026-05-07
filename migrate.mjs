@@ -100,7 +100,8 @@ async function migrateProjects() {
         current: attr.title.toLowerCase().replace(/\s+/g, '-').slice(0, 96),
       },
       description: attr.description,
-      publishedAt: attr.createdAt,
+      year: attr.date, // Strapi date field was actually a string for the year
+      publishedAt: attr.publishedAt || attr.createdAt,
       categories: attr.category ? [attr.category] : [],
       tags: attr.tags || undefined,
       github: attr.github || undefined,

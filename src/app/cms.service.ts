@@ -27,7 +27,7 @@ export class CMSService {
   private __formatSanityProject__(sanityProject: any, processCollections: boolean = false): ProjectAttributes {
     const project: ProjectAttributes = {
       title: sanityProject.title,
-      date: sanityProject.publishedAt,
+      date: sanityProject.year || sanityProject.publishedAt, // Use the new year field, fallback to published date
       description: sanityProject.description,
       category: sanityProject.categories ? sanityProject.categories[0] : '',
       tags: sanityProject.tags || '',

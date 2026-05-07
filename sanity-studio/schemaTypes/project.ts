@@ -50,6 +50,12 @@ export const projectType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'year',
+      type: 'string',
+      title: 'Project Year/Date',
+      description: 'The year or date range of the project (e.g. 2024 or 2023 - 2024)'
+    }),
+    defineField({
       name: 'publishedAt',
       type: 'datetime',
     }),
