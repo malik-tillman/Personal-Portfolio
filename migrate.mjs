@@ -40,15 +40,22 @@ async function uploadAsset(url, filename, type = 'image') {
 
 async function migrateProjects() {
   console.log('Fetching projects from Strapi...');
-  const response = await fetch(`${STRAPI_URL}/projects?populate=*`);
+  // Explicitly populate all media fields
+  const response = await fetch(`${STRAPI_URL}/projects?populate[0]=thumbnail&populate[1]=images&populate[2]=videos`);
   const { data } = await response.json();
+
+  if (!data || data.length === 0) {
+    console.warn('No projects found in Strapi.');
+    return;
+  }
 
   for (const project of data) {
     const attr = project.attributes;
-    console.log(`Migrating project: ${attr.title}`);
+    console.log(`\n--- Migrating project: ${attr.title} ---`);
 
     let mainImage = null;
     if (attr.thumbnail && attr.thumbnail.data) {
+      console.log('  Found thumbnail, uploading...');
       const thumb = attr.thumbnail.data.attributes;
       const imageUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${thumb.hash}${thumb.ext}`;
       mainImage = await uploadAsset(imageUrl, `${thumb.hash}${thumb.ext}`, 'image');
@@ -56,6 +63,7 @@ async function migrateProjects() {
 
     const gallery = [];
     if (attr.images && attr.images.data) {
+      console.log(`  Found ${attr.images.data.length} gallery images, uploading...`);
       for (const img of attr.images.data) {
         const imgAttr = img.attributes;
         const imageUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${imgAttr.hash}${imgAttr.ext}`;
@@ -66,12 +74,21 @@ async function migrateProjects() {
 
     const videos = [];
     if (attr.videos && attr.videos.data) {
+      console.log(`  Found ${attr.videos.data.length} videos, uploading...`);
       for (const vid of attr.videos.data) {
         const vidAttr = vid.attributes;
+        console.log(`    Uploading video: ${vidAttr.name || vidAttr.hash}`);
         const vidUrl = `https://maliktillman-cms-light.s3.us-west-002.backblazeb2.com/${vidAttr.hash}${vidAttr.ext}`;
         const asset = await uploadAsset(vidUrl, `${vidAttr.hash}${vidAttr.ext}`, 'file');
-        if (asset) videos.push(asset);
+        if (asset) {
+          videos.push(asset);
+          console.log(`    Successfully uploaded video: ${vidAttr.hash}`);
+        } else {
+          console.error(`    Failed to upload video: ${vidAttr.hash}`);
+        }
       }
+    } else {
+      console.log('  No videos found for this project.');
     }
 
     const doc = {

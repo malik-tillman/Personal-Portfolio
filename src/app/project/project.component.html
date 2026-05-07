@@ -123,7 +123,7 @@
   </ng-container>
 
   <!-- Video -->
-  <ng-container *ngIf="work.videos">
+  <ng-container *ngIf="work.video_src && work.video_src.length > 0">
     <div class="videos-section">
       <video *ngFor="let video of work.video_src" autoplay loop playsinline muted class="video-js">
         <p class="vjs-no-js">
