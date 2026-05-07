@@ -1,6 +1,6 @@
 <div class="container" *ngIf="work">
   <!-- Thumbnail Hero Scroll to Content -->
-  <ng-container *ngIf="work.thumbnail">
+  <ng-container *ngIf="work.thumbnail || work.thumbnail_src">
     <div class="thumb-container" (click)="scrollToContent()">
       <picture>
         <img
