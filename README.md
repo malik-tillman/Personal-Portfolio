@@ -4,8 +4,8 @@ Repository for the v4 of my Personal Portfolio built with Angular.
 
 ## Todo
 
-- [ ] Migrate to latest Angular version 
-- [ ] Migrate from Strapi --> Sanity.io
+- [x] Migrate to latest Angular version 
+- [x] Migrate from Strapi --> Sanity.io
 - [ ] Implement SSG
 - [ ] Implement better SEO/SEM 
 - [ ] Performance audit (Core Web Vitals)
