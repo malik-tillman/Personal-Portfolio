@@ -2,59 +2,28 @@
  * projects.service
  * @author Malik Tillman
  *
- * 2020
+ * 2020 - Migrated to Sanity 2026
  * */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from '../environments/environment';
 import { SanityService } from './sanity.service';
 
 @Injectable({providedIn: 'root'})
 export class CMSService {
   /**
-   * Default project IDs, can be used for quick showcase of project
-   *
-   * todo: Make dynamic based on recency.
+   * Default project IDs, used for quick showcase
    * */
-  public readonly DEFAULTS = [1,22,23,4];
+  public readonly DEFAULTS = [1, 22, 23, 4];
 
-  /**
-   * Dynamic CDN based on environment
-   * */
-  private readonly CDN = environment.production && false ? // TODO: Remove false before pushing to production
-    'cdn.maliktillman.com/file/maliktillman-cms-light' :
-    'maliktillman-cms-light.s3.us-west-002.backblazeb2.com';
-
-  private api_projects: string = environment.production ?
-    'https://cms.maliktillman.com/api/projects' :
-    'http://localhost:5000/api/projects';
-
-  private api_site: string = environment.production ?
-    'https://cms.maliktillman.com/api/site-setting' :
-    'http://localhost:5000/api/site-setting';
-
-  private api_quotes: string = environment.production ?
-    'https://cms.maliktillman.com/api/quotes' :
-    'http://localhost:5000/api/quotes';
-
-  private backup_quotes: _FormattedQuote[] = [
-    { text: 'Welcome to MalikTillman.com!' },
-    { text: "What's science to a man that can't apply it?", author: 'Roc Marciano' },
-    { text: 'This site was designed and developed by Malik Tillman' },
-    { text: 'A Leek Production' }
-  ]
-
-  private backup_about = ['I\'m a 24 year old full-stack developer, graphic designer, and technical expert based in the NJ and greater NYC area. I strive to craft meaningful digital experiences and enable life-changing creative concepts through the mediums of web development, mobile app development, and photography. I am proficient in a plethora of programming languages, frameworks, and design software, but my best trait as a professional is my ability to adapt to any problem and rise to the occasion. My ability to apply core technical and design methodologies to a range of conditions allow me to effectively craft industry standard digital experiences.'];
-
-  private _ids: number[] = [];
-  private _projects: Project[] = [];
   private _about: string[];
   private _quotes: _FormattedQuote[];
   private _errorMedia: _File[];
   private _successMedia: _File[];
 
-  constructor(private http: HttpClient, private sanity: SanityService) {}
+  constructor(private sanity: SanityService) {}
 
+  /**
+   * Helper to format Sanity project data to ProjectAttributes interface
+   */
   private __formatSanityProject__(sanityProject: any, processCollections: boolean = false): ProjectAttributes {
     const project: ProjectAttributes = {
       title: sanityProject.title,
@@ -67,9 +36,6 @@ export class CMSService {
       createdAt: sanityProject._createdAt || sanityProject.publishedAt,
       updatedAd: sanityProject._updatedAt || sanityProject.publishedAt,
       id: parseInt(sanityProject._id.replace('project-', '')) || 0,
-      thumbnail: null,
-      images: null,
-      videos: null,
       fromSanity: true
     };
 
@@ -81,7 +47,6 @@ export class CMSService {
       };
     }
 
-    // todo: Handle gallery images and videos from Sanity if they are added to schema
     if (processCollections) {
        project.image_src = (sanityProject.gallery || []).map(img => ({
          url: this.sanity.getImageUrl(img).url(),
@@ -99,292 +64,126 @@ export class CMSService {
   }
 
   /**
-   * Returns project data, querying using specified ID
+   * Returns project data by ID
    * */
-  public fetchProject(id: number): Promise<ProjectAttributes> {
-    return new Promise( async resolve => {
-      // Check cache first
-      if(this._ids.includes(id)) {
-        const cached = this._projects.find((project: Project) => project.id === id);
-        if (cached) return resolve(this.__formatSingle__(cached, true));
+  public async fetchProject(id: number): Promise<ProjectAttributes> {
+    try {
+      const sanityId = `project-${id}`;
+      const data = await this.sanity.fetch<any>(`*[_type == "project" && _id == $id][0]`, { id: sanityId });
+      if (data) {
+        return this.__formatSanityProject__(data, true);
       }
-
-      // Try Sanity first
-      try {
-        const sanityId = `project-${id}`;
-        const data = await this.sanity.fetch<any>(`*[_type == "project" && _id == $id][0]`, { id: sanityId });
-        if (data) {
-          return resolve(this.__formatSanityProject__(data, true));
-        }
-      } catch (error) {
-        console.error('Sanity fetchProject error:', error);
-      }
-
-      // Fallback to Strapi
-      this.http.get(`${ this.api_projects }/${ id }?populate=%2A`).subscribe(
-        (strapi: SingularStrapi) => {
-          this._projects.push(strapi.data);
-          this._ids.push(strapi.data.id);
-
-          resolve(
-            this.__formatSingle__(strapi.data, true)
-          );
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.message);
-
-          resolve(null);
-        }
-      );
-
-      this.__fetchAll__().then();
-    })
+    } catch (error) {
+      console.error('Sanity fetchProject error:', error);
+    }
+    return null;
   }
 
   /**
    * Resolves full work list.
    * */
-  public fetchList(): Promise<ProjectAttributes[]> {
-    return new Promise(resolve => {
-      if(this._projects.length > 0)
-        return resolve(
-          this.__formatList__(this._projects)
-        );
-
-      this.__fetchAll__()
-        .then((_projects: Project[]) => {
-          resolve(
-            this.__formatList__(_projects)
-          );
-        })
-    })
+  public async fetchList(): Promise<ProjectAttributes[]> {
+    try {
+      const sanityData = await this.sanity.fetch<any[]>('*[_type == "project"] | order(publishedAt desc)');
+      if (sanityData) {
+        return sanityData.map(sp => this.__formatSanityProject__(sp));
+      }
+    } catch (error) {
+      console.error('Sanity fetchList error:', error);
+    }
+    return [];
   }
 
   /**
    * Resolves work's list by ID
    * */
-  public fetchListByID(ids: number[] = this.DEFAULTS): Promise<ProjectAttributes[]> {
-    return new Promise(resolve => {
-      // Check cache
-      if(this._projects.length > 0)
-        return resolve(
-          this.__formatList__( this._projects.filter(project => ids.includes(project.id)), false )
-        );
-
-      // Fetch
-      this.__fetchAll__()
-        .then((_projects: Project[]) => {
-          resolve(
-            this.__formatList__( _projects.filter(project => ids.includes(project.id)), false )
-          );
-      });
-    })
-  }
-
-  public fetchAbout(): Promise<string[]> {
-    return new Promise(async resolve => {
-      if (this._about)
-        return resolve(this._about);
-
-      try {
-        const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{about}');
-        if (data && data.about) {
-          this._about = data.about.split("\n").filter(_p => _p !== "");
-          return resolve(this._about);
-        }
-      } catch (error) {
-        console.error('Sanity fetchAbout error:', error);
+  public async fetchListByID(ids: number[] = this.DEFAULTS): Promise<ProjectAttributes[]> {
+    try {
+      const sanityIds = ids.map(id => `project-${id}`);
+      const sanityData = await this.sanity.fetch<any[]>(`*[_type == "project" && _id in $ids]`, { ids: sanityIds });
+      
+      if (sanityData) {
+        // Maintain order of requested IDs
+        return ids.map(id => {
+          const project = sanityData.find(p => p._id === `project-${id}`);
+          return project ? this.__formatSanityProject__(project) : null;
+        }).filter(p => p !== null);
       }
-
-      // Fallback to Strapi while transitioning
-      this.http.get(`${ this.api_site }?fields[0]=about`).subscribe((strapi: About) => {
-        this._about = strapi.data.attributes.about.split("\n").filter(_p => _p !== "");
-        resolve(this._about);
-      }, (error: HttpErrorResponse) => {
-        console.log(error.message);
-
-        resolve(this.backup_about);
-      })
-    })
-  }
-
-  public fetchQuotes(): Promise<_FormattedQuote[]> {
-    return new Promise(async resolve => {
-      if (this._quotes)
-        return resolve(this._quotes);
-
-      try {
-        const data = await this.sanity.fetch<any[]>('*[_type == "quote"]{text, author}');
-        if (data && data.length > 0) {
-          this._quotes = data.map(quote => ({
-            text: quote.text,
-            author: quote.author
-          }));
-          return resolve(this._quotes);
-        }
-      } catch (error) {
-        console.error('Sanity fetchQuotes error:', error);
-      }
-
-      // Fallback to Strapi
-      this.http.get(`${this.api_quotes}?populate=%2A`).subscribe(
-        (strapi: QuoteMetaData) => {
-          this._quotes = strapi.data.map((quote: Quote) => {
-            return {
-              text: quote.attributes.text,
-              author: quote.attributes.author
-            };
-          });
-          resolve(this._quotes);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.message);
-
-          resolve(this.backup_quotes);
-        }
-      );
-    })
-  }
-
-  public fetchSuccessMedia(): Promise<_File[]> {
-    return new Promise(async resolve => {
-      if (this._successMedia)
-        return resolve(this._successMedia)
-
-      try {
-        const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{successMedia}');
-        if (data && data.successMedia) {
-          this._successMedia = data.successMedia.map(item => ({
-            url: this.sanity.getImageUrl(item).url(),
-            alt: 'Success Media',
-            id: 0
-          }));
-          return resolve(this._successMedia);
-        }
-      } catch (error) {
-        console.error('Sanity fetchSuccessMedia error:', error);
-      }
-
-      // Fallback to Strapi
-      this.http.get(`${ this.api_site }?populate=%2A`).subscribe((strapi: SingleTypeStrapi) => {
-        this._successMedia = this.__generateFileSources__(strapi.data.attributes.success_media);
-        return  resolve(this._successMedia);
-      },(error: HttpErrorResponse) => {
-        console.log(error.message);
-
-        resolve(null);
-      })
-    })
-  }
-
-  public fetchErrorMedia(): Promise<_File[]> {
-    return new Promise(async resolve => {
-      if (this._errorMedia)
-        return resolve(this._errorMedia)
-
-      try {
-        const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{errorMedia}');
-        if (data && data.errorMedia) {
-          this._errorMedia = data.errorMedia.map(item => ({
-            url: this.sanity.getImageUrl(item).url(),
-            alt: 'Error Media',
-            id: 0
-          }));
-          return resolve(this._errorMedia);
-        }
-      } catch (error) {
-        console.error('Sanity fetchErrorMedia error:', error);
-      }
-
-      // Fallback to Strapi
-      this.http.get(`${ this.api_site }?populate=%2A`).subscribe((strapi: SingleTypeStrapi) => {
-        this._errorMedia = this.__generateFileSources__(strapi.data.attributes.error_media);
-        return  resolve(this._errorMedia);
-      },(error: HttpErrorResponse) => {
-        console.log(error.message);
-
-        resolve(null);
-      })
-    })
-  }
-
-  private __fetchAll__ = (): Promise<Project[]> => {
-    return new Promise( async resolve => {
-      // Try Sanity first
-      try {
-        const sanityData = await this.sanity.fetch<any[]>('*[_type == "project"] | order(publishedAt desc)');
-        if (sanityData && sanityData.length > 0) {
-          // We don't store in this._projects for now as it's a different structure,
-          // but we can map it on the fly in fetchList methods.
-          // For compatibility with __fetchAll__ return type:
-          const mapped = sanityData.map(sp => ({
-             id: parseInt(sp._id.replace('project-', '')) || 0,
-             attributes: this.__formatSanityProject__(sp)
-          }));
-          return resolve(mapped as unknown as Project[]);
-        }
-      } catch (error) {
-        console.error('Sanity fetchAll error:', error);
-      }
-
-      // Fallback to Strapi
-      this.http.get(`${ this.api_projects }?populate=%2A`).subscribe((strapi: PluralStrapi) => {
-        this._projects = strapi.data;
-        this._projects.forEach(_project => {
-          this._ids.push(_project.id)
-        })
-
-        resolve(strapi.data);
-      }, (error: HttpErrorResponse) => {
-        console.log(error.message);
-
-        resolve([]);
-      })
-    })
-  }
-
-  private __formatList__(projects: Project[], processCollections: boolean = false): ProjectAttributes[] {
-    return projects.map((project: Project) => {
-      // If it's a Sanity project, it's already been formatted by __formatSanityProject__
-      if (project.attributes && (project.attributes as any).fromSanity) {
-        return project.attributes;
-      }
-      return this.__formatSingle__(project, processCollections);
-    })
-  }
-
-  private __formatSingle__(project: Project, processCollections: boolean = false): ProjectAttributes {
-    let _formatted = project.attributes;
-
-    _formatted.id = project.id;
-
-    if (project.attributes.thumbnail && project.attributes.thumbnail.data) {
-      _formatted.thumbnail_src = this.__generateFileSource__(project.attributes.thumbnail.data);
+    } catch (error) {
+      console.error('Sanity fetchListByID error:', error);
     }
-
-    if (processCollections) {
-      if (project.attributes.images) {
-        _formatted.image_src = this.__generateFileSources__(project.attributes.images);
-      }
-
-      if (project.attributes.videos) {
-        _formatted.video_src = this.__generateFileSources__(project.attributes.videos);
-      }
-    }
-
-    return _formatted;
+    return [];
   }
 
-  private __generateFileSource__(_file: StrapiFileMetaData): _File {
-    return {
-      url: `https://${ this.CDN }/${ _file.attributes.hash }${ _file.attributes.ext }`,
-      alt: _file.attributes.alternativeText,
-      id: _file.id
+  public async fetchAbout(): Promise<string[]> {
+    if (this._about) return this._about;
+
+    try {
+      const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{about}');
+      if (data && data.about) {
+        this._about = data.about.split("\n").filter(_p => _p !== "");
+        return this._about;
+      }
+    } catch (error) {
+      console.error('Sanity fetchAbout error:', error);
     }
+    return [];
   }
 
-  private __generateFileSources__(_files: StrapiFileCollection): _File[] {
-    return _files.data?.map((_file: StrapiFileMetaData) => this.__generateFileSource__(_file));
+  public async fetchQuotes(): Promise<_FormattedQuote[]> {
+    if (this._quotes) return this._quotes;
+
+    try {
+      const data = await this.sanity.fetch<any[]>('*[_type == "quote"]{text, author}');
+      if (data) {
+        this._quotes = data.map(quote => ({
+          text: quote.text,
+          author: quote.author
+        }));
+        return this._quotes;
+      }
+    } catch (error) {
+      console.error('Sanity fetchQuotes error:', error);
+    }
+    return [];
+  }
+
+  public async fetchSuccessMedia(): Promise<_File[]> {
+    if (this._successMedia) return this._successMedia;
+
+    try {
+      const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{successMedia}');
+      if (data && data.successMedia) {
+        this._successMedia = data.successMedia.map(item => ({
+          url: this.sanity.getImageUrl(item).url(),
+          alt: 'Success Media',
+          id: 0
+        }));
+        return this._successMedia;
+      }
+    } catch (error) {
+      console.error('Sanity fetchSuccessMedia error:', error);
+    }
+    return [];
+  }
+
+  public async fetchErrorMedia(): Promise<_File[]> {
+    if (this._errorMedia) return this._errorMedia;
+
+    try {
+      const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{errorMedia}');
+      if (data && data.errorMedia) {
+        this._errorMedia = data.errorMedia.map(item => ({
+          url: this.sanity.getImageUrl(item).url(),
+          alt: 'Error Media',
+          id: 0
+        }));
+        return this._errorMedia;
+      }
+    } catch (error) {
+      console.error('Sanity fetchErrorMedia error:', error);
+    }
+    return [];
   }
 }
 
@@ -397,9 +196,6 @@ export interface ProjectAttributes {
   description: string,
   category: string,
   tags: string,
-  thumbnail: StrapiFile,
-  images: StrapiFileCollection,
-  videos: StrapiFileCollection,
   github: string,
   website: string,
   createdAt: string,
@@ -412,79 +208,11 @@ export interface ProjectAttributes {
   video_src?: _File[]
 }
 
-interface Project {
-  id: number,
-  attributes: ProjectAttributes
-}
-
-interface PluralStrapi {
-  "data": Project[],
-  "meta": object
-}
-
-interface SingularStrapi {
-  "data": Project,
-  "meta": object
-}
-
-interface SingleTypeStrapi {
-  data: {
-    "id": number,
-    "attributes": {
-      "about": string,
-      error_media?: StrapiFileCollection,
-      success_media?: StrapiFileCollection,
-    }
-  },
-  meta: {}
-}
-
-interface StrapiFile {
-  data: StrapiFileMetaData
-}
-
-interface StrapiFileCollection {
-  data: StrapiFileMetaData[]
-}
-
-interface StrapiFileMetaData {
-  id: number,
-  attributes: {
-    hash: string,
-    ext: string,
-    alternativeText: string
-  }
-}
-
 export interface _File {
   url: string,
   alt: string,
   caption?: string,
   id?: number
-}
-
-interface About {
-  data: {
-    "id": number,
-    "attributes": {
-      "about": string
-    }
-  }
-}
-
-interface QuoteMetaData {
-  data: Quote[],
-  "meta": {
-    "pagination": object
-  }
-}
-
-interface Quote {
-  "id": 1,
-  "attributes": {
-    "text": string,
-    "author": string
-  }
 }
 
 interface _FormattedQuote {

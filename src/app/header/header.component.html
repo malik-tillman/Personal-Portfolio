@@ -14,7 +14,7 @@
 
   <div class="favorite-container">
     <a class="favorites" *ngFor="let work of worksList" [routerLink]="['works', 'project']" [queryParams]="{ id: work.id }">
-      <picture>
+      <picture *ngIf="work.thumbnail_src">
         <img
           class="thumbnail"
           src="{{ work.thumbnail_src.url }}"

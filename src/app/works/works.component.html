@@ -252,7 +252,7 @@
             <div #image_loader class="loading-logo"></div>
           </div>
 
-          <picture>
+          <picture *ngIf="work.thumbnail_src">
             <img
               class="thumbnail"
               src="{{ work.thumbnail_src.url }}"
