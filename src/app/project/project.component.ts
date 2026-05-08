@@ -50,9 +50,11 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
         this.work = data;
 
         if (this.work) {
+          const projectUrl = environment.siteUrl + '/works/project?id=' + this.work.id;
           this.seo.update({
             title: this.work.title,
             description: this.work.description || (this.work.title + ' - a project by Malik Tillman.'),
+            url: projectUrl,
             image: this.work.thumbnail_src?.url,
             type: 'article',
             keywords: this.work.tags ? this.work.tags.replace(/,/g, ', ') + ', Malik Tillman' : 'project, Malik Tillman',
@@ -63,7 +65,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
               'description': this.work.description,
               'author': { '@type': 'Person', 'name': 'Malik Tillman' },
               'dateCreated': this.work.createdAt,
-              'url': environment.siteUrl + '/works/project?id=' + this.work.id
+              'url': projectUrl
             }
           });
         }

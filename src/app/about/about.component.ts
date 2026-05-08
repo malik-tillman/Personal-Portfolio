@@ -19,7 +19,16 @@ export class AboutComponent {
     this.seo.update({
       title: 'About',
       description: 'Learn about Malik Tillman, a full-stack e-commerce developer based in NJ and NYC with expertise in React, Angular, Shopify, and more.',
-      keywords: 'about Malik Tillman, web developer background, developer skills, full-stack developer'
+      keywords: 'about Malik Tillman, web developer background, developer skills, full-stack developer',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        'mainEntity': {
+          '@type': 'Person',
+          'name': 'Malik Tillman',
+          'description': 'Full-stack e-commerce developer based in NJ & NYC.'
+        }
+      }
     });
 
     cms.fetchAbout().then((copy: string[]) => this.aboutCopy = copy)

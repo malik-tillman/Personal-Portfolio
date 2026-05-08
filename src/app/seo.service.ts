@@ -4,8 +4,8 @@
  *
  * Centralizes all SEO concerns: <title>, <meta>, canonical, Open Graph, Twitter Card, and JSON-LD.
  */
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -30,8 +30,7 @@ export class SeoService {
     private meta: Meta,
     private titleService: Title,
     private router: Router,
-    @Inject(DOCUMENT) private doc: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(DOCUMENT) private doc: Document
   ) {}
 
   update(config: SeoConfig): void {

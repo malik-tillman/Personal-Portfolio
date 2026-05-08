@@ -16,7 +16,20 @@ export class ContactComponent {
     this.seo.update({
       title: 'Contact',
       description: 'Get in touch with Malik Tillman for web development, e-commerce, or design projects. Based in NJ & NYC.',
-      keywords: 'contact Malik Tillman, hire developer, web development inquiry, freelance developer'
+      keywords: 'contact Malik Tillman, hire developer, web development inquiry, freelance developer',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        'mainEntity': {
+          '@type': 'Person',
+          'name': 'Malik Tillman',
+          'contactPoint': {
+            '@type': 'ContactPoint',
+            'contactType': 'customer service',
+            'url': 'https://web.maliktillman.com/contact'
+          }
+        }
+      }
     });
   }
 }
