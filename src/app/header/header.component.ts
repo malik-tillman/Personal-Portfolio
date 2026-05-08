@@ -4,7 +4,8 @@
  *
  * 2022
  * */
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NavigationStart, Router } from '@angular/router';
 import { CMSService, ProjectAttributes } from '../cms.service';
 import Typed from 'typed.js';
@@ -23,7 +24,7 @@ export class HeaderComponent implements AfterViewInit {
 
   public worksList: ProjectAttributes[];
 
-  constructor(private projectService: CMSService, private router: Router) {
+  constructor(private projectService: CMSService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {
     projectService.fetchListByID(this.projectService.DEFAULTS)
       .then( (projects: ProjectAttributes[]) => {
         this.worksList = projects;
@@ -34,7 +35,7 @@ export class HeaderComponent implements AfterViewInit {
       if(event instanceof NavigationStart) {
         this.menuToggle = false;
 
-        window.scrollTo({
+        if (isPlatformBrowser(this.platformId)) window.scrollTo({
           top: 0,
           behavior: 'smooth'
         });
@@ -43,6 +44,7 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     new Typed(this.typedName.nativeElement, {
       strings: ['Malik_Tillman'],
       typeSpeed: 100,

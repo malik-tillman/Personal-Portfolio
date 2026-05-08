@@ -4,9 +4,13 @@
  *
  * 2020
  * */
-import { Component, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CMSService, ProjectAttributes} from '../cms.service';
-import Lottie from 'lottie-web';
+let Lottie: any;
+if (typeof window !== 'undefined') {
+  Lottie = require('lottie-web');
+}
 
 @Component({
     selector: 'app-works',
@@ -25,7 +29,7 @@ export class WorksComponent implements AfterViewInit {
 
   public emptyProjects: Boolean;
 
-  constructor(private projectService: CMSService) {
+  constructor(private projectService: CMSService, @Inject(PLATFORM_ID) private platformId: Object) {
     this.emptyProjects = false;
 
     this.projectService.fetchList().then( projects => {
@@ -39,6 +43,7 @@ export class WorksComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return;
     /* Initiate loader animation in lazy loaded cards */
     let _loaderSubscription = this.imageLoader.changes.subscribe((queryList:QueryList<ElementRef>) => {
       queryList.toArray().forEach(loader => {

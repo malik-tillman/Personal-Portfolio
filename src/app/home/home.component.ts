@@ -4,7 +4,8 @@
  *
  * 2020
  * */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import Typed from 'typed.js';
 
 @Component({
@@ -12,6 +13,7 @@ import Typed from 'typed.js';
     standalone: false
 })
 export class HomeComponent implements OnInit {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   /* Text to be typed */
   typedText = [
     'Web Design',
@@ -29,19 +31,21 @@ export class HomeComponent implements OnInit {
     /* Add periods to end of strings */
     this.addPeriod(this.typedText);
 
-    // /* Initiate Typed object */
-    // new Typed('#typed', {
-    //   strings: this.typedText,
-    //   typeSpeed: 75,
-    //   backSpeed: 100,
-    //   backDelay: 1000,
-    //   smartBackspace: true,
-    //   showCursor: true,
-    //   cursorChar: '',
-    //   autoInsertCss: true,
-    //   loop: true,
-    //   shuffle: true
-    // }).start();
+    if (isPlatformBrowser(this.platformId)) {
+      /* Initiate Typed object */
+          new Typed('#typed', {
+          strings: this.typedText,
+          typeSpeed: 75,
+          backSpeed: 100,
+          backDelay: 1000,
+          smartBackspace: true,
+          showCursor: true,
+          cursorChar: '',
+          autoInsertCss: true,
+          loop: true,
+          shuffle: true,
+          }).start();
+    }
   }
 
   /**

@@ -4,7 +4,8 @@
  *
  * 2020
  * */
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NavigationStart, Router } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 
@@ -17,7 +18,9 @@ export class AppComponent {
   public loaded = false;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
+    
     private loader: LoadingBarService
   ) {
     /* Subscribe to routing service */
@@ -26,7 +29,7 @@ export class AppComponent {
       this.loaded = this.router.url !== '/home' && this.router.url !== '/works';
 
       /* Lock scroll */
-      document.body.style.overflow = !this.loaded ? 'hidden' : 'unset';
+      if (isPlatformBrowser(this.platformId)) document.body.style.overflow = !this.loaded ? 'hidden' : 'unset';
 
       /* Start loading bar */
       if (event instanceof NavigationStart) {
@@ -48,7 +51,7 @@ export class AppComponent {
         this.loaded = true;
 
         /* Allow scroll */
-        document.body.style.overflow = 'unset';
+        if (isPlatformBrowser(this.platformId)) document.body.style.overflow = 'unset';
       }
     });
 

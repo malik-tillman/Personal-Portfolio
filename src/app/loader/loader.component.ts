@@ -4,8 +4,12 @@
  *
  * 2020
  * */
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import Lottie from 'lottie-web';
+import { AfterViewInit, Component, ElementRef, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+let Lottie: any;
+if (typeof window !== 'undefined') {
+  Lottie = require('lottie-web');
+}
 
 @Component({
     selector: 'loader', templateUrl: './loader.component.html', styleUrls: ['./loader.component.scss'],

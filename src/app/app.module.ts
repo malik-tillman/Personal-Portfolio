@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { routing } from './app.routing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -47,6 +47,6 @@ import { LinksComponent } from './links/links.component';
     bootstrap: [AppComponent], imports: [BrowserModule,
         routing,
         ReactiveFormsModule,
-        SwiperModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        SwiperModule], providers: [provideHttpClient(withInterceptorsFromDi()), provideClientHydration(withEventReplay())] })
 
 export class AppModule { }

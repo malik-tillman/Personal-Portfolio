@@ -4,7 +4,8 @@
  *
  * 2020
  * */
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   WebGLRenderer,
   Scene,
@@ -29,7 +30,13 @@ export class ThreeComponent implements AfterViewInit {
     return this._canvas.nativeElement;
   }
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     /* Create renderer and scene */
     let renderer = new WebGLRenderer({
       canvas: this.canvas,
