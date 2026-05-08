@@ -8,22 +8,22 @@
 const fs = require('fs');
 const path = require('path');
 
-// Load .env file
+// Load .env file if it exists
 const envPath = path.join(__dirname, '..', '.env');
-if (!fs.existsSync(envPath)) {
-  console.error('Error: .env file not found. Copy .env.example to .env and fill in values.');
-  process.exit(1);
-}
+const env = { ...process.env };
 
-const envContent = fs.readFileSync(envPath, 'utf8');
-const env = {};
-envContent.split('\n').forEach(line => {
-  const trimmed = line.trim();
-  if (trimmed && !trimmed.startsWith('#')) {
-    const [key, ...valueParts] = trimmed.split('=');
-    env[key.trim()] = valueParts.join('=').trim();
-  }
-});
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  envContent.split('\n').forEach(line => {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith('#')) {
+      const [key, ...valueParts] = trimmed.split('=');
+      env[key.trim()] = valueParts.join('=').trim();
+    }
+  });
+} else {
+  console.log('No .env file found, using system environment variables.');
+}
 
 const projectId = env.SANITY_PROJECT_ID || '';
 const dataset = env.SANITY_DATASET || 'production';
