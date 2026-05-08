@@ -66,9 +66,9 @@ export class CMSService {
   /**
    * Returns project data by ID
    * */
-  public async fetchProject(id: number): Promise<ProjectAttributes> {
+  public async fetchProject(id: number | string): Promise<ProjectAttributes> {
     try {
-      const sanityId = `project-${id}`;
+      const sanityId = typeof id === 'number' ? `project-${id}` : id;
       const data = await this.sanity.fetch<any>(`*[_type == "project" && _id == $id][0]`, { id: sanityId });
       if (data) {
         return this.__formatSanityProject__(data, true);

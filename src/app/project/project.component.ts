@@ -45,14 +45,22 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.activatedRouterSubscription = this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRouterSubscription = this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id') || this.activatedRoute.snapshot.queryParams['id'];
       this.projectNotFound = false;
 
-      this.projectService.fetchProject(params.id).then(data => {
+      if (!id) return;
+
+      const projectId = isNaN(Number(id)) ? id : Number(id);
+      this.projectService.fetchProject(projectId as any).then(data => {
         this.work = data;
 
         if (this.work) {
-          const projectUrl = environment.siteUrl + '/works/project?id=' + this.work.id;
+          const isPathParam = !!params.get('id');
+          const projectUrl = isPathParam 
+            ? `${environment.siteUrl}/works/project/${this.work.id}`
+            : `${environment.siteUrl}/works/project?id=${this.work.id}`;
+
           this.seo.update({
             title: this.work.title,
             description: this.work.description || (this.work.title + ' - a project by Malik Tillman.'),

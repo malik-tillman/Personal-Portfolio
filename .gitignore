@@ -50,4 +50,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# generated routes
+/src/routes.txt
+
 .env

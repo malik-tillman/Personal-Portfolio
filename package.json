@@ -11,7 +11,8 @@
     "dev:ssr": "ng run Angular-Root:serve-ssr",
     "serve:ssr": "node dist/Angular-Root/server/main.js",
     "build:ssr": "ng build && ng run Angular-Root:server",
-    "prerender": "ng run Angular-Root:prerender"
+    "generate-routes": "node scripts/generate-routes.mjs",
+    "prerender": "npm run generate-routes && ng run Angular-Root:prerender"
   },
   "private": true,
   "dependencies": {
