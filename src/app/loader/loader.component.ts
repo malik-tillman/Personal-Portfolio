@@ -19,7 +19,10 @@ export class LoaderComponent implements AfterViewInit {
   /* Loader Reference */
   @ViewChild('loader') loader_container:ElementRef;
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     /* Initiate Loader Animation */
     Lottie.loadAnimation({
       container: this.loader_container.nativeElement,

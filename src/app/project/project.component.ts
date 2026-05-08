@@ -4,7 +4,8 @@
  *
  * 2020
  * */
-import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef, ViewChildren, QueryList, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CMSService, ProjectAttributes } from '../cms.service';
 import { Subscription } from 'rxjs';
@@ -39,7 +40,8 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
     private router: Router,
     private projectService: CMSService,
     private activatedRoute: ActivatedRoute,
-    private seo: SeoService
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngAfterViewInit() {
@@ -80,6 +82,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
   }
 
   initializeViewer(list) {
+    if (!isPlatformBrowser(this.platformId)) return;
     if(list) {
       const _subscription = list.changes.subscribe((queryList:QueryList<ElementRef>) => {
         const gallery = new Viewer(this.galleryContainer.nativeElement, {
@@ -98,9 +101,11 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
    * when triggered, sets window scroll down a full height of the view (100vh)
    * */
   scrollToContent() {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: 'smooth'
-    })
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth'
+      })
+    }
   }
 }
