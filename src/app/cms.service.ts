@@ -25,6 +25,9 @@ export class CMSService {
    * Helper to format Sanity project data to ProjectAttributes interface
    */
   private __formatSanityProject__(sanityProject: any, processCollections: boolean = false): ProjectAttributes {
+    const rawId = sanityProject._id.replace('project-', '');
+    const numericId = parseInt(rawId);
+    
     const project: ProjectAttributes = {
       title: sanityProject.title,
       date: sanityProject.year || sanityProject.publishedAt, // Use the new year field, fallback to published date
@@ -35,7 +38,7 @@ export class CMSService {
       website: sanityProject.website || '',
       createdAt: sanityProject._createdAt || sanityProject.publishedAt,
       updatedAd: sanityProject._updatedAt || sanityProject.publishedAt,
-      id: parseInt(sanityProject._id.replace('project-', '')) || 0,
+      id: isNaN(numericId) ? rawId : numericId,
       fromSanity: true
     };
 
@@ -97,15 +100,16 @@ export class CMSService {
   /**
    * Resolves work's list by ID
    * */
-  public async fetchListByID(ids: number[] = this.DEFAULTS): Promise<ProjectAttributes[]> {
+  public async fetchListByID(ids: (number | string)[] = this.DEFAULTS): Promise<ProjectAttributes[]> {
     try {
-      const sanityIds = ids.map(id => `project-${id}`);
+      const sanityIds = ids.map(id => typeof id === 'number' ? `project-${id}` : id);
       const sanityData = await this.sanity.fetch<any[]>(`*[_type == "project" && _id in $ids]`, { ids: sanityIds });
       
       if (sanityData) {
         // Maintain order of requested IDs
         return ids.map(id => {
-          const project = sanityData.find(p => p._id === `project-${id}`);
+          const sanityId = typeof id === 'number' ? `project-${id}` : id;
+          const project = sanityData.find(p => p._id === sanityId);
           return project ? this.__formatSanityProject__(project) : null;
         }).filter(p => p !== null);
       }
@@ -201,7 +205,7 @@ export interface ProjectAttributes {
   createdAt: string,
   updatedAd: string,
 
-  id?: number,
+  id?: number | string,
   fromSanity?: boolean,
   thumbnail_src?: _File
   image_src?: _File[],

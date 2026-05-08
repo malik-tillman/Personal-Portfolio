@@ -21,8 +21,8 @@ export class SwiperShowcaseComponent implements OnInit, AfterViewInit {
   private _swiperRef_;
 
   @Input() hideTitle: boolean;
-  @Input() ids: number[];
-  @Input() omitID: number;
+  @Input() ids: (number | string)[];
+  @Input() omitID: number | string;
   @Input() loop: boolean;
   @Input() arrows: boolean;
   @Input() perPage: number;
