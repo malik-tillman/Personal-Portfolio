@@ -8,7 +8,7 @@ Repository for the v4 of my Personal Portfolio built with Angular.
 - [x] Migrate from Strapi --> Sanity.io
 - [x] Implement SSG
 - [x] Implement better SEO/SEM 
-- [ ] Performance audit (Core Web Vitals)
+- [x] Performance audit (Core Web Vitals)
 - [ ] Add new features
   - [ ] Better value proposition and project showcasing
   - [ ] Testimonials (social proof)
@@ -20,6 +20,13 @@ Repository for the v4 of my Personal Portfolio built with Angular.
   - [ ] Filtering
   - [ ] Search (lite semantic search)
   - [ ] Availability status
+
+## Deploy TODO
+- [ ] Validate data in Sanity
+- [ ] Make design tweaks
+- [ ] Review codebase
+- [ ] Review PR and merge
+- [ ] Deploy
 
 ## Roadmap
 
