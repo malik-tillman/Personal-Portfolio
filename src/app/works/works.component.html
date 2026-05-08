@@ -255,6 +255,7 @@
           <picture *ngIf="work.thumbnail_src">
             <img
               class="thumbnail"
+              fetchpriority="high"
               src="{{ work.thumbnail_src.url }}"
               alt="{{ work.thumbnail_src.alt ? work.thumbnail_src.alt : work.title + ' thumbnail image' }}"
             >

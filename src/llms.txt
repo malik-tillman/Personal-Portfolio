@@ -1,0 +1,22 @@
+# Malik Tillman Portfolio
+
+Malik Tillman is a full-stack e-commerce developer based in NJ & NYC, crafting digital experiences with the Web.
+
+## Projects
+
+### Zep inc.
+Web Development project for Zep inc.
+
+### Rugged Shark
+Web Development project for Rugged Shark.
+
+### Zep - Inventory Migration Suite
+Web Development project for Zep inventory migration.
+
+### Rita Hazan
+Web Development project for Rita Hazan.
+
+## Contact
+- Email: web@maliktillman.com
+- Github: [malik-tillman](https://github.com/malik-tillman)
+- LinkedIn: [malik-tillman](https://www.linkedin.com/in/malik-tillman/)

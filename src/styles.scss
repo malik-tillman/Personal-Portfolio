@@ -12,6 +12,18 @@ body {
   background-color: #0c0c0c;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 h1 {
   margin: 0;
 }
@@ -19,46 +31,55 @@ h1 {
 @font-face {
   font-family: Lato;
   src: url(assets/fonts/Lato-Regular.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Lato Black;
   src: url(assets/fonts/Lato-Black.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Lato Bold;
   src: url(assets/fonts/Lato-Bold.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Lato Light;
   src: url(assets/fonts/Lato-Light.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Lato Thin;
   src: url(assets/fonts/Lato-Thin.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Josefin Sans Light;
   src: url(assets/fonts/JosefinSans-Thin.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Josefin Sans Bold;
   src: url(assets/fonts/JosefinSans-Bold.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Josefin Sans Thin;
   src: url(assets/fonts/JosefinSans-Thin.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: Erica One;
   src: url(assets/fonts/EricaOne-Regular.ttf) format("truetype");
+  font-display: swap;
 }
 
 .swiper-container {
@@ -78,9 +99,11 @@ h1 {
 
       picture {
         display: flex;
+        aspect-ratio: 4 / 3;
 
         img {
           max-width: 100%;
+          height: auto;
         }
       }
 

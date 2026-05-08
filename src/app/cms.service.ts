@@ -41,7 +41,7 @@ export class CMSService {
 
     if (sanityProject.mainImage) {
       project.thumbnail_src = {
-        url: this.sanity.getImageUrl(sanityProject.mainImage).url(),
+        url: this.sanity.getImageUrl(sanityProject.mainImage).width(800).quality(80).auto('format').url(),
         alt: sanityProject.title,
         id: 0
       };
@@ -49,7 +49,7 @@ export class CMSService {
 
     if (processCollections) {
        project.image_src = (sanityProject.gallery || []).map(img => ({
-         url: this.sanity.getImageUrl(img).url(),
+         url: this.sanity.getImageUrl(img).width(1200).quality(85).auto('format').url(),
          alt: project.title,
          id: 0
        }));

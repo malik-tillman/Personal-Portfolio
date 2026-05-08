@@ -1,7 +1,7 @@
 <div class="nav-mask" [class.menu_open]="menuToggle" (click)="toggleMenu()"></div>
 
 <nav class="menu" [class.menu_open]="menuToggle">
-  <button class="close-button button" type="button" (click)="toggleMenu()">
+  <button class="close-button button" type="button" (click)="toggleMenu()" aria-label="Close menu">
     <svg class="close-icon" viewBox="0 0 100 100">
       <g>
         <path d="M16.7,16.7v66.6h66.6V16.7H16.7z M76.3,76.3H23.7V23.7h52.6V76.3z"></path>
@@ -15,11 +15,11 @@
   <div class="favorite-container">
     <a class="favorites" *ngFor="let work of worksList" [routerLink]="['works', 'project']" [queryParams]="{ id: work.id }">
       <picture *ngIf="work.thumbnail_src">
-        <img
-          class="thumbnail"
-          src="{{ work.thumbnail_src.url }}"
-          alt="{{ work.thumbnail_src.alt ? work.thumbnail_src.alt : work.title + ' thumbnail image' }}"
-        />
+          <img
+            class="thumbnail"
+            src="{{ work.thumbnail_src.url }}"
+            alt=""
+          />
       </picture>
       <h3 class="works-name">{{ work.title }}</h3>
     </a>
@@ -39,12 +39,13 @@
 
 <div class="container">
   <div class="wrapper">
-    <a routerLink="home" class="logo-name-container">
+    <a routerLink="home" class="logo-name-container" aria-label="Home">
       <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
         <path d="M0,365.116H131l227-241.86v241.86H500V0H323.4ZM64,469.767H50V365.116H0V500H103V459.3H64v10.465ZM212,365.116H103V500H212V472.093H151V444.186h33V415l-33,.116V395.349h61V365.116Zm106,0H212V500H318V470.93H259V444.186h32V413.953H259V394.186h59v-29.07ZM368,500V365.116H318V500h50ZM500,365.116H439L375,437l64,63h61l-72-67Z"></path>
       </svg>
 
-      <h1 id="name" #typedName></h1>
+      <h1 id="name" #typedName aria-hidden="true"></h1>
+      <span class="sr-only">Malik Tillman</span>
     </a>
 
     <ul class="nav-menu">
@@ -61,7 +62,7 @@
       </li>
     </ul>
 
-    <button class="menu-button button" type="button" (click)="toggleMenu()">
+    <button class="menu-button button" type="button" (click)="toggleMenu()" aria-label="Open menu">
       <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" xml:space="preserve"
            fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
     <g transform="matrix(1,0,0,1,-390,-30)"><path d="M410,38L410,42L390,42L390,38L410,38ZM410,46L410,50L390,50L390,46L410,46ZM410,30L410,34L390,34L390,30L410,30Z"></path></g></svg>
