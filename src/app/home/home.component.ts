@@ -7,13 +7,33 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import Typed from 'typed.js';
+import { SeoService } from '../seo.service';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss'],
     standalone: false
 })
 export class HomeComponent implements OnInit {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {
+    this.seo.update({
+      title: 'Malik Tillman',
+      description: 'Malik Tillman is a full-stack e-commerce developer based in NJ & NYC, crafting digital experiences with the Web.',
+      keywords: 'Malik Tillman, full-stack developer, e-commerce developer, web developer, NYC developer, NJ developer, portfolio',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        'name': 'Malik Tillman',
+        'url': environment.siteUrl,
+        'jobTitle': 'Full-Stack E-Commerce Developer',
+        'description': 'Full-stack e-commerce developer based in NJ & NYC, crafting digital experiences with the Web.',
+        'sameAs': [
+          'https://github.com/maliktillman'
+        ],
+        'knowsAbout': ['Web Development', 'E-Commerce', 'React', 'Angular', 'Shopify', 'Graphic Design']
+      }
+    });
+  }
   /* Text to be typed */
   typedText = [
     'Web Design',

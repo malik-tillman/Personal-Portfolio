@@ -8,6 +8,8 @@ import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef, ViewChildre
 import { ActivatedRoute, Router } from '@angular/router';
 import { CMSService, ProjectAttributes } from '../cms.service';
 import { Subscription } from 'rxjs';
+import { SeoService } from '../seo.service';
+import { environment } from '../../environments/environment';
 
 import Viewer from "viewerjs"
 
@@ -36,7 +38,8 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
   constructor(
     private router: Router,
     private projectService: CMSService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private seo: SeoService
   ) {}
 
   ngAfterViewInit() {
@@ -45,6 +48,25 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
 
       this.projectService.fetchProject(params.id).then(data => {
         this.work = data;
+
+        if (this.work) {
+          this.seo.update({
+            title: this.work.title,
+            description: this.work.description || (this.work.title + ' - a project by Malik Tillman.'),
+            image: this.work.thumbnail_src?.url,
+            type: 'article',
+            keywords: this.work.tags ? this.work.tags.replace(/,/g, ', ') + ', Malik Tillman' : 'project, Malik Tillman',
+            jsonLd: {
+              '@context': 'https://schema.org',
+              '@type': 'CreativeWork',
+              'name': this.work.title,
+              'description': this.work.description,
+              'author': { '@type': 'Person', 'name': 'Malik Tillman' },
+              'dateCreated': this.work.createdAt,
+              'url': environment.siteUrl + '/works/project?id=' + this.work.id
+            }
+          });
+        }
 
         this.initializeViewer(this.galleryImage);
       })

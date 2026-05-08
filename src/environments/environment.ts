@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  siteUrl: 'https://web.maliktillman.com',
   sanity: {
     projectId: 'yn76jr12',
     dataset: 'production',

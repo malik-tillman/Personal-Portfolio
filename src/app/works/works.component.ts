@@ -7,6 +7,8 @@
 import { Component, AfterViewInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CMSService, ProjectAttributes} from '../cms.service';
+import { SeoService } from '../seo.service';
+import { environment } from '../../environments/environment';
 let Lottie: any;
 if (typeof window !== 'undefined') {
   Lottie = require('lottie-web');
@@ -29,7 +31,20 @@ export class WorksComponent implements AfterViewInit {
 
   public emptyProjects: Boolean;
 
-  constructor(private projectService: CMSService, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private projectService: CMSService, @Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {
+    this.seo.update({
+      title: 'Works',
+      description: 'Browse the portfolio of Malik Tillman featuring web development, e-commerce, graphic design, and more.',
+      keywords: 'portfolio, web projects, e-commerce projects, Malik Tillman works, developer portfolio',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        'name': 'Works | Malik Tillman',
+        'description': 'Browse the portfolio of Malik Tillman featuring web development, e-commerce, graphic design, and more.',
+        'url': environment.siteUrl + '/works'
+      }
+    });
+
     this.emptyProjects = false;
 
     this.projectService.fetchList().then( projects => {
