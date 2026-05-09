@@ -11,13 +11,15 @@
 
   color: white;
 
-  h2 {
+  h2, h1 {
     //display: none;
     color: white;
     font-family: Josefin Sans, sans-serif;
     text-align: center;
     width: 100%;
     max-width: 750px;
+    font-size: 24px;
+    margin: 20px 0;
   }
 
   .item {
