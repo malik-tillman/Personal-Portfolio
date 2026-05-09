@@ -24,6 +24,8 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { SwiperShowcaseComponent } from './swiper-showcase/swiper-showcase.component';
 import { LinksComponent } from './links/links.component';
+import { CaseStudiesComponent } from './case-studies/case-studies.component';
+import { CaseStudyComponent } from './case-study/case-study.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -42,7 +44,9 @@ import { LinksComponent } from './links/links.component';
         ContactFormComponent,
         ContactInfoComponent,
         SwiperShowcaseComponent,
-        LinksComponent
+        LinksComponent,
+        CaseStudiesComponent,
+        CaseStudyComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         routing,

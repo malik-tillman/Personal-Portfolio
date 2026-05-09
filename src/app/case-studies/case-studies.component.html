@@ -1,0 +1,15 @@
+<div class="case-studies-container">
+  <h1>Case Studies</h1>
+  <div *ngIf="emptyCaseStudies">
+    <p>No case studies found.</p>
+  </div>
+  <div class="grid">
+    <div class="case-study-card" *ngFor="let study of caseStudiesList">
+      <a [routerLink]="['/case-studies', study.slug.current]">
+        <img *ngIf="study.heroImage" [src]="study.heroImage" [alt]="study.title" class="thumbnail"/>
+        <h2>{{study.title}}</h2>
+        <p *ngIf="study.overview?.role">{{study.overview.role}}</p>
+      </a>
+    </div>
+  </div>
+</div>

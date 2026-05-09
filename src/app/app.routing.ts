@@ -16,6 +16,8 @@ import { ProjectComponent } from './project/project.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { CaseStudiesComponent } from './case-studies/case-studies.component';
+import { CaseStudyComponent } from './case-study/case-study.component';
 
 /**
  * Define application routes
@@ -24,6 +26,8 @@ import { ContactComponent } from './contact/contact.component';
 const appRoutes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'case-studies', component: CaseStudiesComponent },
+  { path: 'case-studies/:slug', component: CaseStudyComponent },
   {
     path: 'works/project',
     component: ProjectComponent,

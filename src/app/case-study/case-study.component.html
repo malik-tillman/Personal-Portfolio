@@ -1,0 +1,26 @@
+<div class="case-study-detail" *ngIf="caseStudy">
+  <div class="hero">
+    <img *ngIf="caseStudy.heroImage" [src]="caseStudy.heroImage" [alt]="caseStudy.title" class="hero-image"/>
+    <h1>{{caseStudy.title}}</h1>
+  </div>
+  
+  <div class="overview" *ngIf="caseStudy.overview">
+    <div class="overview-item" *ngIf="caseStudy.overview.role">
+      <strong>Role:</strong> {{caseStudy.overview.role}}
+    </div>
+    <div class="overview-item" *ngIf="caseStudy.overview.timeline">
+      <strong>Timeline:</strong> {{caseStudy.overview.timeline}}
+    </div>
+    <div class="overview-item" *ngIf="caseStudy.overview.techStack?.length">
+      <strong>Tech Stack:</strong>
+      <ul>
+        <li *ngFor="let tech of caseStudy.overview.techStack">{{tech}}</li>
+      </ul>
+    </div>
+    <div class="overview-item" *ngIf="caseStudy.overview.liveUrl">
+      <strong>Live URL:</strong> <a [href]="caseStudy.overview.liveUrl" target="_blank">View Live</a>
+    </div>
+  </div>
+
+  <div class="body-content" [innerHTML]="portableTextHtml"></div>
+</div>
