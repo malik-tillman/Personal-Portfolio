@@ -2,7 +2,7 @@
   "name": "angular-root",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve --host 0.0.0.0",
+    "start": "ng serve --host 0.0.0.0 --hmr",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
     "test": "ng test",
