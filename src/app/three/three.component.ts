@@ -32,7 +32,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { gsap } from 'gsap';
 
 @Component({
@@ -133,14 +132,23 @@ export class ThreeComponent implements AfterViewInit {
         uniform vec3 outerColor;
         varying vec2 vUv;
 
+        // Pseudo-random noise function
+        float random(vec2 st) {
+            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+        }
+
         void main() {
           // Distance from center for the gradient
           float dist = distance(vUv, vec2(0.5, 0.5)) * 2.0;
 
-          // Mix colors based on distance
-          vec3 baseColor = mix(innerColor, outerColor, smoothstep(0.0, 1.0, dist));
+          // Generate fine grain/noise based on UVs
+          float noise = random(vUv * 500.0) * 0.05; // 0.05 controls grain intensity
 
-          gl_FragColor = vec4(baseColor, 1.0);
+          // Mix colors based on distance, then add noise only where it's not fully black
+          vec3 baseColor = mix(innerColor, outerColor, smoothstep(0.0, 1.0, dist));
+          vec3 finalColor = baseColor + (noise * (1.0 - smoothstep(0.0, 1.0, dist)));
+
+          gl_FragColor = vec4(finalColor, 1.0);
         }
       `,
       side: DoubleSide
@@ -328,49 +336,12 @@ export class ThreeComponent implements AfterViewInit {
       });
     }))
 
-    /* Post-processing (Bloom & Full-Screen Grain) */
+    /* Post-processing (Bloom) */
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
     bloomPass.threshold = 0.2; // Raised threshold so ONLY the brightest highlights glow, preventing a washed-out look
     bloomPass.strength = 0.4;   // Intensity of the glow
     bloomPass.radius = 0.5;     // Softness/spread of the glow
-
-    // Custom Film Grain Shader Pass
-    const grainShader = {
-      uniforms: {
-        tDiffuse: { value: null },
-        amount: { value: 0.04 },
-        time: { value: 0.0 }
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D tDiffuse;
-        uniform float amount;
-        uniform float time;
-        varying vec2 vUv;
-
-        // Pseudo-random noise function
-        float random(vec2 st) {
-            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-        }
-
-        void main() {
-          vec4 color = texture2D(tDiffuse, vUv);
-          
-          // Generate full-screen noise. Adding 'time' makes it animated cinematic film grain!
-          float noise = random(vUv * 500.0 + fract(time)) * amount;
-          
-          gl_FragColor = vec4(color.rgb + noise, color.a);
-        }
-      `
-    };
-    const grainPass = new ShaderPass(grainShader);
 
     // Restore Anti-Aliasing for EffectComposer
     const renderTarget = new WebGLRenderTarget(window.innerWidth, window.innerHeight, {
@@ -380,19 +351,15 @@ export class ThreeComponent implements AfterViewInit {
     const composer = new EffectComposer(renderer, renderTarget);
     composer.addPass(renderScene);
     composer.addPass(bloomPass);
-    composer.addPass(grainPass); // Add grain to the entire canvas output
 
     /* Render animation frames */
     const render = (timeMs: number) => {
       requestAnimationFrame(render);
       const time = timeMs * 0.001; // Convert to seconds
 
-      /* Animate Particles & Post-Processing */
+      /* Animate Particles */
       particlesMesh.rotation.y = time * 0.03;
       particlesMesh.rotation.z = time * 0.015;
-      
-      // Update grain time so it animates
-      grainPass.uniforms.time.value = time;
 
       /* Animate Lights */
       if (rimLight) {
