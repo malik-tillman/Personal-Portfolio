@@ -94,7 +94,7 @@ export class ThreeComponent implements AfterViewInit {
     /* Studio 3-Point Lighting Setup */
 
     // Key Light - Main light, front-right, warm white
-    let keyLight = new RectAreaLight("rgb(255,250,244)", 1, 60, 60);
+    let keyLight = new RectAreaLight("rgb(255,250,244)", 2, 60, 60);
     keyLight.position.set(30, 40, 50);
     keyLight.lookAt(0, 27, 0);
 
@@ -167,12 +167,12 @@ export class ThreeComponent implements AfterViewInit {
 
       /* create material */
       let material = new MeshPhysicalMaterial({
-        color: "rgb(250,100,100)",
+        color: "rgb(125,40,40)", // Deeper, richer red so it doesn't wash out to pink
         metalness: 1.0,
-        roughness: 0.4,
-        clearcoat: 0.8,
+        roughness: 0.25, // Slightly smoother for sharper, less washed-out highlights
+        clearcoat: 1.0,
         clearcoatRoughness: 0.02,
-        reflectivity: 0.75,
+        reflectivity: 1.0,
         flatShading: false
       });
 
@@ -312,8 +312,8 @@ export class ThreeComponent implements AfterViewInit {
     /* Post-processing (Bloom) */
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0.15; // Only glow bright things
-    bloomPass.strength = 0.2;   // Intensity of the glow
+    bloomPass.threshold = 0.2; // Raised threshold so ONLY the brightest highlights glow, preventing a washed-out look
+    bloomPass.strength = 0.4;   // Intensity of the glow
     bloomPass.radius = 0.5;     // Softness/spread of the glow
 
     // Restore Anti-Aliasing for EffectComposer
@@ -332,13 +332,13 @@ export class ThreeComponent implements AfterViewInit {
 
       /* Animate Lights */
       if (rimLight) {
-        // Pulse rim light intensity between 2.5 and 5.5
-        rimLight.intensity = 4 + Math.sin(time * 2) * 1.5;
+        // Pulse rim light intensity between 1.5 and 3.5
+        rimLight.intensity = 2.5 + Math.sin(time * 2) * 1.0;
       }
 
       if (keyLight) {
-        // Very subtle pulse on the main light between 2.7 and 3.3
-        keyLight.intensity = 3 + Math.sin(time * 1.2) * 0.3;
+        // Very subtle pulse on the main light between 1.3 and 1.7
+        keyLight.intensity = 1.5 + Math.sin(time * 1.2) * 0.2;
       }
 
       /* Fix aspect on window resize */
