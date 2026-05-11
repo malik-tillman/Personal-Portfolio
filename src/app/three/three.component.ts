@@ -180,8 +180,20 @@ export class ThreeComponent implements AfterViewInit {
     }))
 
     /* Render animation frames */
-    const render = () => {
+    const render = (timeMs: number) => {
       requestAnimationFrame(render);
+      const time = timeMs * 0.001; // Convert to seconds
+
+      /* Animate Lights */
+      if (rimLight) {
+        // Pulse rim light intensity between 2.5 and 5.5
+        rimLight.intensity = 4 + Math.sin(time * 2) * 1.5;
+      }
+
+      if (keyLight) {
+        // Very subtle pulse on the main light between 2.7 and 3.3
+        keyLight.intensity = 3 + Math.sin(time * 1.2) * 0.3;
+      }
 
       /* Fix aspect on window resize */
       if (resizeRenderer(renderer)) {
@@ -254,6 +266,6 @@ export class ThreeComponent implements AfterViewInit {
       return lines;
     }
 
-    render();
+    render(0);
   }
 }
