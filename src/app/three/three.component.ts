@@ -207,6 +207,17 @@ export class ThreeComponent implements AfterViewInit {
       scene.add(fillLight);
       scene.add(rimLight);
 
+      /* Phase 5: Cinematic Entrance Animation */
+      // Shift logo down slightly for a very subtle rise
+      gltfObj.position.y -= 2;
+
+      // Animate Logo Rise subtly
+      gsap.to(gltfObj.position, {
+        y: "+=2",
+        duration: 1.5,
+        ease: "power2.out"
+      });
+
       /* Click & Hover Events for Easter Egg */
       const raycaster = new Raycaster();
       const mouse = new Vector2();
@@ -225,7 +236,7 @@ export class ThreeComponent implements AfterViewInit {
 
         raycaster.setFromCamera(mouse, camera);
         const intersects = raycaster.intersectObjects(logo.CHUNKS, true);
-        
+
         this.canvas.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
       });
 
