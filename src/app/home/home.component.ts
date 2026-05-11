@@ -15,25 +15,6 @@ import { environment } from '../../environments/environment';
     standalone: false
 })
 export class HomeComponent implements OnInit {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {
-    this.seo.update({
-      title: 'Malik Tillman',
-      description: 'Malik Tillman is a full-stack e-commerce developer based in NJ & NYC, crafting digital experiences with the Web.',
-      keywords: 'Malik Tillman, full-stack developer, e-commerce developer, web developer, NYC developer, NJ developer, portfolio',
-      jsonLd: {
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        'name': 'Malik Tillman',
-        'url': environment.siteUrl,
-        'jobTitle': 'Full-Stack E-Commerce Developer',
-        'description': 'Full-stack e-commerce developer based in NJ & NYC, crafting digital experiences with the Web.',
-        'sameAs': [
-          'https://github.com/maliktillman'
-        ],
-        'knowsAbout': ['Web Development', 'E-Commerce', 'React', 'Angular', 'Shopify', 'Graphic Design']
-      }
-    });
-  }
   /* Text to be typed */
   typedText = [
     'System Design',
@@ -42,17 +23,40 @@ export class HomeComponent implements OnInit {
     'Data Science',
     'Machine Learning',
     'LLM Orchestration',
+    'Artificial Intelligence',
+    'Data Visualization',
     'Standardization & Best Practices',
     'React',
     'Node.js',
     'Python',
     'Java',
-    'Vue',
     'Angular',
     'Shopify',
     'Android Development',
     'IOS Development'
   ];
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {
+    const skillsString = this.typedText.join(', ');
+
+    this.seo.update({
+      title: 'Malik Tillman',
+      description: `Senior Full-Stack Engineer based in NJ & NYC, crafting digital experiences with ${skillsString}.`,
+      keywords: `Malik Tillman, Senior Full-Stack Engineer, developer, NYC developer, NJ developer, portfolio, ${skillsString}`,
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        'name': 'Malik Tillman',
+        'url': environment.siteUrl,
+        'jobTitle': 'Senior Full-Stack Engineer',
+        'description': `Senior Full-Stack Engineer based in NJ & NYC, crafting digital experiences with ${skillsString}.`,
+        'sameAs': [
+          'https://github.com/maliktillman'
+        ],
+        'knowsAbout': this.typedText
+      }
+    });
+  }
 
   featured = true;
 
