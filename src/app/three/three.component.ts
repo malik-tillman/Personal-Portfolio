@@ -61,7 +61,7 @@ export class ThreeComponent implements AfterViewInit {
       antialias: true
     });
     renderer.setClearColor(new Color('#0c0c0c')); // Match site background
-    renderer.setPixelRatio(window.devicePixelRatio || 1);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); // Cap at 2x to save mobile battery/performance
     let scene = new Scene();
 
     const _positions = {
@@ -85,8 +85,14 @@ export class ThreeComponent implements AfterViewInit {
     /* Create and set camera */
     let camera = new PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 500 );
 
-    camera.position.set(_positions._d._x, _positions._d._y, _positions._d._z);
-    camera.lookAt(_targets._d._x, _targets._d._y, _targets._d._z);
+    // Set initial camera based on screen size
+    if (window.innerWidth < 630) {
+      camera.position.set(_positions._m._x, _positions._m._y, _positions._m._z);
+      camera.lookAt(_targets._m._x, _targets._m._y, _targets._m._z);
+    } else {
+      camera.position.set(_positions._d._x, _positions._d._y, _positions._d._z);
+      camera.lookAt(_targets._d._x, _targets._d._y, _targets._d._z);
+    }
 
     /* Create Lights */
     RectAreaLightUniformsLib.init();
@@ -250,30 +256,12 @@ export class ThreeComponent implements AfterViewInit {
       const mouse = new Vector2();
       let isAnimating = false;
 
-      // Handle hover cursor
-      this.canvas.addEventListener('mousemove', (event) => {
-        if (!logo || isAnimating) {
-          this.canvas.style.cursor = 'default';
-          return;
-        }
-
-        const rect = this.canvas.getBoundingClientRect();
-        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-        raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(logo.CHUNKS, true);
-
-        this.canvas.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
-      });
-
-      this.canvas.addEventListener('dblclick', (event) => {
+      const triggerEasterEgg = (clientX: number, clientY: number) => {
         if (!logo || isAnimating) return;
 
-        // Calculate mouse position relative to canvas
         const rect = this.canvas.getBoundingClientRect();
-        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
 
@@ -333,7 +321,41 @@ export class ThreeComponent implements AfterViewInit {
             });
           });
         }
+      };
+
+      // Handle hover cursor (Desktop only)
+      this.canvas.addEventListener('mousemove', (event) => {
+        if (!logo || isAnimating) {
+          this.canvas.style.cursor = 'default';
+          return;
+        }
+
+        const rect = this.canvas.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(logo.CHUNKS, true);
+
+        this.canvas.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
       });
+
+      // Desktop Double Click
+      this.canvas.addEventListener('dblclick', (event) => {
+        triggerEasterEgg(event.clientX, event.clientY);
+      });
+
+      // Mobile Double Tap
+      let lastTap = 0;
+      this.canvas.addEventListener('touchstart', (event) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 500 && tapLength > 0) {
+          triggerEasterEgg(event.touches[0].clientX, event.touches[0].clientY);
+          event.preventDefault(); // Prevent zoom
+        }
+        lastTap = currentTime;
+      }, { passive: false });
     }))
 
     /* Post-processing (Bloom) */
