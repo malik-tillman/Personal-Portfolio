@@ -12,7 +12,12 @@ import {
   PerspectiveCamera,
   RectAreaLight,
   MathUtils,
-  MeshPhysicalMaterial
+  MeshPhysicalMaterial,
+  CircleGeometry,
+  ShaderMaterial,
+  Mesh,
+  DoubleSide,
+  Color
 } from 'three';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -79,15 +84,53 @@ export class ThreeComponent implements AfterViewInit {
     // let mainRectLight = new RectAreaLight("rgb(218,227,255)", 2.5, 100, 100);
     // mainRectLight.position.set(10,50,100);
 
-    let rectLight = new RectAreaLight("rgb(0,13,61)", 40, 1000, 1000);
-    rectLight.position.set(10,50,-200);
-    rectLight.rotation.y = MathUtils.degToRad(150);
+    /* Studio 3-Point Lighting Setup */
 
-    let secRectLight = new RectAreaLight("rgb(0,31,199)", 15, 100, 100);
-    secRectLight.position.set(0,30,100);
+    // Key Light - Main light, front-right, warm white
+    let keyLight = new RectAreaLight("rgb(255,250,244)", 3, 60, 60);
+    keyLight.position.set(30, 40, 50);
+    keyLight.lookAt(0, 27, 0);
 
-    let mainRectLight = new RectAreaLight("rgb(218,227,255)", 2.5, 100, 100);
-    mainRectLight.position.set(10,50,100);
+    // Fill Light - Softer, front-left, neutral/cool
+    let fillLight = new RectAreaLight("rgb(200,210,255)", 2, 50, 50);
+    fillLight.position.set(-35, 30, 40);
+    fillLight.lookAt(0, 27, 0);
+
+    // Rim/Back Light - Behind, creates edge separation, blue accent
+    let rimLight = new RectAreaLight("rgb(80,120,255)", 4, 80, 80);
+    rimLight.position.set(0, 35, -40);
+    rimLight.lookAt(0, 27, 0);
+
+    /* Gradient Floor Plane */
+    const floorGeometry = new CircleGeometry(25, 64);
+    const floorMaterial = new ShaderMaterial({
+      uniforms: {
+        innerColor: { value: new Color(0x1a1a1a) },
+        outerColor: { value: new Color(0x000000) }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 innerColor;
+        uniform vec3 outerColor;
+        varying vec2 vUv;
+        void main() {
+          float dist = distance(vUv, vec2(0.5, 0.5)) * 2.0;
+          vec3 color = mix(innerColor, outerColor, smoothstep(0.0, 1.0, dist));
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `,
+      side: DoubleSide
+    });
+    const floor = new Mesh(floorGeometry, floorMaterial);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.set(0, 20, 0);
+    scene.add(floor);
 
     /* Load GLTF Object */
     const gltfLoader = new GLTFLoader();
@@ -103,8 +146,13 @@ export class ThreeComponent implements AfterViewInit {
 
       /* create material */
       let material = new MeshPhysicalMaterial({
-        color: "rgb(237,0,0)",
-        flatShading: true
+        color: "rgb(250,100,100)",
+        metalness: 1.0,
+        roughness: 0.3,
+        clearcoat: 0.8,
+        clearcoatRoughness: 0.02,
+        reflectivity: 0.8,
+        flatShading: false
       });
 
       /* Apply material */
@@ -126,9 +174,9 @@ export class ThreeComponent implements AfterViewInit {
 
       /* Add object and lights */
       scene.add(gltfObj);
-      scene.add(rectLight);
-      scene.add(mainRectLight);
-      scene.add(secRectLight);
+      scene.add(keyLight);
+      scene.add(fillLight);
+      scene.add(rimLight);
     }))
 
     /* Render animation frames */

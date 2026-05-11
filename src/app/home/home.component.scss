@@ -1,5 +1,3 @@
-
-
 h2 {
   color: white;
   font-family: Josefin Sans, sans-serif;
@@ -103,11 +101,10 @@ p {
 }
 
 .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
-
-  //display: none;
-
-  max-width: var(--max-width);
   margin: 100px auto auto;
 
   three {
@@ -142,14 +139,14 @@ p {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: flex-end;
-    //justify-content: space-between;
-    //min-height: 80vh;
-    //padding: 35px 25px;
     padding: 35px 0;
     width: 100%;
 
+    max-width: var(--max-width);
+
     position: absolute;
     bottom: 0;
+
 
     .welcome-text {
       color: white;
