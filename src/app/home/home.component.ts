@@ -36,13 +36,22 @@ export class HomeComponent implements OnInit {
   }
   /* Text to be typed */
   typedText = [
-    'Web Design',
-    'Photography',
-    'Videography',
-    'Marketing',
-    'Advertisement',
+    'System Design',
+    'Full-Stack Development',
+    'Data Engineering',
+    'Data Science',
+    'Machine Learning',
+    'LLM Orchestration',
+    'Standardization & Best Practices',
+    'React',
+    'Node.js',
+    'Python',
+    'Java',
+    'Vue',
+    'Angular',
+    'Shopify',
     'Android Development',
-    'Game Development'
+    'IOS Development'
   ];
 
   featured = true;
