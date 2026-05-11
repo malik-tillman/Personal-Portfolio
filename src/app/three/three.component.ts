@@ -207,10 +207,27 @@ export class ThreeComponent implements AfterViewInit {
       scene.add(fillLight);
       scene.add(rimLight);
 
-      /* Click Event for Easter Egg */
+      /* Click & Hover Events for Easter Egg */
       const raycaster = new Raycaster();
       const mouse = new Vector2();
       let isAnimating = false;
+
+      // Handle hover cursor
+      this.canvas.addEventListener('mousemove', (event) => {
+        if (!logo || isAnimating) {
+          this.canvas.style.cursor = 'default';
+          return;
+        }
+
+        const rect = this.canvas.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(logo.CHUNKS, true);
+        
+        this.canvas.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
+      });
 
       this.canvas.addEventListener('dblclick', (event) => {
         if (!logo || isAnimating) return;
