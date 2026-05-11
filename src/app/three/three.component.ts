@@ -160,7 +160,7 @@ export class ThreeComponent implements AfterViewInit {
 
     /* Phase 6: Floating Particles (Ambient Dust) */
     const particleGeometry = new BufferGeometry();
-    const particleCount = 100;
+    const particleCount = 250;
     const posArray = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i++) {
@@ -358,8 +358,8 @@ export class ThreeComponent implements AfterViewInit {
       const time = timeMs * 0.001; // Convert to seconds
 
       /* Animate Particles */
-      particlesMesh.rotation.y = time * 0.03;
-      particlesMesh.rotation.z = time * 0.015;
+      particlesMesh.rotation.y = time * 0.01;
+      particlesMesh.rotation.z = time * 0.005;
 
       /* Animate Lights */
       if (rimLight) {
