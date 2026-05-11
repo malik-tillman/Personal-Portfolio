@@ -17,10 +17,15 @@ import {
   ShaderMaterial,
   Mesh,
   DoubleSide,
-  Color
+  Color,
+  Vector2,
+  WebGLRenderTarget
 } from 'three';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 
 @Component({
     selector: 'three', templateUrl: './three.component.html', styleUrls: ['./three.component.scss'],
@@ -45,10 +50,10 @@ export class ThreeComponent implements AfterViewInit {
     /* Create renderer and scene */
     let renderer = new WebGLRenderer({
       canvas: this.canvas,
-      alpha: true,
-      antialias: true,
-      logarithmicDepthBuffer: true
+      alpha: false, // Disabled alpha to fix post-processing transparency bugs
+      antialias: true
     });
+    renderer.setClearColor(new Color('#0c0c0c')); // Match site background
     renderer.setPixelRatio(window.devicePixelRatio || 1);
     let scene = new Scene();
 
@@ -87,7 +92,7 @@ export class ThreeComponent implements AfterViewInit {
     /* Studio 3-Point Lighting Setup */
 
     // Key Light - Main light, front-right, warm white
-    let keyLight = new RectAreaLight("rgb(255,250,244)", 3, 60, 60);
+    let keyLight = new RectAreaLight("rgb(255,250,244)", 1, 60, 60);
     keyLight.position.set(30, 40, 50);
     keyLight.lookAt(0, 27, 0);
 
@@ -97,7 +102,7 @@ export class ThreeComponent implements AfterViewInit {
     fillLight.lookAt(0, 27, 0);
 
     // Rim/Back Light - Behind, creates edge separation, blue accent
-    let rimLight = new RectAreaLight("rgb(80,120,255)", 4, 80, 80);
+    let rimLight = new RectAreaLight("rgb(80,120,255)", 2, 80, 80);
     rimLight.position.set(0, 35, -40);
     rimLight.lookAt(0, 27, 0);
 
@@ -105,8 +110,8 @@ export class ThreeComponent implements AfterViewInit {
     const floorGeometry = new CircleGeometry(25, 64);
     const floorMaterial = new ShaderMaterial({
       uniforms: {
-        innerColor: { value: new Color(0x1a1a1a) },
-        outerColor: { value: new Color(0x000000) }
+        innerColor: { value: new Color("hsl(0, 0%, 15%)") },
+        outerColor: { value: new Color("hsl(0, 0%, 4%)") }
       },
       vertexShader: `
         varying vec2 vUv;
@@ -119,17 +124,31 @@ export class ThreeComponent implements AfterViewInit {
         uniform vec3 innerColor;
         uniform vec3 outerColor;
         varying vec2 vUv;
+
+        // Pseudo-random noise function
+        float random(vec2 st) {
+            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+        }
+
         void main() {
+          // Distance from center for the gradient
           float dist = distance(vUv, vec2(0.5, 0.5)) * 2.0;
-          vec3 color = mix(innerColor, outerColor, smoothstep(0.0, 1.0, dist));
-          gl_FragColor = vec4(color, 1.0);
+
+          // Generate fine grain/noise based on UVs
+          float noise = random(vUv * 500.0) * 0.05; // 0.05 controls grain intensity
+
+          // Mix colors based on distance, then add noise only where it's not fully black
+          vec3 baseColor = mix(innerColor, outerColor, smoothstep(0.0, 1.0, dist));
+          vec3 finalColor = baseColor + (noise * (1.0 - smoothstep(0.0, 1.0, dist)));
+
+          gl_FragColor = vec4(finalColor, 1.0);
         }
       `,
       side: DoubleSide
     });
     const floor = new Mesh(floorGeometry, floorMaterial);
     floor.rotation.x = -Math.PI / 2;
-    floor.position.set(0, 20, 0);
+    floor.position.set(0, 18, 0);
     scene.add(floor);
 
     /* Load GLTF Object */
@@ -148,10 +167,10 @@ export class ThreeComponent implements AfterViewInit {
       let material = new MeshPhysicalMaterial({
         color: "rgb(250,100,100)",
         metalness: 1.0,
-        roughness: 0.3,
+        roughness: 0.4,
         clearcoat: 0.8,
         clearcoatRoughness: 0.02,
-        reflectivity: 0.8,
+        reflectivity: 0.75,
         flatShading: false
       });
 
@@ -179,6 +198,22 @@ export class ThreeComponent implements AfterViewInit {
       scene.add(rimLight);
     }))
 
+    /* Post-processing (Bloom) */
+    const renderScene = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(new Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+    bloomPass.threshold = 0.15; // Only glow bright things
+    bloomPass.strength = 0.2;   // Intensity of the glow
+    bloomPass.radius = 0.5;     // Softness/spread of the glow
+
+    // Restore Anti-Aliasing for EffectComposer
+    const renderTarget = new WebGLRenderTarget(window.innerWidth, window.innerHeight, {
+      samples: 4
+    });
+
+    const composer = new EffectComposer(renderer, renderTarget);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
+
     /* Render animation frames */
     const render = (timeMs: number) => {
       requestAnimationFrame(render);
@@ -200,6 +235,7 @@ export class ThreeComponent implements AfterViewInit {
         const canvas = renderer.domElement;
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
+        composer.setSize(canvas.clientWidth, canvas.clientHeight);
 
         /* Reset camera */
         if (window.innerWidth < 630) {
@@ -220,7 +256,7 @@ export class ThreeComponent implements AfterViewInit {
       }
 
       /* Render Frame */
-      renderer.render(scene, camera);
+      composer.render();
     }
 
     /**
