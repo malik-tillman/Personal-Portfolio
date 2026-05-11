@@ -64,7 +64,7 @@ export class ThreeComponent implements AfterViewInit {
     renderer.setClearColor(new Color('#0c0c0c')); // Match site background
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); // Cap at 2x to save mobile battery/performance
     let scene = new Scene();
-    
+
     /* Phase 8: Add subtle scene fog for atmospheric depth */
     scene.fog = new Fog('#0c0c0c', 15, 60);
 
@@ -170,7 +170,7 @@ export class ThreeComponent implements AfterViewInit {
 
     /* Phase 6: Floating Particles (Ambient Dust) */
     const particleGeometry = new BufferGeometry();
-    const particleCount = 250;
+    const particleCount = 150;
     const posArray = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i++) {
@@ -367,7 +367,7 @@ export class ThreeComponent implements AfterViewInit {
 
         const currentTime = new Date().getTime();
         const tapLength = currentTime - lastTap;
-        
+
         // Handle Double Tap Easter Egg
         if (tapLength < 500 && tapLength > 0) {
           triggerEasterEgg(event.touches[0].clientX, event.touches[0].clientY);
@@ -405,7 +405,7 @@ export class ThreeComponent implements AfterViewInit {
 
       this.canvas.addEventListener('touchend', () => {
         isDragging = false;
-        
+
         // Optional: smoothly return to center when released
         // targetRotationX = 0;
         // targetRotationY = 0;
