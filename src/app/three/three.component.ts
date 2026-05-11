@@ -25,7 +25,8 @@ import {
   Float32BufferAttribute,
   PointsMaterial,
   Points,
-  AdditiveBlending
+  AdditiveBlending,
+  Fog
 } from 'three';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -63,6 +64,9 @@ export class ThreeComponent implements AfterViewInit {
     renderer.setClearColor(new Color('#0c0c0c')); // Match site background
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); // Cap at 2x to save mobile battery/performance
     let scene = new Scene();
+    
+    /* Phase 8: Add subtle scene fog for atmospheric depth */
+    scene.fog = new Fog('#0c0c0c', 15, 60);
 
     const _positions = {
       _d: {
