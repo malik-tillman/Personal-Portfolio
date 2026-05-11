@@ -20,7 +20,12 @@ import {
   Color,
   Vector2,
   WebGLRenderTarget,
-  Raycaster
+  Raycaster,
+  BufferGeometry,
+  Float32BufferAttribute,
+  PointsMaterial,
+  Points,
+  AdditiveBlending
 } from 'three';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -152,6 +157,28 @@ export class ThreeComponent implements AfterViewInit {
     floor.rotation.x = -Math.PI / 2;
     floor.position.set(0, 18, 0);
     scene.add(floor);
+
+    /* Phase 6: Floating Particles (Ambient Dust) */
+    const particleGeometry = new BufferGeometry();
+    const particleCount = 100;
+    const posArray = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i++) {
+      // Spread particles randomly in a 150-unit volume
+      posArray[i] = (Math.random() - 0.5) * 150;
+    }
+
+    particleGeometry.setAttribute('position', new Float32BufferAttribute(posArray, 3));
+    const particleMaterial = new PointsMaterial({
+      size: 0.1,
+      color: "rgb(255, 230, 230)", // Subtle warm tint
+      transparent: true,
+      opacity: 0.5,
+      blending: AdditiveBlending
+    });
+
+    const particlesMesh = new Points(particleGeometry, particleMaterial);
+    scene.add(particlesMesh);
 
     /* Load GLTF Object */
     const gltfLoader = new GLTFLoader();
@@ -329,6 +356,10 @@ export class ThreeComponent implements AfterViewInit {
     const render = (timeMs: number) => {
       requestAnimationFrame(render);
       const time = timeMs * 0.001; // Convert to seconds
+
+      /* Animate Particles */
+      particlesMesh.rotation.y = time * 0.03;
+      particlesMesh.rotation.z = time * 0.015;
 
       /* Animate Lights */
       if (rimLight) {
