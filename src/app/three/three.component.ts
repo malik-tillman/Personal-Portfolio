@@ -353,17 +353,62 @@ export class ThreeComponent implements AfterViewInit {
         triggerEasterEgg(event.clientX, event.clientY);
       });
 
-      // Mobile Double Tap
+      // Mobile Drag & Double Tap
       let lastTap = 0;
+      let isDragging = false;
+      let previousTouch = { x: 0, y: 0 };
+
       this.canvas.addEventListener('touchstart', (event) => {
+        if (!logo || isAnimating) return;
+
         const currentTime = new Date().getTime();
         const tapLength = currentTime - lastTap;
+        
+        // Handle Double Tap Easter Egg
         if (tapLength < 500 && tapLength > 0) {
           triggerEasterEgg(event.touches[0].clientX, event.touches[0].clientY);
           event.preventDefault(); // Prevent zoom
+        } else {
+          // Start dragging
+          isDragging = true;
+          previousTouch.x = event.touches[0].clientX;
+          previousTouch.y = event.touches[0].clientY;
         }
         lastTap = currentTime;
       }, { passive: false });
+
+      this.canvas.addEventListener('touchmove', (event) => {
+        if (!isDragging || !logo || isAnimating) return;
+
+        // Calculate delta
+        const deltaX = event.touches[0].clientX - previousTouch.x;
+        const deltaY = event.touches[0].clientY - previousTouch.y;
+
+        // Accumulate rotation (adjust sensitivity with multiplier)
+        targetRotationY += deltaX * 0.005;
+        targetRotationX += deltaY * 0.005;
+
+        // Clamp rotation so the back of the logo isn't exposed
+        targetRotationY = MathUtils.clamp(targetRotationY, -0.6, 0.6);
+        targetRotationX = MathUtils.clamp(targetRotationX, -0.4, 0.4);
+
+        // Update previous touch
+        previousTouch.x = event.touches[0].clientX;
+        previousTouch.y = event.touches[0].clientY;
+
+        event.preventDefault(); // Prevent page scrolling while rotating the logo
+      }, { passive: false });
+
+      this.canvas.addEventListener('touchend', () => {
+        isDragging = false;
+        
+        // Optional: smoothly return to center when released
+        // targetRotationX = 0;
+        // targetRotationY = 0;
+      });
+      this.canvas.addEventListener('touchcancel', () => {
+        isDragging = false;
+      });
     }))
 
     /* Post-processing (Bloom) */
