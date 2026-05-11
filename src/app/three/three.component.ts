@@ -191,6 +191,10 @@ export class ThreeComponent implements AfterViewInit {
     let gltfObj;
     let logo;
 
+    /* Mouse Parallax Targets */
+    let targetRotationX = 0;
+    let targetRotationY = 0;
+
     gltfLoader.load('assets/3d/home-1.gltf', ( gltf => {
       /* Get gltf objects */
       gltfObj = gltf.scene;
@@ -334,6 +338,10 @@ export class ThreeComponent implements AfterViewInit {
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
+        // Map mouse to rotation (adjust multiplier for intensity)
+        targetRotationY = mouse.x * 0.5;
+        targetRotationX = -mouse.y * 0.3;
+
         raycaster.setFromCamera(mouse, camera);
         const intersects = raycaster.intersectObjects(logo.CHUNKS, true);
 
@@ -413,10 +421,9 @@ export class ThreeComponent implements AfterViewInit {
 
       /* Rotate logo */
       if (logo){
-        if (window.innerWidth < 630)
-          logo.MAIN.rotation.y += MathUtils.degToRad(-.5);
-        else
-          logo.MAIN.rotation.y += MathUtils.degToRad(-.3);
+        // Smoothly interpolate current rotation towards target mouse rotation
+        logo.MAIN.rotation.x += (targetRotationX - logo.MAIN.rotation.x) * 0.05;
+        logo.MAIN.rotation.y += (targetRotationY - logo.MAIN.rotation.y) * 0.05;
       }
 
       /* Render Frame */
