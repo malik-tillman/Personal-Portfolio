@@ -11,10 +11,7 @@
     height: 100%;
     display: block;
     outline: none;
-    user-select: none;
-    pointer-events: none;
-
-
+    cursor: pointer;
   }
 
   &.hover {

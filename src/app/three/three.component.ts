@@ -19,13 +19,15 @@ import {
   DoubleSide,
   Color,
   Vector2,
-  WebGLRenderTarget
+  WebGLRenderTarget,
+  Raycaster
 } from 'three';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { gsap } from 'gsap';
 
 @Component({
     selector: 'three', templateUrl: './three.component.html', styleUrls: ['./three.component.scss'],
@@ -191,11 +193,92 @@ export class ThreeComponent implements AfterViewInit {
         ]
       };
 
+      /* Phase 5: Easter Egg Click Animation */
+      logo.CHUNKS.forEach((chunk) => {
+        if (!chunk) return;
+        // Save original position & rotation into userData
+        chunk.userData.originalPos = chunk.position.clone();
+        chunk.userData.originalRot = chunk.rotation.clone();
+      });
+
       /* Add object and lights */
       scene.add(gltfObj);
       scene.add(keyLight);
       scene.add(fillLight);
       scene.add(rimLight);
+
+      /* Click Event for Easter Egg */
+      const raycaster = new Raycaster();
+      const mouse = new Vector2();
+      let isAnimating = false;
+
+      this.canvas.addEventListener('dblclick', (event) => {
+        if (!logo || isAnimating) return;
+
+        // Calculate mouse position relative to canvas
+        const rect = this.canvas.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+
+        // Check if user clicked the logo
+        const intersects = raycaster.intersectObjects(logo.CHUNKS, true);
+        if (intersects.length > 0) {
+          isAnimating = true;
+
+          logo.CHUNKS.forEach((chunk, index) => {
+            if (!chunk) return;
+            const origPos = chunk.userData.originalPos;
+            const origRot = chunk.userData.originalRot;
+
+            // Subtle explode parameters
+            const radius = .5;
+            const angle = Math.random() * Math.PI * 2;
+
+            // 1. Explode out quickly
+            gsap.to(chunk.position, {
+              x: origPos.x + Math.cos(angle) * radius,
+              y: origPos.y + (Math.random() - 0.5) * 5,
+              z: origPos.z + Math.sin(angle) * radius,
+              duration: 0.3,
+              ease: "power2.out",
+              onComplete: () => {
+                // 2. Snap back elastically
+                gsap.to(chunk.position, {
+                  x: origPos.x,
+                  y: origPos.y,
+                  z: origPos.z,
+                  duration: 1.5,
+                  ease: "elastic.out(1.2, 0.4)",
+                  onComplete: () => {
+                    // Unlock animation when last chunk finishes
+                    if (index === logo.CHUNKS.length - 1) isAnimating = false;
+                  }
+                });
+              }
+            });
+
+            // Random rotation jiggle
+            gsap.to(chunk.rotation, {
+              x: origRot.x + (Math.random() - 0.5) * 1.5,
+              y: origRot.y + (Math.random() - 0.5) * 1.5,
+              z: origRot.z + (Math.random() - 0.5) * 1.5,
+              duration: 0.3,
+              ease: "power2.out",
+              onComplete: () => {
+                gsap.to(chunk.rotation, {
+                  x: origRot.x,
+                  y: origRot.y,
+                  z: origRot.z,
+                  duration: 1.5,
+                  ease: "elastic.out(1.2, 0.4)"
+                });
+              }
+            });
+          });
+        }
+      });
     }))
 
     /* Post-processing (Bloom) */
