@@ -11,6 +11,7 @@ import {
   Scene,
   PerspectiveCamera,
   RectAreaLight,
+  AmbientLight,
   MathUtils,
   MeshPhysicalMaterial,
   CircleGeometry,
@@ -109,19 +110,24 @@ export class ThreeComponent implements AfterViewInit {
     /* Studio 3-Point Lighting Setup */
 
     // Key Light - Main light, front-right, warm white
-    let keyLight = new RectAreaLight("rgb(255,250,244)", 2, 60, 60);
+    let keyLight = new RectAreaLight("rgb(255,250,244)", 1, 60, 60);
     keyLight.position.set(30, 40, 50);
     keyLight.lookAt(0, 27, 0);
 
     // Fill Light - Softer, front-left, neutral/cool
-    let fillLight = new RectAreaLight("rgb(200,210,255)", 2, 50, 50);
+    let fillLight = new RectAreaLight("rgb(200,210,255)", 1, 50, 50);
     fillLight.position.set(-35, 30, 40);
     fillLight.lookAt(0, 27, 0);
 
     // Rim/Back Light - Behind, creates edge separation, blue accent
-    let rimLight = new RectAreaLight("rgb(80,120,255)", 2, 80, 80);
+    let rimLight = new RectAreaLight("rgb(80,120,255)", 1, 80, 80);
     rimLight.position.set(0, 35, -40);
     rimLight.lookAt(0, 27, 0);
+
+    // Ambient Light
+    let ambientLight = new AmbientLight("rgb(255,255,255)", 3);
+    ambientLight.position.set(0, 50, 100);
+    ambientLight.lookAt(0, 27, 0);
 
     /* Gradient Floor Plane */
     const floorGeometry = new CircleGeometry(25, 64);
@@ -209,7 +215,7 @@ export class ThreeComponent implements AfterViewInit {
       /* create material */
       let material = new MeshPhysicalMaterial({
         color: "rgb(125,40,40)", // Deeper, richer red so it doesn't wash out to pink
-        metalness: 1.0,
+        metalness: 0.9,
         roughness: 0.25, // Slightly smoother for sharper, less washed-out highlights
         clearcoat: 1.0,
         clearcoatRoughness: 0.02,
@@ -247,6 +253,7 @@ export class ThreeComponent implements AfterViewInit {
       scene.add(keyLight);
       scene.add(fillLight);
       scene.add(rimLight);
+      scene.add(ambientLight);
 
       /* Phase 5: Cinematic Entrance Animation */
       // Shift logo down slightly for a very subtle rise
@@ -443,7 +450,7 @@ export class ThreeComponent implements AfterViewInit {
       /* Animate Lights */
       if (rimLight) {
         // Pulse rim light intensity between 1.5 and 3.5
-        rimLight.intensity = 2.5 + Math.sin(time * 2) * 1.0;
+        rimLight.intensity = 1.5 + Math.sin(time * 2) * 0.5;
       }
 
       if (keyLight) {
