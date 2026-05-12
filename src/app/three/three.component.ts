@@ -11,6 +11,8 @@ import {
   Scene,
   PerspectiveCamera,
   RectAreaLight,
+  DirectionalLight,
+  PointLight,
   AmbientLight,
   MathUtils,
   MeshPhysicalMaterial,
@@ -108,21 +110,46 @@ export class ThreeComponent implements AfterViewInit {
     // mainRectLight.position.set(10,50,100);
 
     /* Studio 3-Point Lighting Setup */
+    let keyLight, fillLight, rimLight;
 
-    // Key Light - Main light, front-right, warm white
-    let keyLight = new RectAreaLight("rgb(255,250,244)", 1, 60, 60);
-    keyLight.position.set(30, 40, 50);
-    keyLight.lookAt(0, 27, 0);
+    // Feature detection for RectAreaLight capabilities
+    // RectAreaLight relies on float/half-float textures which older/buggy WebGL implementations (like older iOS Safari) struggle with
+    const supportsRectAreaLight = renderer.capabilities.isWebGL2 ||
+                                  renderer.capabilities.floatFragmentTextures ||
+                                  renderer.extensions.get('OES_texture_half_float');
 
-    // Fill Light - Softer, front-left, neutral/cool
-    let fillLight = new RectAreaLight("rgb(200,210,255)", 1, 50, 50);
-    fillLight.position.set(-35, 30, 40);
-    fillLight.lookAt(0, 27, 0);
+    if (supportsRectAreaLight) {
+      // Key Light - Main light, front-right, warm white
+      keyLight = new RectAreaLight("rgb(255,250,244)", 1, 60, 60);
+      keyLight.position.set(30, 40, 50);
+      keyLight.lookAt(0, 27, 0);
 
-    // Rim/Back Light - Behind, creates edge separation, blue accent
-    let rimLight = new RectAreaLight("rgb(80,120,255)", 1, 80, 80);
-    rimLight.position.set(0, 35, -40);
-    rimLight.lookAt(0, 27, 0);
+      // Fill Light - Softer, front-left, neutral/cool
+      fillLight = new RectAreaLight("rgb(200,210,255)", 1, 50, 50);
+      fillLight.position.set(-35, 30, 40);
+      fillLight.lookAt(0, 27, 0);
+
+      // Rim/Back Light - Behind, creates edge separation, blue accent
+      rimLight = new RectAreaLight("rgb(80,120,255)", 1, 80, 80);
+      rimLight.position.set(0, 35, -40);
+      rimLight.lookAt(0, 27, 0);
+    } else {
+
+      // FALLBACK: Directional and Point lights for broader device compatibility
+      // Key Light
+      keyLight = new DirectionalLight("rgb(255,250,244)", 0); // Boosted intensity for fallback
+      keyLight.position.set(30, 40, 50);
+      keyLight.lookAt(0, 27, 0);
+
+      // Fill Light
+      fillLight = new DirectionalLight("rgb(200,210,255)", 0); // Boosted intensity
+      fillLight.position.set(-35, 30, 40);
+      fillLight.lookAt(0, 27, 0);
+
+      // Rim/Back Light
+      rimLight = new PointLight("rgb(80,120,255)", 1, 150);
+      rimLight.position.set(0, 35, -40);
+    }
 
     // Ambient Light
     let ambientLight = new AmbientLight("rgb(255,255,255)", 3);
@@ -214,12 +241,12 @@ export class ThreeComponent implements AfterViewInit {
 
       /* create material */
       let material = new MeshPhysicalMaterial({
-        color: "rgb(125,40,40)", // Deeper, richer red so it doesn't wash out to pink
-        metalness: 0.9,
-        roughness: 0.25, // Slightly smoother for sharper, less washed-out highlights
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.02,
-        reflectivity: 1.0,
+        color: supportsRectAreaLight ? "rgb(125,40,40)" : "rgb(180,55,55)", // Brighter red on fallback
+        metalness: supportsRectAreaLight ? 0.9 : 0.8,
+        roughness: supportsRectAreaLight ? 0.25 : 0.5, // Lower roughness so it reflects better
+        clearcoat: supportsRectAreaLight ? 1.0 : 1.0,
+        clearcoatRoughness: supportsRectAreaLight ? 0.2 : 0.5,
+        reflectivity: supportsRectAreaLight ? 1.0 : 0.2,
         flatShading: false
       });
 
@@ -426,8 +453,8 @@ export class ThreeComponent implements AfterViewInit {
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
     bloomPass.threshold = 0.2; // Raised threshold so ONLY the brightest highlights glow, preventing a washed-out look
-    bloomPass.strength = 0.4;   // Intensity of the glow
-    bloomPass.radius = 0.5;     // Softness/spread of the glow
+    bloomPass.strength = supportsRectAreaLight ? 0.5 : 0.7;   // Intensity of the glow
+    bloomPass.radius = supportsRectAreaLight ? 0.4 : 0.3;     // Softness/spread of the glow
 
     // Restore Anti-Aliasing for EffectComposer
     const renderTarget = new WebGLRenderTarget(window.innerWidth, window.innerHeight, {
@@ -448,12 +475,12 @@ export class ThreeComponent implements AfterViewInit {
       particlesMesh.rotation.z = time * 0.005;
 
       /* Animate Lights */
-      if (rimLight) {
+      if (rimLight && supportsRectAreaLight) {
         // Pulse rim light intensity between 1.5 and 3.5
         rimLight.intensity = 1.5 + Math.sin(time * 2) * 0.5;
       }
 
-      if (keyLight) {
+      if (keyLight && supportsRectAreaLight) {
         // Very subtle pulse on the main light between 1.3 and 1.7
         keyLight.intensity = 1.5 + Math.sin(time * 1.2) * 0.2;
       }
