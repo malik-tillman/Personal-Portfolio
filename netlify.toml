@@ -2,6 +2,9 @@
   command = "npm run prerender"
   publish = "dist/Angular-Root/browser"
 
+[images]
+  remote_images = ["https://cdn.sanity.io/.*"]
+
 [[headers]]
   for = "/*"
   [headers.values]
