@@ -6,7 +6,7 @@
   <div class="works-list">
     <div class="works-container">
       <ng-container *ngFor="let work of this.worksList">
-        <a class="work-card" href="" routerLink='project' [queryParams]="{ id: work.id }">
+        <a class="work-card" [routerLink]="['/works/project']" [queryParams]="{ id: work.id }">
           <div class="works-info_container">
             <div class="works-info top" >
               <div class="catagory-container">
