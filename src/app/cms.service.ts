@@ -27,7 +27,7 @@ export class CMSService {
   private __formatSanityProject__(sanityProject: any, processCollections: boolean = false): ProjectAttributes {
     const rawId = sanityProject._id.replace('project-', '');
     const numericId = parseInt(rawId);
-    
+
     const project: ProjectAttributes = {
       title: sanityProject.title,
       date: sanityProject.year || sanityProject.publishedAt, // Use the new year field, fallback to published date
@@ -44,7 +44,7 @@ export class CMSService {
 
     if (sanityProject.mainImage) {
       project.thumbnail_src = {
-        url: this.sanity.getImageUrl(sanityProject.mainImage).width(800).quality(80).auto('format').url(),
+        url: this.sanity.getImageUrl(sanityProject.mainImage).width(1920).height(1080).quality(100).auto('format').url(),
         alt: sanityProject.title,
         id: 0
       };
@@ -104,7 +104,7 @@ export class CMSService {
     try {
       const sanityIds = ids.map(id => typeof id === 'number' ? `project-${id}` : id);
       const sanityData = await this.sanity.fetch<any[]>(`*[_type == "project" && _id in $ids]`, { ids: sanityIds });
-      
+
       if (sanityData) {
         // Maintain order of requested IDs
         return ids.map(id => {
@@ -148,7 +148,7 @@ export class CMSService {
     }
     return null;
   }
-  
+
   public urlFor(source: any) {
     return this.sanity.getImageUrl(source);
   }
