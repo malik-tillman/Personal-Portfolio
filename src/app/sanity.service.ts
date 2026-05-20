@@ -65,10 +65,66 @@ export class SanityService {
 
   /**
    * Generate Sanity image URL
+   * In production, proxies the request through Netlify's Image CDN
    * @param source Sanity image source object
    */
   getImageUrl(source: any) {
-    return this.builder.image(source);
+    const rawBuilder = this.builder.image(source);
+
+    class NetlifyImageBuilder {
+      private _width?: number;
+      private _height?: number;
+      private _quality?: number;
+      private _format?: string;
+
+      constructor(private builderRef: any) {}
+
+      width(w: number) {
+        this._width = w;
+        this.builderRef = this.builderRef.width(w);
+        return this;
+      }
+
+      height(h: number) {
+        this._height = h;
+        this.builderRef = this.builderRef.height(h);
+        return this;
+      }
+
+      quality(q: number) {
+        this._quality = q;
+        this.builderRef = this.builderRef.quality(q);
+        return this;
+      }
+
+      auto(format: string) {
+        this._format = format;
+        this.builderRef = this.builderRef.auto(format);
+        return this;
+      }
+
+      url(): string {
+        const sanityUrl = this.builderRef.url();
+        if (!sanityUrl) return '';
+
+        if (!environment.production) {
+          return sanityUrl;
+        }
+
+        // Parse and forward parameters to Netlify's Image CDN proxy
+        const baseUrl = sanityUrl.split('?')[0];
+        const params = new URLSearchParams();
+        params.set('url', baseUrl);
+        if (this._width) params.set('w', this._width.toString());
+        if (this._height) params.set('h', this._height.toString());
+        if (this._quality) params.set('q', this._quality.toString());
+        if (this._format) params.set('fm', this._format === 'format' ? 'webp' : this._format);
+
+        return `/.netlify/images?${params.toString()}`;
+      }
+    }
+
+    return new NetlifyImageBuilder(rawBuilder);
   }
 
   /**
