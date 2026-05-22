@@ -46,13 +46,10 @@
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 20vw;
 
   overflow: hidden;
 
-  border-radius: 15px;
-
-
+  border-radius: 5px;
 
   .works-info_container {
     position: absolute;
@@ -66,102 +63,54 @@
     z-index: 1;
 
     .works-info {
-      display: grid;
+      position: absolute;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      gap: 15px;
       width: 100%;
+      padding: 15px 0;
 
-      background-color: rgb(255 255 255 / 37%);
-      //background-color: rgba(0, 0, 0, .2);
+      background-color: rgb(245, 245, 245);
       backdrop-filter: blur(3px);
-      box-shadow: 0 0 10px 0 rgb(0 0 0 / 25%);
+      box-shadow: 0 0 7px 0 rgb(0 0 0 / 20%);
 
-      &.top {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+      will-change: bottom;
+      bottom: -20%;
+      //bottom: 0%;
+      transition: bottom .5s cubic-bezier(0.4, 0, 0.2, 1);
 
-        border-radius: 15px;
+      .works-title {
+        text-decoration: none;
+        // font-family: Josefin Sans, sans-serif;
+        color: black;
+        margin: 0;
+        // font-weight: bolder;
 
-        @include top-bottom(top, -59px);
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
-        .catagory-container {
-          padding-left: 15px;
+        font-size: 14px;
+        font-family: Lato Bold, sans-serif;
+        text-align: center;
 
-          display: flex;
-          align-items: center;
+        @media (max-width: 630px) {
 
-          h3 {
-            color: black;
-            font-family: Josefin Sans Thin, sans-serif;
-            font-size: 14px;
-          }
-        }
-
-        .external-link-container {
-          display: flex;
-          justify-content: flex-end;
-
-          padding: 15px 15px;
-
-          @include icons-fade;
-
-          .logo {
-            width: 25px;
-            fill: white;
-            z-index: 10;
-            margin-left: 25px;
-
-            transform: scale(1);
-            will-change: transform;
-            transition: transform .5s ease;
-
-            &:hover {
-              transform: scale(1.15);
-            }
-          }
         }
       }
 
-      &.bottom {
-        grid-template-rows: 1fr 2fr;
-        align-items: center;
-        position: absolute;
-        height: 32%;
-        padding: 0 15px;
+      .works-tags {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
 
-        border-radius: 15px;
+        @include icons-fade;
 
-        @include top-bottom(bottom, -20%);
-
-        .works-title {
-          text-decoration: none;
-          // font-family: Josefin Sans, sans-serif;
-          color: black;
-          margin: 0;
-          // font-weight: bolder;
-
-          white-space: nowrap;
-          text-overflow: ellipsis;
-
-          font-size: 14px;
-          font-family: Lato Bold, sans-serif;
-          text-align: center;
-
-          @media (max-width: 630px) {
-
-          }
-        }
-
-        .works-tags {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-
-          @include icons-fade;
-
-          img {
-            height: 40px;
-            padding-right: 10px;
-          }
+        img {
+          height: 40px;
+          padding-right: 10px;
         }
       }
     }
