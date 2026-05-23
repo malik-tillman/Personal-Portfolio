@@ -9,7 +9,8 @@ import { Subscription } from 'rxjs';
     selector: 'contact-form',
     templateUrl: './contact-form.component.html',
     styleUrls: ['./contact-form.component.scss'],
-    standalone: false
+    standalone: false,
+    host: { 'ngSkipHydration': 'true' }
 })
 export class ContactFormComponent implements OnInit, OnDestroy {
   @ViewChild('contactForm') private form:ElementRef;

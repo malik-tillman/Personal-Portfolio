@@ -18,7 +18,8 @@ if (typeof window !== 'undefined') {
     selector: 'app-works',
     templateUrl: './works.component.html',
     styleUrls: ['./works.component.scss'],
-    standalone: false
+    standalone: false,
+    host: { 'ngSkipHydration': 'true' }
 })
 export class WorksComponent implements AfterViewInit {
   /* Child Ref for image loader animation */
