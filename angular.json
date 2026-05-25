@@ -50,7 +50,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": true,
@@ -160,7 +160,7 @@
                 }
               ],
               "optimization": true,
-              "sourceMap": true,
+              "sourceMap": false,
               "extractLicenses": true,
               "vendorChunk": true
             },
