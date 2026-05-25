@@ -27,7 +27,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
   @ViewChild('galleryContainer') private galleryContainer: ElementRef;
 
   /* Project Object */
-  public work: ProjectAttributes;
+  public work: any;
 
   /* Media URIs */
   public imgURIs = [];
@@ -57,7 +57,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
 
         if (this.work) {
           const isPathParam = !!this.activatedRoute.snapshot.paramMap.get('id');
-          const projectUrl = isPathParam 
+          const projectUrl = isPathParam
             ? `${environment.siteUrl}/works/project/${this.work.id}`
             : `${environment.siteUrl}/works/project?id=${this.work.id}`;
 

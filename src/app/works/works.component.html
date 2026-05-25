@@ -1,176 +1,19 @@
 <div class="container" ngSkipHydration>
   <div class="title-container">
     <h1>Web Projects</h1>
+
+    <p class="description">
+      Lorem ipsum dolor sit amet,
+      consectetur adipiscing elit,
+      sed do eiusmod tempor incididunt
+    </p>
   </div>
 
   <div class="works-list">
     <div class="works-container">
       <ng-container *ngFor="let work of this.worksList">
         <a class="work-card" [routerLink]="['/works/project']" [queryParams]="{ id: work.id }">
-          <div class="works-info_container">
-            <div class="works-info bottom">
-              <span class="works-title">{{ work.title }}</span>
-
-              <div class="works-tags">
-                <ng-container *ngIf="work.tags?.split(',').includes('react')">
-                  <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/react-1.png" alt="React Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('html')">
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/html.png" alt="HTML Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('css')">
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/css.png" alt="CSS Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('javascript')">
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/javascript" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/javascript.png" alt="Javascript Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('xml')">
-                  <a href="https://developer.mozilla.org/en-US/docs/Web/XML/XML_introduction" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/xml.png" alt="XML Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('scss')">
-                  <a href="https://sass-lang.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/scss.png" alt="SCSS Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('typescript')">
-                  <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/typescript.png" alt="TypeScript Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('java,')">
-                  <a href="https://docs.oracle.com/javase/7/docs/api/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/java.png" alt="Java Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('c++')">
-                  <a href="https://docs.microsoft.com/en-us/cpp/?view=vs-2019" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/c++.png" alt="C++ Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('c#')">
-                  <a href="https://docs.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/csharp.png" alt="C# Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('opencv')">
-                  <a href="https://docs.opencv.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/opencv.png" alt="OpenCV Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('mips32')">
-                  <a href="https://www.mips.com/products/architectures/mips32-2/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/mips32.png" alt="MIPS32 Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('rainmeter')">
-                  <a href="https://docs.rainmeter.net/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/rainmeter.png" alt="Rainmeter Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('django')">
-                  <a href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/django.png" alt="Django Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('asp.net')">
-                  <a href="https://dotnet.microsoft.com/apps/aspnet" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/aspnet.png" alt="Asp.net Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('node')">
-                  <a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/node.png" alt="Node JS Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('postgre')">
-                  <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/postgre.png" alt="Postgre SQL Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('t-sql')">
-                  <a href="https://docs.microsoft.com/en-us/sql/t-sql/tutorial-writing-transact-sql-statements?view=sql-server-ver15" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/tsql.png" alt="Transact-SQL Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('mysql')">
-                  <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/mysql.png" alt="MySQL Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('android')">
-                  <a href="https://developer.android.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/android.png" alt="Android Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('photoshop')">
-                  <a href="https://www.adobe.com/products/photoshop.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/photoshop.png" alt="Photoshop Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('after effects')">
-                  <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/ae.png" alt="After Effects Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('premiere pro')">
-                  <a href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/premiere.png" alt="Premiere Pro Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('cinema 4d')">
-                  <a href="https://www.maxon.net/en-us/products/cinema-4d/overview/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/cinema.png" alt="Cinema 4d Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('unity')">
-                  <a href="https://docs.unity3d.com/Manual/index.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/unity.png" alt="Unity Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('XD')">
-                  <a href="https://www.adobe.com/products/xd.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/xd.png" alt="XD Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('shopify')">
-                  <a href="https://www.shopify.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/shopify-logo.png" alt="Shopify Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('php')">
-                  <a href="https://www.php.net/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/php.png" alt="PHP Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('figma')">
-                  <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/figma.png" alt="Figma Icon">
-                  </a>
-                </ng-container>
-                <ng-container *ngIf="work.tags?.split(',').includes('python')">
-                  <a href="https://www.python.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
-                    <img src="assets/tag-icons/python.png" alt="Python Icon">
-                  </a>
-                </ng-container>
-              </div>
-            </div>
-          </div>
-
-          <div class="loading-logo_container">
-            <div #image_loader class="loading-logo"></div>
-          </div>
-
-          <picture *ngIf="work.thumbnail_src">
+          <picture *ngIf="work.thumbnail_src" class="thumbnail-container aspect-ratio{{work.aspectRatio}}">
             <img
               class="thumbnail"
               fetchpriority="high"
@@ -178,14 +21,235 @@
               alt="{{ work.thumbnail_src.alt ? work.thumbnail_src.alt : work.title + ' thumbnail image' }}"
             >
           </picture>
+
+          <div class="info">
+            <p class="year role">
+              <span *ngIf="work.role">
+                {{work.role}} -
+              </span>{{ work.year }}
+            </p>
+
+            <h2 class="work-title">{{ work.title }}</h2>
+
+            <div class="works-tags tags">
+              <ng-container *ngIf="work.tags?.split(',').includes('react')">
+                <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/react-1.png" alt="React Icon">
+
+                  <span>React</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('html')">
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/html.png" alt="HTML Icon">
+
+                  <span>HTML</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('css')">
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/css.png" alt="CSS Icon">
+
+                  <span>CSS</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('javascript')">
+                <a href="https://developer.mozilla.org/en-US/docs/Web/javascript" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/javascript.png" alt="Javascript Icon">
+
+                  <span>JavaScript</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('xml')">
+                <a href="https://developer.mozilla.org/en-US/docs/Web/XML/XML_introduction" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/xml.png" alt="XML Icon">
+
+                  <span>XML</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('scss')">
+                <a href="https://sass-lang.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/scss.png" alt="SCSS Icon">
+
+                  <span>SCSS</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('typescript')">
+                <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/typescript.png" alt="TypeScript Icon">
+
+                  <span>TypeScript</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('java,')">
+                <a href="https://docs.oracle.com/javase/7/docs/api/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/java.png" alt="Java Icon">
+
+                  <span>Java</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('c++')">
+                <a href="https://docs.microsoft.com/en-us/cpp/?view=vs-2019" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/c++.png" alt="C++ Icon">
+
+                  <span>C++</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('c#')">
+                <a href="https://docs.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/csharp.png" alt="C# Icon">
+
+                  <span>C#</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('opencv')">
+                <a href="https://docs.opencv.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/opencv.png" alt="OpenCV Icon">
+
+                  <span>OpenCV</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('mips32')">
+                <a href="https://www.mips.com/products/architectures/mips32-2/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/mips32.png" alt="MIPS32 Icon">
+
+                  <span>MIPS32</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('rainmeter')">
+                <a href="https://docs.rainmeter.net/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/rainmeter.png" alt="Rainmeter Icon">
+
+                  <span>Rainmeter</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('django')">
+                <a href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/django.png" alt="Django Icon">
+
+                  <span>Django</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('asp.net')">
+                <a href="https://dotnet.microsoft.com/apps/aspnet" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/aspnet.png" alt="Asp.net Icon">
+
+                  <span>ASP.NET</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('node')">
+                <a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/node.png" alt="Node JS Icon">
+
+                  <span>Node.js</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('postgre')">
+                <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/postgre.png" alt="Postgre SQL Icon">
+
+                  <span>PostgreSQL</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('t-sql')">
+                <a href="https://docs.microsoft.com/en-us/sql/t-sql/tutorial-writing-transact-sql-statements?view=sql-server-ver15" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/tsql.png" alt="Transact-SQL Icon">
+
+                  <span>T-SQL</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('mysql')">
+                <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/mysql.png" alt="MySQL Icon">
+
+                  <span>MySQL</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('android')">
+                <a href="https://developer.android.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/android.png" alt="Android Icon">
+
+                  <span>Android</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('photoshop')">
+                <a href="https://www.adobe.com/products/photoshop.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/photoshop.png" alt="Photoshop Icon">
+
+                  <span>Photoshop</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('after effects')">
+                <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/ae.png" alt="After Effects Icon">
+
+                  <span>After Effects</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('premiere pro')">
+                <a href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/premiere.png" alt="Premiere Pro Icon">
+
+                  <span>Premiere Pro</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('cinema 4d')">
+                <a href="https://www.maxon.net/en-us/products/cinema-4d/overview/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/cinema.png" alt="Cinema 4d Icon">
+
+                  <span>Cinema 4D</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('unity')">
+                <a href="https://docs.unity3d.com/Manual/index.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/unity.png" alt="Unity Icon">
+
+                  <span>Unity</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('XD')">
+                <a href="https://www.adobe.com/products/xd.html" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/xd.png" alt="XD Icon">
+
+                  <span>Adobe XD</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('shopify')">
+                <a href="https://www.shopify.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/shopify-logo.png" alt="Shopify Icon">
+
+                  <span>Shopify</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('php')">
+                <a href="https://www.php.net/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/php.png" alt="PHP Icon">
+
+                  <span>PHP</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('figma')">
+                <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/figma.png" alt="Figma Icon">
+
+                  <span>Figma</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="work.tags?.split(',').includes('python')">
+                <a href="https://www.python.org/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
+                  <img src="assets/tag-icons/python.png" alt="Python Icon">
+
+                  <span>Python</span>
+                </a>
+              </ng-container>
+            </div>
+          </div>
         </a>
       </ng-container>
     </div>
   </div>
 
   <not-found *ngIf="emptyProjects"></not-found>
-
-  <swiper-toolbox></swiper-toolbox>
 
   <links
     [contact]="true"

@@ -39,7 +39,10 @@ export class CMSService {
       createdAt: sanityProject._createdAt || sanityProject.publishedAt,
       updatedAd: sanityProject._updatedAt || sanityProject.publishedAt,
       id: isNaN(numericId) ? rawId : numericId,
-      fromSanity: true
+      fromSanity: true,
+      year: sanityProject.year,
+      aspectRatio: sanityProject.aspectRatio,
+      role: sanityProject.role,
     };
 
     if (sanityProject.mainImage) {
@@ -243,7 +246,10 @@ export interface ProjectAttributes {
   fromSanity?: boolean,
   thumbnail_src?: _File
   image_src?: _File[],
-  video_src?: _File[]
+  video_src?: _File[],
+  year?: string
+  aspectRatio?: string
+  role?: string
 }
 
 export interface _File {

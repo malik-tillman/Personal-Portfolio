@@ -29,6 +29,19 @@ export const projectType = defineType({
       },
     }),
     defineField({
+      name: 'aspectRatio',
+      title: 'Aspect Ratio',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'wide', value: '16/9'},
+          {title: 'tall', value: '7/8'}
+        ]
+      },
+      initialValue: '16/9',
+      description: 'The aspect ratio of the hero image'
+    }),
+    defineField({
       name: 'gallery',
       type: 'array',
       of: [{type: 'image'}],
@@ -41,13 +54,20 @@ export const projectType = defineType({
       title: 'Project Videos'
     }),
     defineField({
-      name: 'categories',
-      type: 'array',
-      of: [{type: 'string'}],
-    }),
-    defineField({
       name: 'tags',
       type: 'string',
+    }),
+    defineField({
+      name: 'tagsV2',
+      type: 'array',
+      title: 'Tags v2',
+      of: [{ type: 'string' }]
+    }),
+    defineField({
+      name: 'role',
+      type: 'string',
+      title: 'Role',
+      description: 'My role in the project'
     }),
     defineField({
       name: 'year',
@@ -63,11 +83,6 @@ export const projectType = defineType({
       name: 'body',
       type: 'array',
       of: [{type: 'block'}],
-    }),
-    defineField({
-        name: 'github',
-        type: 'url',
-        title: 'GitHub URL'
     }),
     defineField({
         name: 'website',

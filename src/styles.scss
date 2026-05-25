@@ -338,7 +338,7 @@ about contact-info, contact contact-info {
   font-size: 12px;
   text-transform: uppercase;
 
-  li {
+  li, div, a {
     background-color: #393939;
     padding: 7px 15px;
     color: var(--secondary-color);

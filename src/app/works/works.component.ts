@@ -28,7 +28,7 @@ export class WorksComponent implements AfterViewInit {
   /* Lazy load default image */
   public default_image = 'assets/lazy-thumb.jpg';
 
-  public worksList:ProjectAttributes[];
+  public worksList:any[];
 
   public emptyProjects: Boolean;
 

@@ -36,32 +36,9 @@
   </div>
 </div>
 
-<div class="showcase">
-  <div class="copy-container">
-    <h2>Recent Projects</h2>
+<app-case-studies></app-case-studies>
 
-    <p>
-      As of late, I’ve been really helping small businesses get their ecommerce platforms up and running. Have a look at
-      some of my recently completed projects!
-    </p>
-  </div>
-
-  <swiper-showcase
-    [loop]="true"
-    [perPage]="3"
-    [ids]="[1,22,23,4]"
-    [spacing]="15"
-    [spacing_m]="15"
-    [autoplay]="false"
-    [delay]="5000"
-    [hideTitle]="false"
-    [arrows]="true"
-  ></swiper-showcase>
-
-  <div class="ctas">
-    <a routerLink="/works" class=""><span>View More</span></a>
-  </div>
-</div>
+<app-works></app-works>
 
 <div class="toolbox">
   <div class="toolbox-copy">

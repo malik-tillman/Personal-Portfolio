@@ -1,19 +1,34 @@
 .container {
-  margin: 50px 0 50px;
+  margin: 100px 0 50px;
   padding: 50px 25px 0;
 }
 
 .title-container {
-  font-family: 'Lato', sans-serif;
-  color: white;
-  text-transform: uppercase;
+  margin-bottom: 50px;
 
   h2, h1 {
-    font-size: 24px;
+    font-family: 'Josefin Sans Thin', sans-serif;
+    font-size: 75px;
     position: relative;
+    color: white;
     text-align: center;
-    margin: 25px 0;
+
+    @media screen and (max-width: 768px) {
+      font-size: 52px;
+    }
   }
+}
+
+.description {
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  color: #9D9F9EFF;
+  line-height: 1.5;
+
+
+  max-width: 600px;
+  margin: 35px auto 0;
 }
 
 @mixin top-bottom($direction, $height) {
@@ -33,131 +48,101 @@
 
 .works-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 25px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 50px;
 
   max-width: var(--max-width);
   margin: 0 auto;
 
   color: white;
 
-  @media (max-width: 630px) {
-    .works-container {
-      grid-template-columns: repeat(1, 1fr);
-      grid-gap: 25px;
-    }
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (min-width: 1920px) {
-    grid-template-columns: repeat(3, 1fr);
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
 .work-card {
   position: relative;
-  width: 100%;
-  height: 100%;
 
-  overflow: hidden;
+  text-decoration: none;
 
-  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  .works-info_container {
-    position: absolute;
+  .thumbnail-container {
+    position: relative;
+    aspect-ratio: 16/9;
     width: 100%;
-    height: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
 
-    background-color: rgba(0, 0, 0, .2);
-    will-change: background-color;
-    transition: background-color 1s ease;
+    overflow: hidden;
 
-    z-index: 1;
+    &.aspect-ratio7\/8 {
+      aspect-ratio: 7/8;
+    }
 
-    .works-info {
-      position: absolute;
+    &.aspect-ratio1\/1 {
+      aspect-ratio: 1/1;
+    }
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    &.aspect-ratio4\/3 {
+      aspect-ratio: 4/3;
+    }
 
-      gap: 15px;
+    &.aspect-ratio16\/9 {
+      aspect-ratio: 16/9;
+    }
+
+    .thumbnail {
       width: 100%;
-      padding: 15px 0;
-
-      background-color: rgb(255 255 255 / 37%);
-      backdrop-filter: blur(3px);
-      box-shadow: 0 0 7px 0 rgb(0 0 0 / 20%);
-
-      will-change: bottom;
-      bottom: -46px;
-      //bottom: 0%;
-      transition: bottom .5s cubic-bezier(0.4, 0, 0.2, 1);
-
-      .works-title {
-        text-decoration: none;
-        // font-family: Josefin Sans, sans-serif;
-        color: black;
-        margin: 0;
-        // font-weight: bolder;
-
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
-        font-size: 14px;
-        font-family: Lato Bold, sans-serif;
-        text-align: center;
-
-        @media (max-width: 630px) {
-
-        }
-      }
-
-      .works-tags {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        @include icons-fade;
-
-        img {
-          height: 30px;
-          padding-right: 20px;
-        }
-      }
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms ease;
     }
   }
 
-  .thumbnail {
-    display: block;
-    z-index: 0;
-    max-width: 100%;
-    transform: scale(1);
-    will-change: transform;
-    transition: transform 0.5s ease;
+  .info {
+    display: flex;
+    flex-direction: column;
+    color: white;
+
+    gap: 15px;
+
+    padding: 25px 0;
+
+    font-family: 'Lato', sans-serif;
+
+    * {
+      margin: 0;
+    }
+
+    .work-title {
+
+    }
+
+    .works-tags {
+      display: flex;
+      flex-direction: row;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      img {
+        height: 30px;
+      }
+    }
   }
 }
 
 .work-card:hover {
-  .works-info_container {
-    background-color: rgba(0, 0, 0, 0);
-
-    .top {
-      top: 0;
-
-      .external-link-container {
-        opacity: 1;
-      }
-    }
-
-    .bottom {
-      bottom: 0;
-
-      .works-tags {
-        opacity: 1;
-      }
-    }
-  }
-
   .thumbnail {
     transform: scale(1.05);
   }

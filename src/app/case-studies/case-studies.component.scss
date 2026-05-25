@@ -1,5 +1,5 @@
 .case-studies-container {
-  margin: 75px 0 50px;
+  margin: 100px 0 50px;
   padding: 50px 25px 0;
 }
 
@@ -29,15 +29,12 @@
 
 .grid {
   display: grid;
-  //grid-template-columns: repeat(auto-fit, minmax(calc(50% - 50px), 1fr));
   grid-template-columns: repeat(3, 1fr);
   align-content: center;
   grid-gap: 50px;
 
   max-width: var(--max-width);
-  margin: 0 auto;
-
-  margin-top: 50px;
+  margin: 50px auto 0;
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
@@ -115,10 +112,6 @@
       font-family: Lato, sans-serif;
       line-height: 1.2;
       font-weight: 400;
-    }
-
-    h2, p {
-
     }
   }
 
