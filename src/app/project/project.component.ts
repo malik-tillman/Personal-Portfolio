@@ -45,8 +45,8 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.activatedRouterSubscription = this.activatedRoute.paramMap.subscribe(params => {
-      const id = params.get('id') || this.activatedRoute.snapshot.queryParams['id'];
+    this.activatedRouterSubscription = this.activatedRoute.queryParams.subscribe(queryParams => {
+      const id = this.activatedRoute.snapshot.paramMap.get('id') || queryParams['id'];
       this.projectNotFound = false;
 
       if (!id) return;
@@ -56,7 +56,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
         this.work = data;
 
         if (this.work) {
-          const isPathParam = !!params.get('id');
+          const isPathParam = !!this.activatedRoute.snapshot.paramMap.get('id');
           const projectUrl = isPathParam 
             ? `${environment.siteUrl}/works/project/${this.work.id}`
             : `${environment.siteUrl}/works/project?id=${this.work.id}`;

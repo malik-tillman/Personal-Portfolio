@@ -89,7 +89,7 @@ h1 {
     font-family: Lato Light, sans-serif;
 
     .swiper-slide {
-      border-radius: 15px;
+      border-radius: 5px;
       overflow: hidden;
     }
 
@@ -99,7 +99,6 @@ h1 {
 
       picture {
         display: flex;
-        aspect-ratio: 4 / 3;
 
         img {
           max-width: 100%;

@@ -73,12 +73,12 @@
       width: 100%;
       padding: 15px 0;
 
-      background-color: rgb(245, 245, 245);
+      background-color: rgb(255 255 255 / 37%);
       backdrop-filter: blur(3px);
       box-shadow: 0 0 7px 0 rgb(0 0 0 / 20%);
 
       will-change: bottom;
-      bottom: -20%;
+      bottom: -46px;
       //bottom: 0%;
       transition: bottom .5s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -109,8 +109,8 @@
         @include icons-fade;
 
         img {
-          height: 40px;
-          padding-right: 10px;
+          height: 30px;
+          padding-right: 20px;
         }
       }
     }
@@ -214,20 +214,6 @@ swiper-toolbox {
     grid-gap: 25px;
   }
 
-  .work-card {
-    //border-radius: 0;
-    min-height: 50vw;
-
-    .works-info_container {
-      .works-info {
-        &.bottom {
-          height: 40%;
-          bottom: -25%;
-        }
-      }
-    }
-  }
-
   .work-card:hover {
     .works-info_container {
       .bottom {
@@ -240,9 +226,5 @@ swiper-toolbox {
 @media (min-width: 1920px) {
   .works-container {
     grid-template-columns: repeat(auto-fill, minmax(calc(33% - 75px), 1fr));
-  }
-
-  .work-card {
-    min-height: 15vw;
   }
 }
