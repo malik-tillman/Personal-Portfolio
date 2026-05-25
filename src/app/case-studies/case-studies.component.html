@@ -6,16 +6,31 @@
   <div class="grid">
     <div class="case-study-card" *ngFor="let study of caseStudiesList">
       <a [routerLink]="['/case-studies', study.slug.current]">
-        <img *ngIf="study.heroImage" [src]="study.heroImage" [alt]="study.title" class="thumbnail"/>
+        <img
+          *ngIf="study.heroImage"
+          [src]="study.heroImage"
+          [alt]="study.title"
+          class="thumbnail aspect-ratio{{study.aspectRatio}}"
+        />
 
         <div class="copy-container">
-          <p *ngIf="study.overview?.role" class="role">
-            {{study.overview.role}}
+          <p *ngIf="study?.role" class="role">
+            {{study.role}}
           </p>
 
           <h2 class="study-title">
             {{study.title}}
           </h2>
+
+          <p *ngIf="study?.excerpt" class="excerpt">
+            {{study.excerpt}}
+          </p>
+
+          <ul class="tags">
+            <li *ngFor="let tag of study.tags">
+              {{tag}}
+            </li>
+          </ul>
         </div>
       </a>
     </div>

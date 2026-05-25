@@ -18,6 +18,7 @@ export const caseStudyType = defineType({
         source: 'title',
         maxLength: 96,
       },
+      description: 'The URL slug of the case study'
     }),
     defineField({
       name: 'heroImage',
@@ -28,15 +29,30 @@ export const caseStudyType = defineType({
       },
     }),
     defineField({
-      name: 'overview',
-      title: 'Overview',
-      type: 'object',
-      fields: [
-        {name: 'role', type: 'string', title: 'Role'},
-        {name: 'timeline', type: 'string', title: 'Timeline'},
-        {name: 'techStack', type: 'array', title: 'Tech Stack', of: [{type: 'string'}]},
-        {name: 'liveUrl', type: 'url', title: 'Live URL'},
-      ]
+      name: 'aspectRatio',
+      title: 'Aspect Ratio',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'wide', value: '16/9'},
+          {title: 'tall', value: '7/8'}
+        ]
+      },
+      initialValue: '16/9',
+      description: 'The aspect ratio of the hero image'
+    }),
+    defineField({
+      name: 'tags',
+      type: 'array',
+      title: 'Tags',
+      of: [{ type: 'string' }],
+      description: 'Tags for the case study'
+    }),
+    defineField({
+      name: 'role',
+      type: 'string',
+      title: 'Role',
+      description: 'My role in the project'
     }),
     defineField({
       name: 'body',
@@ -63,7 +79,13 @@ export const caseStudyType = defineType({
             }
           ]
         }
-      ]
+      ],
+    }),
+    defineField({
+      name: 'excerpt',
+      type: 'text',
+      title: 'Excerpt',
+      description: 'A short description of the case study'
     })
   ]
 })
