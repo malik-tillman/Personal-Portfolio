@@ -299,11 +299,11 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
       /* create material */
       this.logoMaterial = new MeshPhysicalMaterial({
         color: "rgb(125,40,40)",
-        metalness: isIPhone ? 0.6 : 0.95,
+        metalness: isIPhone ? 0.7 : 0.95,
         roughness: 0.25,
         clearcoat: 1.0,
         clearcoatRoughness: 0.2,
-        reflectivity: isIPhone ? 0.8 : 0.2,
+        reflectivity: isIPhone ? 0.5 : 0.2,
         flatShading: false
       });
 
