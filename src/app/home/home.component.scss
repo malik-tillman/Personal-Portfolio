@@ -24,7 +24,7 @@ p {
     font-family: Lato Light, sans-serif;
     text-decoration: none;
 
-    border-radius: 5px;
+    border-radius: var(--border-radius);
 
     min-width: 115px;
     text-align: center;
@@ -50,7 +50,7 @@ p {
         bottom: -2px;
         background: transparent;
         border-bottom: 2px solid black;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
         display: block;
 
         transition: width 500ms ease;

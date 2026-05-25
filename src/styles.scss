@@ -89,7 +89,7 @@ h1 {
     font-family: Lato Light, sans-serif;
 
     .swiper-slide {
-      border-radius: 5px;
+      border-radius: var(--border-radius);
       overflow: hidden;
     }
 
@@ -170,7 +170,7 @@ h1 {
 
         padding: 15px;
 
-        border-radius: 5px;
+        border-radius: var(--border-radius);
 
         &.Node--JS, &.Java, &.Adobe--CC, &.Shopify, &.Javascript {
           background-color: var(--primary-color);
@@ -270,7 +270,7 @@ home {
 
     svg {
       //box-shadow: 0px 0px 20px 5px rgba(250, 237, 205, 0.30);
-      border-radius: 5px;
+      border-radius: var(--border-radius);
       transform: translateY(0px);
 
       transition: transform 250ms ease, box-shadow 500ms ease;
@@ -324,5 +324,6 @@ about contact-info, contact contact-info {
 
 :root {
   --primary-color: rgb(235 235 235);
-  --max-width: 1500px;
+  --max-width: 1750px;
+  --border-radius: 25px;
 }

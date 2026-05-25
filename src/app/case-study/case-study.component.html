@@ -1,9 +1,9 @@
-<div class="case-study-detail" *ngIf="caseStudy">
+<div class="case-study-detail container" *ngIf="caseStudy">
   <div class="hero">
-    <img *ngIf="caseStudy.heroImage" [src]="caseStudy.heroImage" [alt]="caseStudy.title" class="hero-image"/>
     <h1>{{caseStudy.title}}</h1>
+    <img *ngIf="caseStudy.heroImage" [src]="caseStudy.heroImage" [alt]="caseStudy.title" class="hero-image"/>
   </div>
-  
+
   <div class="overview" *ngIf="caseStudy.overview">
     <div class="overview-item" *ngIf="caseStudy.overview.role">
       <strong>Role:</strong> {{caseStudy.overview.role}}

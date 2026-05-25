@@ -1,29 +1,95 @@
 .case-studies-container {
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 50px 0 50px;
+  padding: 50px 25px 0;
 }
+
+.title {
+  font-family: 'Lato', sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+  position: relative;
+  margin: 25px 0;
+  color: white;
+  text-align: center;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  //grid-template-columns: repeat(auto-fit, minmax(calc(50% - 50px), 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 50px;
+
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
+
 .case-study-card {
   color: white;
 
   a {
     text-decoration: none;
     color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    position: relative;
   }
+
   .thumbnail {
     width: 100%;
     height: auto;
-    border-radius: 8px;
     aspect-ratio: 16/9;
     object-fit: cover;
+
+    border-radius: var(--border-radius);
   }
-  h2 {
-    margin-top: 1rem;
-    font-size: 1.5rem;
+
+  .copy-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+
+    color: white;
+
+    padding: 15px 0;
+
+    .study-title {
+      font-size: 24px;
+      font-family: Lato, sans-serif;
+      width: 50%;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .role {
+      font-family: "Josefin Sans Bold", sans-serif;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #f8edcd;
+    }
+
+    h2, p {
+      margin: 0;
+    }
+  }
+
+  &:nth-child(1) {
+    .thumbnail {
+      aspect-ratio: 16/9;
+    }
+  }
+
+  &:nth-child(2) {
+    .thumbnail {
+      aspect-ratio: 4/3;
+    }
+  }
+
+  &:nth-child(3) {
+    .thumbnail {
+      aspect-ratio: 1/1;
+    }
   }
 }

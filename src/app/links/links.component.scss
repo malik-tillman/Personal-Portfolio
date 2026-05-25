@@ -46,7 +46,7 @@
         bottom: 0;
         background: transparent;
         border-bottom: 2px solid #ffffff;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
         display: block;
 
         transition: width 500ms ease;

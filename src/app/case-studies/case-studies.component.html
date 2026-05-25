@@ -1,5 +1,5 @@
-<div class="case-studies-container">
-  <h1>Case Studies</h1>
+<div class="case-studies-container container">
+  <h1 class="title">Case Studies</h1>
   <div *ngIf="emptyCaseStudies">
     <p>No case studies found.</p>
   </div>
@@ -7,8 +7,16 @@
     <div class="case-study-card" *ngFor="let study of caseStudiesList">
       <a [routerLink]="['/case-studies', study.slug.current]">
         <img *ngIf="study.heroImage" [src]="study.heroImage" [alt]="study.title" class="thumbnail"/>
-        <h2>{{study.title}}</h2>
-        <p *ngIf="study.overview?.role">{{study.overview.role}}</p>
+
+        <div class="copy-container">
+          <p *ngIf="study.overview?.role" class="role">
+            {{study.overview.role}}
+          </p>
+
+          <h2 class="study-title">
+            {{study.title}}
+          </h2>
+        </div>
       </a>
     </div>
   </div>

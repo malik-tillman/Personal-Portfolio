@@ -65,7 +65,7 @@ $error-red: #ff4343;
 
         border: 2px solid transparent;
 
-        border-radius: 5px;
+        border-radius: var(--border-radius);
       }
 
       &.errors {
@@ -90,7 +90,7 @@ $error-red: #ff4343;
       margin-top: 15px;
 
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: var(--border-radius);
       width: fit-content;
 
       background: #0d0d0d;
