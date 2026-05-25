@@ -189,17 +189,17 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
 
       // FALLBACK: Directional and Point lights for broader device compatibility
       // Key Light
-      keyLight = new DirectionalLight("rgb(255,250,244)", 0); // Boosted intensity for fallback
+      keyLight = new DirectionalLight("rgb(255,250,244)", 2.5); // Boosted intensity for fallback
       keyLight.position.set(30, 40, 50);
       keyLight.lookAt(0, 27, 0);
 
       // Fill Light
-      fillLight = new DirectionalLight("rgb(200,210,255)", 0); // Boosted intensity
+      fillLight = new DirectionalLight("rgb(200,210,255)", 1.5); // Boosted intensity
       fillLight.position.set(-35, 30, 40);
       fillLight.lookAt(0, 27, 0);
 
       // Rim/Back Light
-      rimLight = new PointLight("rgb(80,120,255)", 1, 150);
+      rimLight = new PointLight("rgb(80,120,255)", 2.0, 150);
       rimLight.position.set(0, 35, -40);
     }
 
@@ -291,14 +291,16 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
       /* Set object scene size */
       gltfObj.scale.set(.5,.5,.5);
 
+      const isIPhone = /iPhone/i.test(navigator.userAgent);
+
       /* create material */
       this.logoMaterial = new MeshPhysicalMaterial({
-        color: supportsRectAreaLight ? "rgb(125,40,40)" : "rgb(180,55,55)", // Brighter red on fallback
-        metalness: supportsRectAreaLight ? 0.9 : 0.8,
-        roughness: supportsRectAreaLight ? 0.25 : 0.5, // Lower roughness so it reflects better
-        clearcoat: supportsRectAreaLight ? 1.0 : 1.0,
-        clearcoatRoughness: supportsRectAreaLight ? 0.2 : 0.5,
-        reflectivity: supportsRectAreaLight ? 1.0 : 0.2,
+        color: "rgb(125,40,40)",
+        metalness: isIPhone ? 0.6 : 0.95,
+        roughness: 0.25,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.2,
+        reflectivity: isIPhone ? 0.8 : 0.2,
         flatShading: false
       });
 
