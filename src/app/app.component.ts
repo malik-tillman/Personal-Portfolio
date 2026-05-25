@@ -4,18 +4,20 @@
  *
  * 2020
  * */
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationStart, Router } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import Lenis from 'lenis';
 
 @Component({
     selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.scss'],
     standalone: false
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   /* Load toggle */
   public loaded = false;
+  private lenis: Lenis | null = null;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -77,6 +79,32 @@ export class AppComponent {
     asciiTag = asciiTitle  + asciiTagline;
 
     console.log(asciiTag);
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.initLenis();
+    }
+  }
+
+  private initLenis() {
+    this.lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 2.0,
+      infinite: false,
+    });
+
+    const raf = (time: number) => {
+      this.lenis?.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
   }
 
   /**
