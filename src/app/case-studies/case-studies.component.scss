@@ -1,16 +1,30 @@
 .case-studies-container {
-  margin: 50px 0 50px;
+  margin: 75px 0 50px;
   padding: 50px 25px 0;
 }
 
 .title {
-  font-family: 'Lato', sans-serif;
-  font-size: 24px;
-  text-transform: uppercase;
+  font-family: 'Josefin Sans Thin', sans-serif;
+  font-size: 75px;
   position: relative;
-  margin: 25px 0;
   color: white;
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: 52px;
+  }
+}
+
+.description {
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  color: #9D9F9EFF;
+  line-height: 1.5;
+
+
+  max-width: 600px;
+  margin: 35px auto 0;
 }
 
 .grid {
@@ -22,6 +36,8 @@
 
   max-width: var(--max-width);
   margin: 0 auto;
+
+  margin-top: 50px;
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
@@ -47,13 +63,21 @@
     position: relative;
   }
 
-  .thumbnail {
+  .thumbnail-container {
+    position: relative;
+    aspect-ratio: 16/9;
     width: 100%;
     height: auto;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-
     border-radius: var(--border-radius);
+
+    overflow: hidden;
+
+    .thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms ease;
+    }
 
     &.aspect-ratio7\/8 {
       aspect-ratio: 7/8;
@@ -93,41 +117,14 @@
       font-weight: 400;
     }
 
-    .role {
-      font-family: "Josefin Sans Bold", sans-serif;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #f8edcd;
-    }
-
-    .excerpt {
-      font-family: "Lato", sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    .tags {
-      list-style: none;
-      display: flex;
-      gap: 10px;
-      padding: 0;
-
-      flex-wrap: wrap;
-
-      font-family: "Lato", sans-serif;
-      font-size: 12px;
-      text-transform: uppercase;
-
-      li {
-        background-color: #393939;
-        padding: 7px 15px;
-        color: var(--secondary-color);
-      }
-    }
-
     h2, p {
 
+    }
+  }
+
+  &:hover {
+    .thumbnail {
+      transform: scale(1.1);
     }
   }
 }

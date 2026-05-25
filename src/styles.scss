@@ -320,7 +320,38 @@ about contact-info, contact contact-info {
   }
 }
 
+.excerpt {
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
 
+.tags {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  padding: 0;
+
+  flex-wrap: wrap;
+
+  font-family: "Lato", sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+
+  li {
+    background-color: #393939;
+    padding: 7px 15px;
+    color: var(--secondary-color);
+  }
+}
+
+.role {
+  font-family: "Josefin Sans Bold", sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #f8edcd;
+}
 
 :root {
   --primary-color: rgb(235 235 235);

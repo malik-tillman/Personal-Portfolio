@@ -1,7 +1,22 @@
 <div class="case-study-detail container" *ngIf="caseStudy">
   <div class="hero">
-    <h1>{{caseStudy.title}}</h1>
+    <p *ngIf="caseStudy?.role" class="role">
+      {{caseStudy.role}}
+    </p>
+
+    <h1 class="title">{{caseStudy.title}}</h1>
+
+    <p *ngIf="caseStudy?.excerpt" class="excerpt">
+      {{caseStudy.excerpt}}
+    </p>
+
     <img *ngIf="caseStudy.heroImage" [src]="caseStudy.heroImage" [alt]="caseStudy.title" class="hero-image"/>
+
+    <ul class="tags">
+      <li *ngFor="let tag of caseStudy.tags">
+        {{tag}}
+      </li>
+    </ul>
   </div>
 
   <div class="overview" *ngIf="caseStudy.overview">

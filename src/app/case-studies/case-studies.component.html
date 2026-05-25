@@ -1,17 +1,28 @@
 <div class="case-studies-container container">
   <h1 class="title">Case Studies</h1>
+
+  <p class="description">
+    High-impact engineering solutions,
+    demonstrating technical leadership
+    in modular&nbsp;architecture.
+  </p>
+
   <div *ngIf="emptyCaseStudies">
     <p>No case studies found.</p>
   </div>
+
   <div class="grid">
     <div class="case-study-card" *ngFor="let study of caseStudiesList">
       <a [routerLink]="['/case-studies', study.slug.current]">
-        <img
-          *ngIf="study.heroImage"
-          [src]="study.heroImage"
-          [alt]="study.title"
-          class="thumbnail aspect-ratio{{study.aspectRatio}}"
-        />
+        <div class="thumbnail-container aspect-ratio{{study.aspectRatio}}">
+          <img
+            *ngIf="study.heroImage"
+            [src]="study.heroImage"
+            [alt]="study.title"
+            class="thumbnail "
+          />
+        </div>
+
 
         <div class="copy-container">
           <p *ngIf="study?.role" class="role">

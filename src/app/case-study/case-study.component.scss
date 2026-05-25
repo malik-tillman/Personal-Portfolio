@@ -4,8 +4,6 @@
   align-items: center;
   width: 100%;
 
-  max-width: 800px;
-
   color: white;
 
   margin: 50px auto 50px;
@@ -14,7 +12,10 @@
   .hero {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 25px;
+
+    max-width: var(--max-width);
 
     .hero-image {
       width: 100%;
@@ -24,10 +25,21 @@
       border-radius: var(--border-radius);
     }
 
-    h1 {
-      font-size: 2.5rem;
-      font-family: Lato, sans-serif;
-      font-weight: 800;
+    .title {
+      font-family: 'Josefin Sans Thin', sans-serif;
+      font-size: 45px;
+      position: relative;
+      color: white;
+      text-align: center;
+
+      @media screen and (max-width: 768px) {
+        font-size: 32px;
+      }
+    }
+
+    .excerpt {
+      max-width: 400px;
+      text-align: center;
     }
   }
 
@@ -48,13 +60,30 @@
   }
 
   .body-content {
-    font-size: 1.125rem;
-    line-height: 1.8;
+    font-size: 18px;
+    line-height: 2;
 
     font-family: Lato, sans-serif;
 
+    max-width: 800px;
+
+    @media screen and (max-width: 768px) {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
     p {
       margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 400;
+      font-family: Lato, sans-serif;
+
+      @media screen and (max-width: 768px) {
+        font-size: 24px;
+      }
     }
 
     .portable-text-image {
