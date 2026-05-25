@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CMSService } from '../cms.service';
 import { SeoService } from '../seo.service';
 import { environment } from '../../environments/environment';
@@ -10,6 +10,8 @@ import { environment } from '../../environments/environment';
   standalone: false
 })
 export class CaseStudiesComponent implements OnInit {
+  @Input() public condensed: boolean = false;
+
   public caseStudiesList: any[] = [];
   public emptyCaseStudies: boolean = false;
 
@@ -23,7 +25,7 @@ export class CaseStudiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.cmsService.fetchCaseStudiesList().then(studies => {
-      this.caseStudiesList = studies;
+      this.caseStudiesList = this.condensed ? studies.slice(0, 6) : studies;
       if (this.caseStudiesList.length === 0) {
         this.emptyCaseStudies = true;
       }

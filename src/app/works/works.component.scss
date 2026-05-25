@@ -184,6 +184,8 @@
     background-color: transparent;
     border: 1px solid #faedcd;
 
+    border-radius: var(--border-radius);
+
     &:hover {
       background-color: #faedcd;
       color: black;

@@ -121,3 +121,36 @@
     }
   }
 }
+
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+
+  a {
+    padding: 15px 25px;
+    font-family: Lato bold, sans-serif;
+    text-decoration: none;
+
+    min-width: 115px;
+    text-align: center;
+
+    transition: background-color 500ms ease,
+    border-color 500ms ease,
+    color 500ms ease,
+    transform 250ms ease;
+
+    color: #faedcd;
+    background-color: transparent;
+    border: 1px solid #faedcd;
+
+    border-radius: var(--border-radius);
+
+    &:hover {
+      background-color: #faedcd;
+      color: black;
+      border-color: transparent;
+      transform: translateY(-5px);
+    }
+  }
+}

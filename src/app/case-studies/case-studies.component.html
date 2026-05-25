@@ -47,7 +47,12 @@
     </div>
   </div>
 
+  <div class="cta" *ngIf="condensed">
+    <a routerLink="/case-studies"><span>View All Case Studies</span></a>
+  </div>
+
   <links
+    *ngIf="!condensed"
     [contact]="true"
     [projects]="false"
     [about]="true"

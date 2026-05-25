@@ -251,7 +251,12 @@
 
   <not-found *ngIf="emptyProjects"></not-found>
 
+  <div class="cta" *ngIf="condensed">
+    <a routerLink="/works"><span>View All Projects</span></a>
+  </div>
+
   <links
+    *ngIf="!condensed"
     [contact]="true"
     [projects]="false"
     [about]="true"

@@ -4,7 +4,7 @@
  *
  * 2020
  * */
-import { Component, AfterViewInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID, Input } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CMSService, ProjectAttributes} from '../cms.service';
 import { SeoService } from '../seo.service';
@@ -22,6 +22,8 @@ if (typeof window !== 'undefined') {
     host: { 'ngSkipHydration': 'true' }
 })
 export class WorksComponent implements AfterViewInit {
+  @Input() public condensed: boolean = false;
+
   /* Child Ref for image loader animation */
   @ViewChildren('image_loader') imageLoader: QueryList<ElementRef>;
 
@@ -49,7 +51,7 @@ export class WorksComponent implements AfterViewInit {
     this.emptyProjects = false;
 
     this.projectService.fetchList().then( projects => {
-      this.worksList = projects;
+      this.worksList = this.condensed ? projects.slice(0, 6) : projects;
 
       this.shuffle(this.worksList);
 
