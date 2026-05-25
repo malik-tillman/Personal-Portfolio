@@ -29,7 +29,10 @@ import {
   PointsMaterial,
   Points,
   AdditiveBlending,
-  Fog
+  Fog,
+  EdgesGeometry,
+  LineBasicMaterial,
+  LineSegments
 } from 'three';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -304,9 +307,21 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
         flatShading: false
       });
 
-      /* Apply material */
+      /* Apply material and generate stylized outlines */
+      const outlineMaterial = new LineBasicMaterial({
+        color: new Color("rgb(0, 0, 0)"), // Vibrant glowing red outline
+        linewidth: 2 // Supported native width (fallback on some platforms to 1px)
+      });
+
       gltfObj.traverse(obj => {
-        if (obj.isMesh) obj.material = this.logoMaterial;
+        if (obj.isMesh) {
+          obj.material = this.logoMaterial;
+
+          // Generate outlines using EdgesGeometry
+          const edges = new EdgesGeometry(obj.geometry, 15); // 15-degree threshold for sharp borders
+          const line = new LineSegments(edges, outlineMaterial);
+          obj.add(line); // Nest outlines directly onto parent mesh coordinates
+        }
       })
 
       /* Parse object */
