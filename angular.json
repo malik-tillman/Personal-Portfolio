@@ -33,7 +33,8 @@
             "styles": [
               "src/styles.scss",
               "./node_modules/viewerjs/dist/viewer.min.css",
-              "./node_modules/swiper/swiper-bundle.min.css"
+              "./node_modules/swiper/swiper-bundle.min.css",
+              "./node_modules/lenis/dist/lenis.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [

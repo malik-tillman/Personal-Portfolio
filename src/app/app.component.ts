@@ -4,7 +4,7 @@
  *
  * 2020
  * */
-import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationStart, Router } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
@@ -14,7 +14,7 @@ import Lenis from 'lenis';
     selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.scss'],
     standalone: false
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   /* Load toggle */
   public loaded = false;
   private lenis: Lenis | null = null;
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
-    
+
     private loader: LoadingBarService
   ) {
     /* Subscribe to routing service */
@@ -87,24 +87,23 @@ export class AppComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.lenis?.destroy();
+    this.lenis = null;
+  }
+
   private initLenis() {
     this.lenis = new Lenis({
+      autoRaf: true,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.0,
+      wheelMultiplier: 1.2,
       touchMultiplier: 2.0,
       infinite: false,
     });
-
-    const raf = (time: number) => {
-      this.lenis?.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    requestAnimationFrame(raf);
   }
 
   /**
