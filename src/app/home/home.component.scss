@@ -239,9 +239,7 @@ p {
   //padding: 0 25px;
 
   max-width: var(--max-width);
-  margin: 25px auto auto;
-
-  min-height: 60vh;
+  margin: 100px auto 100px;
 
   display: flex;
   flex-direction: column;
@@ -282,7 +280,6 @@ p {
   }
 
   @media (max-width: 768px) {
-    min-height: 100vh;
     gap: 50px;
   }
 }
@@ -325,6 +322,7 @@ p {
   @media (max-width: 630px) {
     //margin: 25px 0;
     padding: 25px;
+    padding-top: 0;
   }
 }
 
