@@ -14,7 +14,7 @@
   <div class="grid">
     <div class="case-study-card" *ngFor="let study of caseStudiesList">
       <a [routerLink]="['/case-studies', study.slug.current]">
-        <div class="thumbnail-container aspect-ratio{{study.aspectRatio}}">
+        <div class="thumbnail-container aspect-ratio-{{study.aspectRatio}}">
           <img
             *ngIf="study.heroImage"
             [src]="study.heroImage"
@@ -22,7 +22,6 @@
             class="thumbnail "
           />
         </div>
-
 
         <div class="copy-container">
           <p *ngIf="study?.role" class="role">
@@ -47,7 +46,7 @@
     </div>
   </div>
 
-  <div class="cta" *ngIf="condensed">
+  <div class="cta" *ngIf="condensed && caseStudiesCount > 3">
     <a routerLink="/case-studies"><span>View All Case Studies</span></a>
   </div>
 

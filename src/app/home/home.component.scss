@@ -241,6 +241,18 @@ p {
   max-width: var(--max-width);
   margin: 25px auto auto;
 
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+
+  padding: 0 25px;
+
+  width: 100%;
+
   .toolbox-copy {
     display: flex;
     position: relative;
@@ -248,8 +260,6 @@ p {
     align-items: flex-start;
     max-width: 100%;
     justify-content: space-around;
-
-    margin-bottom: 100px;
 
     gap: 15px;
 
@@ -264,38 +274,52 @@ p {
       text-align: start;
     }
   }
+
+  swiper-toolbox {
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 100vh;
+    gap: 50px;
+  }
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
+  gap: 25px;
 
   position: relative;
-
-  padding: 35px;
 
   max-width: 750px;
 
   margin: 100px auto;
-  background-color: var(--primary-color);
-  border-radius: 15px;
+  margin-top: 0;
 
   h2 {
     width: 100%;
     max-width: 750px;
-    margin-top: 0;
-    text-align: start;
-    color: black;
 
-    font-family: Lato, sans-serif;
+    color: #fff;
+    font-family: Josefin Sans, sans-serif;
+
+    text-align: start;
+    margin: 0;
+    text-transform: uppercase;
   }
 
   contact-form {
+    border-radius: var(--border-radius);
+    padding: 35px;
+    background-color: var(--tertiary-color);
+
     max-width: 100%;
     width: 100%;
-
-    --primary-color: #cfcfcf;
   }
 
   @media (max-width: 630px) {

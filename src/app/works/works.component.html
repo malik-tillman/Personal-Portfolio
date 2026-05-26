@@ -251,9 +251,14 @@
 
   <not-found *ngIf="emptyProjects"></not-found>
 
-  <div class="cta" *ngIf="condensed">
-    <a routerLink="/works"><span>View All Projects</span></a>
+  <div class="cta" *ngIf="condensed && worksCount > 3">
+    <a routerLink="/works"><span>View More Projects</span></a>
   </div>
+
+  <swiper-toolbox
+    *ngIf="!condensed"
+    [centered]="false"
+  ></swiper-toolbox>
 
   <links
     *ngIf="!condensed"

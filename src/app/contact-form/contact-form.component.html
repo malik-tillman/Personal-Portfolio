@@ -22,10 +22,10 @@
     <label #bodyControl class="form-item">
       <span>Message <span class="required">*</span></span>
 
-      <textarea rows="6" cols="50" formControlName="_body" placeholder="Message"></textarea>
+      <textarea rows="3" cols="50" formControlName="_body" placeholder="Message"></textarea>
     </label>
 
-    <input type="button"  value="Submit" (click)="onSubmit(contactGroup)">
+    <input type="button" class="cta"  value="Submit" (click)="onSubmit(contactGroup)">
 
     <div data-netlify-recaptcha="true"></div>
   </form>

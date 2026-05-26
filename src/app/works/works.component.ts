@@ -32,6 +32,8 @@ export class WorksComponent implements AfterViewInit {
 
   public worksList:any[];
 
+  public worksCount: number;
+
   public emptyProjects: Boolean;
 
   constructor(private projectService: CMSService, @Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {
@@ -51,7 +53,8 @@ export class WorksComponent implements AfterViewInit {
     this.emptyProjects = false;
 
     this.projectService.fetchList().then( projects => {
-      this.worksList = this.condensed ? projects.slice(0, 6) : projects;
+      this.worksCount = projects.length;
+      this.worksList = this.condensed ? projects.slice(0, 3) : projects;
 
       this.shuffle(this.worksList);
 

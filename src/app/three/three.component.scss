@@ -17,6 +17,18 @@
     cursor: pointer;
   }
 
+  // Add gradient fade to bottom of container
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, rgba(12, 12, 12, 0), rgba(12, 12, 12, 1));
+    pointer-events: none;
+  }
+
   @media (max-width: 630px) {
     height: calc(100vh - 85px);
   }

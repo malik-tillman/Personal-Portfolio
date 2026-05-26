@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, OnInit} from '@angular/core';
+import {Component, AfterViewInit, OnInit, Input} from '@angular/core';
 
 import SwiperCore, { Autoplay, SwiperOptions, FreeMode } from 'swiper';
 import {config} from 'rxjs';
@@ -11,6 +11,8 @@ SwiperCore.use([Autoplay, FreeMode]);
     standalone: false
 })
 export class SwiperToolboxComponent implements AfterViewInit, OnInit {
+  @Input() public centered: boolean = false;
+
   public toolbox: object[] = [];
   public config: SwiperOptions;
 

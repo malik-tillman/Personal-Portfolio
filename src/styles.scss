@@ -137,8 +137,8 @@ h1 {
   justify-content: center;
   position: relative;
 
+  width: 750px;
   max-width: 100%;
-  width: 100%;
 
   swiper {
     position: relative;
@@ -163,18 +163,14 @@ h1 {
         align-items: center;
         position: relative;
 
-        background-color: var(--primary-color);
+        background-color: var(--tertiary-color);
 
         width: 100%;
         height: 100%;
 
         padding: 15px;
 
-        border-radius: var(--border-radius);
-
-        &.Node--JS, &.Java, &.Adobe--CC, &.Shopify, &.Javascript {
-          background-color: var(--primary-color);
-        }
+        border-radius: 5px;
 
         img {
           max-width:100%;
@@ -217,10 +213,10 @@ h1 {
     }
   }
 
-  @media (max-width: 630px) {
+  @media (max-width: 768px) {
     swiper {
       .swiper-slide {
-        max-width: 75px;
+        max-width: 50px;
 
         a {
           padding: 10px;
@@ -339,7 +335,7 @@ about contact-info, contact contact-info {
   text-transform: uppercase;
 
   li, div, a {
-    background-color: #393939;
+    background-color: var(--tertiary-color);
     padding: 7px 15px;
     color: var(--secondary-color);
   }

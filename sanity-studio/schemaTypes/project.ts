@@ -34,11 +34,11 @@ export const projectType = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'wide', value: '16/9'},
-          {title: 'tall', value: '7/8'}
+          {title: 'wide', value: 'wide'},
+          {title: 'tall', value: 'tall'}
         ]
       },
-      initialValue: '16/9',
+      initialValue: 'wide',
       description: 'The aspect ratio of the hero image'
     }),
     defineField({

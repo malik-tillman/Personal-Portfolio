@@ -13,6 +13,7 @@ export class CaseStudiesComponent implements OnInit {
   @Input() public condensed: boolean = false;
 
   public caseStudiesList: any[] = [];
+  public caseStudiesCount: number;
   public emptyCaseStudies: boolean = false;
 
   constructor(private cmsService: CMSService, private seo: SeoService) {
@@ -25,7 +26,8 @@ export class CaseStudiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.cmsService.fetchCaseStudiesList().then(studies => {
-      this.caseStudiesList = this.condensed ? studies.slice(0, 6) : studies;
+      this.caseStudiesCount = studies.length;
+      this.caseStudiesList = this.condensed ? studies.slice(0, 3) : studies;
       if (this.caseStudiesList.length === 0) {
         this.emptyCaseStudies = true;
       }

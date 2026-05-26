@@ -1,4 +1,4 @@
-<div class="toolbox-container">
+<div class="toolbox-container {{ centered ? 'centered' : '' }}">
   <swiper [config]="config">
     <ng-template swiperSlide *ngFor="let tool of toolbox">
       <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer" class="{{ tool.title.replace(' ', '--').replace('++', 'plusplus') }}">
