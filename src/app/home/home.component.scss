@@ -126,7 +126,7 @@ p {
     position: absolute;
     right: 0;
     top: 0;
-    //padding-right: 25px;
+    padding-right: 25px;
 
     max-width: 250px;
 
@@ -139,7 +139,7 @@ p {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: flex-end;
-    padding: 35px 0;
+    padding: 35px 25px;
     width: 100%;
 
     max-width: var(--max-width);
@@ -241,7 +241,7 @@ p {
   max-width: var(--max-width);
   margin: 25px auto auto;
 
-  min-height: 100vh;
+  min-height: 60vh;
 
   display: flex;
   flex-direction: column;
