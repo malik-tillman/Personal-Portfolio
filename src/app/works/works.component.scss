@@ -129,6 +129,13 @@
     .works-tags {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
+      overflow: hidden;
+      max-height: 44px;
+
+      &.expanded {
+        max-height: none;
+      }
 
       a {
         display: flex;
@@ -138,6 +145,19 @@
       img {
         height: 30px;
       }
+    }
+
+    .tags-toggle {
+      display: inline-block;
+      background: var(--tertiary-color);
+      color: var(--secondary-color);
+      border: none;
+      padding: 7px 15px;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      align-self: flex-start;
     }
   }
 }

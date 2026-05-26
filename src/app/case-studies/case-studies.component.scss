@@ -128,6 +128,28 @@
       line-height: 1.2;
       font-weight: 400;
     }
+
+    .tags {
+      overflow: hidden;
+      max-height: 34px;
+
+      &.expanded {
+        max-height: none;
+      }
+    }
+
+    .tags-toggle {
+      display: inline-block;
+      background: var(--tertiary-color);
+      color: var(--secondary-color);
+      border: none;
+      padding: 7px 15px;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      align-self: flex-start;
+    }
   }
 
   &:hover {

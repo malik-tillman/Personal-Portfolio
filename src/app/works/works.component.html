@@ -31,7 +31,7 @@
 
             <h2 class="work-title">{{ work.title }}</h2>
 
-            <div class="works-tags tags">
+            <div #tagsContainer [attr.data-work-id]="work.id" class="works-tags tags" [class.expanded]="expandedTags.has(work.id)">
               <ng-container *ngIf="work.tags?.split(',').includes('react')">
                 <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()">
                   <img src="assets/tag-icons/react-1.png" alt="React Icon">
@@ -243,6 +243,15 @@
                 </a>
               </ng-container>
             </div>
+
+            <button
+              *ngIf="overflowingTags.has(work.id) || expandedTags.has(work.id)"
+              class="tags-toggle"
+              (click)="toggleTags(work.id, $event)"
+              aria-label="Show more tags"
+            >
+              {{ expandedTags.has(work.id) ? 'Less' : 'More' }}
+            </button>
           </div>
         </a>
       </ng-container>

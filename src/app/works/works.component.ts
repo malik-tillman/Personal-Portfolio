@@ -24,6 +24,12 @@ if (typeof window !== 'undefined') {
 export class WorksComponent implements AfterViewInit {
   @Input() public condensed: boolean = false;
 
+  /* Track which cards have expanded tags */
+  public expandedTags = new Set<number>();
+  public overflowingTags = new Set<number>();
+
+  @ViewChildren('tagsContainer') tagsContainers: QueryList<ElementRef>;
+
   /* Child Ref for image loader animation */
   @ViewChildren('image_loader') imageLoader: QueryList<ElementRef>;
 
@@ -60,6 +66,10 @@ export class WorksComponent implements AfterViewInit {
 
       if (this.worksList.length === 0)
         this.emptyProjects = true;
+
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => this.checkTagsOverflow(), 100);
+      }
     })
   }
 
@@ -79,6 +89,33 @@ export class WorksComponent implements AfterViewInit {
 
       _loaderSubscription.unsubscribe();
     })
+
+  }
+
+  private checkTagsOverflow() {
+    if (!this.tagsContainers) return;
+    const updated = new Set(this.overflowingTags);
+    this.tagsContainers.forEach((ref: ElementRef) => {
+      const el = ref.nativeElement as HTMLElement;
+      const id = Number(el.getAttribute('data-work-id'));
+      if (isNaN(id)) return;
+      if (el.scrollHeight > el.clientHeight) {
+        updated.add(id);
+      } else if (!this.expandedTags.has(id)) {
+        updated.delete(id);
+      }
+    });
+    this.overflowingTags = updated;
+  }
+
+  toggleTags(workId: number, event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.expandedTags.has(workId)) {
+      this.expandedTags.delete(workId);
+    } else {
+      this.expandedTags.add(workId);
+    }
   }
 
   shuffle(array) {
