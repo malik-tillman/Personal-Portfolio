@@ -367,7 +367,7 @@ contact-form {
 
   background-color: var(--tertiary-color);
   border: 1px solid rgb(250 237 205 / 12%);
-  border-radius: 20px;
+  border-radius: var(--border-radius);
   box-shadow: 0 0 30px rgb(250 237 205 / 6%), 0 0 80px rgb(250 237 205 / 3%);
 
   transition: box-shadow 0.4s ease;
