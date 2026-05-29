@@ -4,7 +4,7 @@
  *
  * 2020
  * */
-import { Component, AfterViewInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID, Input } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CMSService, ProjectAttributes} from '../cms.service';
 import { SeoService } from '../seo.service';
@@ -21,7 +21,7 @@ if (typeof window !== 'undefined') {
     standalone: false,
     host: { 'ngSkipHydration': 'true' }
 })
-export class WorksComponent implements AfterViewInit {
+export class WorksComponent implements OnInit, AfterViewInit {
   @Input() public condensed: boolean = false;
 
   /* Track which cards have expanded tags */
@@ -42,7 +42,9 @@ export class WorksComponent implements AfterViewInit {
 
   public emptyProjects: Boolean;
 
-  constructor(private projectService: CMSService, @Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {
+  constructor(private projectService: CMSService, @Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {}
+
+  ngOnInit() {
     this.seo.update({
       title: 'Works',
       description: 'Browse the portfolio of Malik Tillman featuring web development, e-commerce, graphic design, and more.',
