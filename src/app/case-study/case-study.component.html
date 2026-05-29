@@ -1,9 +1,5 @@
 <div class="case-study-detail container" *ngIf="caseStudy">
   <div class="hero">
-    <p *ngIf="caseStudy?.role" class="role">
-      {{caseStudy.role}}
-    </p>
-
     <h1 class="title">{{caseStudy.title}}</h1>
 
     <p *ngIf="caseStudy?.excerpt" class="excerpt">
@@ -11,6 +7,15 @@
     </p>
 
     <img *ngIf="caseStudy.heroImage" [src]="caseStudy.heroImage" [alt]="caseStudy.title" class="hero-image"/>
+
+    <div class="meta-pills" *ngIf="caseStudy?.role || caseStudy?.timeline">
+      <p *ngIf="caseStudy?.role" class="role">
+        <span class="meta-label">Role:</span> {{caseStudy.role}}
+      </p>
+      <p *ngIf="caseStudy?.timeline" class="role">
+        <span class="meta-label">Timeline:</span> {{caseStudy.timeline}}
+      </p>
+    </div>
 
     <ul class="tags">
       <li *ngFor="let tag of caseStudy.tags">
