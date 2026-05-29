@@ -126,12 +126,12 @@ export class CMSService {
     try {
       const sanityData = await this.sanity.fetch<any[]>('*[_type == "caseStudy"] | order(_createdAt desc)');
       if (sanityData) {
-        return sanityData.map(study => {
-          if (study.heroImage) {
-             study.heroImage = this.sanity.getImageUrl(study.heroImage).width(800).quality(80).auto('format').url();
-          }
-          return study;
-        });
+        return sanityData.map(study => ({
+          ...study,
+          heroImage: study.heroImage
+            ? this.sanity.getImageUrl(study.heroImage).width(800).quality(80).auto('format').url()
+            : null
+        }));
       }
     } catch (error) {
       console.error('Sanity fetchCaseStudiesList error:', error);
@@ -142,8 +142,13 @@ export class CMSService {
   public async fetchCaseStudy(slug: string): Promise<any> {
     try {
       const data = await this.sanity.fetch<any>(`*[_type == "caseStudy" && slug.current == $slug][0]`, { slug });
-      if (data && data.heroImage) {
-         data.heroImage = this.sanity.getImageUrl(data.heroImage).width(1200).quality(85).auto('format').url();
+      if (data) {
+        return {
+          ...data,
+          heroImage: data.heroImage
+            ? this.sanity.getImageUrl(data.heroImage).width(1200).quality(85).auto('format').url()
+            : null
+        };
       }
       return data;
     } catch (error) {
