@@ -43,6 +43,7 @@ export class CMSService {
       year: sanityProject.year,
       aspectRatio: sanityProject.aspectRatio,
       role: sanityProject.role,
+      timeline: sanityProject.timeline,
     };
 
     if (sanityProject.mainImage) {
@@ -254,7 +255,8 @@ export interface ProjectAttributes {
   video_src?: _File[],
   year?: string
   aspectRatio?: string
-  role?: string
+  role?: string,
+  timeline?: string
 }
 
 export interface _File {

@@ -55,6 +55,12 @@ export const caseStudyType = defineType({
       description: 'My role in the project'
     }),
     defineField({
+      name: 'timeline',
+      title: 'Timeline',
+      type: 'string',
+      description: 'The timeline of the project (e.g. 2022-2023)'
+    }),
+    defineField({
       name: 'body',
       title: 'Body (Portable Text)',
       type: 'array',
