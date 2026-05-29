@@ -53,6 +53,10 @@ export class HeaderComponent implements AfterViewInit {
       if(event instanceof NavigationStart) {
         this.menuToggle = false;
 
+        if (isPlatformBrowser(this.platformId)) {
+          document.body.style.overflow = '';
+        }
+
         if (isPlatformBrowser(this.platformId)) window.scrollTo({
           top: 0,
           behavior: 'smooth'
@@ -74,5 +78,11 @@ export class HeaderComponent implements AfterViewInit {
 
   /**
    * Toggles menu state by reversing boolean value */
-  toggleMenu() { this.menuToggle = !this.menuToggle }
+  toggleMenu() {
+    this.menuToggle = !this.menuToggle;
+
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = this.menuToggle ? 'hidden' : '';
+    }
+  }
 }
