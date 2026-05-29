@@ -7,8 +7,10 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationStart, Router } from '@angular/router';
-import { CMSService } from '../cms.service';
+import { CMSService, ProjectAttributes } from '../cms.service';
 import Typed from 'typed.js';
+import SwiperCore, { Autoplay, SwiperOptions } from 'swiper';
+SwiperCore.use([Autoplay]);
 
 @Component({
     selector: 'app-header',
@@ -23,11 +25,27 @@ export class HeaderComponent implements AfterViewInit {
   public menuToggle:boolean = false;
 
   public caseStudiesList: any[];
+  public worksList: ProjectAttributes[] = [];
+  public worksSliderConfig: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 50,
+    speed: 400,
+    autoplay: {
+      delay: 7500,
+      disableOnInteraction: false,
+    },
+    loop: true,
+  };
 
   constructor(private projectService: CMSService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {
     projectService.fetchCaseStudiesList()
       .then( (studies: any[]) => {
         this.caseStudiesList = studies;
+    })
+
+    projectService.fetchList().then(projects => {
+      const shuffled = [...projects].sort(() => Math.random() - 0.5);
+      this.worksList = shuffled.slice(0, 5);
     })
 
     // When route changes, close menu and scroll to top

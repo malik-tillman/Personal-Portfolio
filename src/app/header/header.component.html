@@ -20,7 +20,11 @@
     </div>
   </div>
 
-  <h2 class="menu-title">Case Studies</h2>
+  <a routerLink="case-studies" class="case-studies-section-header">
+    <h2 class="menu-title">Case Studies</h2>
+
+    <!-- <p class="view-all-link">View All</p> -->
+  </a>
 
   <div class="case-study-grid">
     <a class="case-study-card" *ngFor="let study of caseStudiesList" [routerLink]="['case-studies', study.slug.current]">
@@ -33,6 +37,30 @@
       </picture>
       <h3 class="card-title">{{ study.title }}</h3>
     </a>
+  </div>
+
+  <div class="works-section" *ngIf="worksList.length">
+    <a routerLink="works" class="works-section-header">
+      <h2 class="menu-title">Web Projects</h2>
+      <p class="view-all-link">View All</p>
+    </a>
+
+    <div class="works-slider">
+      <swiper [config]="worksSliderConfig">
+        <ng-template swiperSlide *ngFor="let work of worksList">
+          <a class="works-slide" [routerLink]="['/works', 'project']" [queryParams]="{ id: work.id }">
+            <picture *ngIf="work.thumbnail_src" class="slide-image">
+              <img
+                class="slide-thumbnail"
+                [src]="work.thumbnail_src.url"
+                [alt]="work.thumbnail_src.alt || work.title"
+              />
+            </picture>
+            <h3 class="slide-title">{{ work.title }}</h3>
+          </a>
+        </ng-template>
+      </swiper>
+    </div>
   </div>
 </nav>
 
