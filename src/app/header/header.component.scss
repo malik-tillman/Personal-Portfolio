@@ -36,7 +36,6 @@ $font-family: Josefin Sans Light, sans-serif;
 
   z-index: 99;
 
-  // background: linear-gradient(-145deg, #0d0d0d 0%, #070707 100%);
   background-color: $bg-color;
   box-shadow: -4px -2px 20px 0px rgb(0 0 0 / 0.4);
 
@@ -54,32 +53,11 @@ $font-family: Josefin Sans Light, sans-serif;
 
   a {
     display: flex;
-    margin-top: 10px;
-
     text-decoration: none;
     color: $menu-text-color;
-    font-size: 24px;
     transform: scale(1);
-    will-change: tranform;
+    will-change: transform;
     transition: transform .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-
-    max-height: 35px;
-
-    margin: 0;
-
-    svg {
-      width: 35px;
-      margin-right: 15px;
-
-      fill: $menu-icon-color;
-      stroke: $menu-icon-color;
-    }
-
-    h3 {
-      margin: 0;
-      position: relative;
-      top: 5px;
-    }
 
     &.small {
       font-size: 16px;
@@ -87,53 +65,79 @@ $font-family: Josefin Sans Light, sans-serif;
     }
 
     &:hover {
-     transform: scale(1.05);
+      transform: scale(1.02);
+    }
+  }
 
-      &.small {
-        transform: scale(1.01);
-      }
+  .menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .menu-header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
   }
 
   .menu-title {
-    font-size: 24px;
-    margin: 0 0 25px;
-  }
-
-  a.view_all {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 25px;
-    padding: 10px;
-    border: 1px solid $menu-text-color;
-    border-radius: var(--border-radius);
-    text-align: center;
-    font-size: 16px;
-    font-family: Josefin Sans, sans-serif;
-    color: $menu-text-color;
-    text-decoration: none;
-
+    font-size: 20px;
+    margin: 0 0 20px;
     text-transform: uppercase;
-
-    max-height: unset;
+    letter-spacing: 2px;
+    font-family: Josefin Sans, sans-serif;
+    opacity: 0.6;
+    font-weight: 400;
   }
 
-  .menu-footer {
-    display: flex;
-    flex-direction: column;
-    margin-top: auto;
+  .case-study-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    flex: 1;
+    align-content: start;
 
-    width: 100%;
-
-    .nav-links {
+    .case-study-card {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
+      flex-direction: column;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s ease, border-color 0.3s ease;
 
-    social-icons {
-      display: none;
+      &:hover {
+        transform: scale(1.03);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .card-image {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+
+        .thumbnail {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .card-title {
+        margin: 0;
+        padding: 10px 12px;
+        font-size: 11px;
+        font-family: Josefin Sans, sans-serif;
+        font-weight: 400;
+        line-height: 1.3;
+      }
     }
   }
 }
@@ -243,8 +247,7 @@ $font-family: Josefin Sans Light, sans-serif;
 }
 
 .close-button {
-  position: absolute;
-  align-self: flex-end;
+  position: relative;
   z-index: 5;
 }
 
@@ -262,46 +265,6 @@ $font-family: Josefin Sans Light, sans-serif;
   padding: 0;
 }
 
-.favorites-title {
-  margin-top: 50px;
-  color: $menu-text-color;
-}
-
-.favorite-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  width: 300px;
-  max-width: 100%;
-
-  //height: 500px;
-
-  justify-self: center;
-  align-self: center;
-}
-
-.favorites {
-  width: 300px;
-
-  picture {
-    height: 100%;
-
-    img {
-      height: 100%;
-      border-radius: 3px;
-      align-self: center;
-    }
-  }
-
-  .works-name {
-    display: flex;
-    align-items: center;
-
-    padding-left: 15px;
-    font-size: 12px;
-  }
-}
 
 
 @media (max-width: 630px) {
@@ -333,42 +296,25 @@ $font-family: Josefin Sans Light, sans-serif;
       right: 0;
     }
 
-    .menu-footer {
-      social-icons {
-        display: block;
+    .case-study-grid {
+      grid-template-columns: 1fr;
+
+      .case-study-card {
+        flex-direction: row;
+
+        .card-image {
+          width: 80px;
+          min-width: 80px;
+          aspect-ratio: 1;
+        }
+
+        .card-title {
+          display: flex;
+          align-items: center;
+          font-size: 12px;
+        }
       }
     }
-
-    a {
-      //margin-bottom: 10px;
-
-      svg {
-        width: 20px;
-      }
-
-      .big {
-        font-size: 16px;
-      }
-    }
-  }
-
-  .favorite-container {
-    grid-gap: 15px;
-  }
-
-  .favorites-title {
-    margin-top: 25px;
   }
 }
 
-@media (max-height: 600px) {
-  .menu {
-    .menu-footer {
-      bottom: 40px;
-    }
-  }
-
-  social-icons {
-    bottom: 10px;
-  }
-}

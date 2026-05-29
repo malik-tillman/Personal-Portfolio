@@ -1,39 +1,38 @@
 <div class="nav-mask" [class.menu_open]="menuToggle" (click)="toggleMenu()"></div>
 
 <nav class="menu" [class.menu_open]="menuToggle">
-  <button class="close-button button" type="button" (click)="toggleMenu()" aria-label="Close menu">
-    <svg class="close-icon" viewBox="0 0 100 100">
-      <g>
-        <path d="M16.7,16.7v66.6h66.6V16.7H16.7z M76.3,76.3H23.7V23.7h52.6V76.3z"></path>
-        <polygon points="40.8,64.2 50,54.9 59.2,64.2 64.2,59.2 54.9,50 64.2,40.8 59.2,35.8 50,45.1 40.8,35.8 35.8,40.8 45.1,50    35.8,59.2  "></polygon>
-      </g>
-    </svg>
-  </button>
+  <div class="menu-header">
+    <div class="nav-links">
+      <a routerLink="about" class="small">About</a>
+      <a routerLink="contact" class="small">Contact</a>
+    </div>
+
+    <div class="menu-header-right">
+      <social-icons></social-icons>
+      <button class="close-button button" type="button" (click)="toggleMenu()" aria-label="Close menu">
+        <svg class="close-icon" viewBox="0 0 100 100">
+          <g>
+            <path d="M16.7,16.7v66.6h66.6V16.7H16.7z M76.3,76.3H23.7V23.7h52.6V76.3z"></path>
+            <polygon points="40.8,64.2 50,54.9 59.2,64.2 64.2,59.2 54.9,50 64.2,40.8 59.2,35.8 50,45.1 40.8,35.8 35.8,40.8 45.1,50    35.8,59.2  "></polygon>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
 
   <h2 class="menu-title">Case Studies</h2>
 
-  <div class="favorite-container">
-    <a class="favorites" *ngFor="let study of caseStudiesList" [routerLink]="['case-studies', study.slug.current]">
-      <picture *ngIf="study.heroImage">
+  <div class="case-study-grid">
+    <a class="case-study-card" *ngFor="let study of caseStudiesList" [routerLink]="['case-studies', study.slug.current]">
+      <picture *ngIf="study.heroImage" class="card-image">
           <img
             class="thumbnail"
             [src]="study.heroImage"
             [alt]="study.title"
           />
       </picture>
-      <h3 class="works-name">{{ study.title }}</h3>
+      <h3 class="card-title">{{ study.title }}</h3>
     </a>
-  </div>
-
-  <a routerLink="case-studies" class="view_all">View All</a>
-
-  <div class="menu-footer">
-    <div class="nav-links">
-      <a routerLink="about" class="small">About</a>
-      <a routerLink="contact" class="small">Contact</a>
-    </div>
-
-    <social-icons></social-icons>
   </div>
 </nav>
 
