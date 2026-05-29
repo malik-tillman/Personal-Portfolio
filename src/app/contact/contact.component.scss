@@ -43,22 +43,7 @@
   }
 
   contact-form {
-    --primary-color: #cfcfcf;
-
-    padding: 35px;
-
-    max-width: 750px;
-
-    background-color: var(--tertiary-color);
-    border-radius: 15px;
-
-    width: 100%;
-
     margin-bottom: 50px;
-
-    @media screen and (max-width: 630px) {
-      padding: 25px;
-    }
   }
 
   contact-info {

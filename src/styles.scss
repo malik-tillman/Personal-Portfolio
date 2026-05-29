@@ -356,3 +356,29 @@ about contact-info, contact contact-info {
   --max-width: 1750px;
   --border-radius: 25px;
 }
+
+contact-form {
+  --primary-color: #cfcfcf;
+
+  display: block;
+  padding: 40px;
+  max-width: 750px;
+  width: 100%;
+
+  background-color: var(--tertiary-color);
+  border: 1px solid rgb(250 237 205 / 12%);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgb(250 237 205 / 6%), 0 0 80px rgb(250 237 205 / 3%);
+
+  transition: box-shadow 0.4s ease;
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 0 40px rgb(250 237 205 / 10%), 0 0 100px rgb(250 237 205 / 5%);
+  }
+
+  @media screen and (max-width: 630px) {
+    padding: 25px;
+    border-radius: 15px;
+  }
+}
