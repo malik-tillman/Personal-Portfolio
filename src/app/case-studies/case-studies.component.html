@@ -24,9 +24,11 @@
         </div>
 
         <div class="copy-container">
-          <p *ngIf="study?.role" class="role">
-            {{study.role}}
-          </p>
+          <div class="meta-pills" *ngIf="study?.role || study?.timeline">
+            <p *ngIf="study?.role" class="role">
+              <span class="meta-label">Role:</span> {{study.role}}
+            </p>
+          </div>
 
           <h2 class="study-title">
             {{study.title}}

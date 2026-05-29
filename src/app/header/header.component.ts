@@ -7,7 +7,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationStart, Router } from '@angular/router';
-import { CMSService, ProjectAttributes } from '../cms.service';
+import { CMSService } from '../cms.service';
 import Typed from 'typed.js';
 
 @Component({
@@ -22,12 +22,12 @@ export class HeaderComponent implements AfterViewInit {
   /* Handles opening and closing menu */
   public menuToggle:boolean = false;
 
-  public worksList: ProjectAttributes[];
+  public caseStudiesList: any[];
 
   constructor(private projectService: CMSService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {
-    projectService.fetchListByID(this.projectService.DEFAULTS)
-      .then( (projects: ProjectAttributes[]) => {
-        this.worksList = projects;
+    projectService.fetchCaseStudiesList()
+      .then( (studies: any[]) => {
+        this.caseStudiesList = studies;
     })
 
     // When route changes, close menu and scroll to top

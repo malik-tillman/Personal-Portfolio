@@ -10,22 +10,22 @@
     </svg>
   </button>
 
-  <h2 class="menu-title">Works</h2>
+  <h2 class="menu-title">Case Studies</h2>
 
   <div class="favorite-container">
-    <a class="favorites" *ngFor="let work of worksList" [routerLink]="['works', 'project']" [queryParams]="{ id: work.id }">
-      <picture *ngIf="work.thumbnail_src">
+    <a class="favorites" *ngFor="let study of caseStudiesList" [routerLink]="['case-studies', study.slug.current]">
+      <picture *ngIf="study.heroImage">
           <img
             class="thumbnail"
-            src="{{ work.thumbnail_src.url }}"
-            alt=""
+            [src]="study.heroImage"
+            [alt]="study.title"
           />
       </picture>
-      <h3 class="works-name">{{ work.title }}</h3>
+      <h3 class="works-name">{{ study.title }}</h3>
     </a>
   </div>
 
-  <a routerLink="works" class="view_all">View All</a>
+  <a routerLink="case-studies" class="view_all">View All</a>
 
   <div class="menu-footer">
     <div class="nav-links">
@@ -50,11 +50,11 @@
 
     <ul class="nav-menu">
       <li>
-        <a routerLink="works">Works</a>
+        <a routerLink="case-studies">Case Studies</a>
       </li>
 
       <li>
-        <a routerLink="case-studies">Case Studies</a>
+        <a routerLink="works">Web Projects</a>
       </li>
 
       <li>
@@ -62,7 +62,7 @@
       </li>
 
       <li>
-        <a routerLink="about">About</a>
+        <a routerLink="about">About Me</a>
       </li>
     </ul>
 
