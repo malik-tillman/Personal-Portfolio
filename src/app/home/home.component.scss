@@ -119,18 +119,23 @@ p {
   .right-panel {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     gap: 25px;
 
     z-index: 1;
 
     position: absolute;
-    right: 0;
     top: 0;
     padding-right: 25px;
 
     max-width: 350px;
+    max-width: var(--max-width);
+    width: 100%;
+    margin: auto;
 
     .case-study-slider {
+      max-width: 350px;
+
       .case-study-slide {
         display: flex;
         flex-direction: row;

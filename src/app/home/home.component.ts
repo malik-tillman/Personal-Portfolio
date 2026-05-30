@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     spaceBetween: 12,
     speed: 400,
     autoplay: {
-      delay: 5000,
+      delay: 10000,
       disableOnInteraction: false,
     },
     loop: true,

@@ -50,6 +50,12 @@
   }
 
   &.end {
+    align-items: flex-end;
+
+    .info_container, .link_container {
+      align-items: flex-end;
+    }
+
     .item {
       justify-content: flex-end;
     }
