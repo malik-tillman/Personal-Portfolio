@@ -63,8 +63,16 @@ export class WorksComponent implements OnInit, AfterViewInit {
     this.projectService.fetchList().then( projects => {
       console.log("Projects", projects)
 
+      const favoriteProjects = [
+        'goshi',
+        'rita-hazan',
+        'romeo-hunte-nyc'
+      ]
+
       this.worksCount = projects.length;
-      this.worksList = this.condensed ? projects.slice(0, 3) : projects;
+      this.worksList = this.condensed
+        ? projects.filter(project => favoriteProjects.includes(project.slug))
+        : projects;
 
       if(!this.condensed) {
         this.shuffle(this.worksList);
