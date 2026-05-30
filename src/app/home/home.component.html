@@ -5,7 +5,7 @@
     <div class="case-study-slider" *ngIf="caseStudiesList.length">
       <swiper [config]="caseStudySliderConfig">
         <ng-template swiperSlide *ngFor="let study of caseStudiesList">
-          <a class="case-study-slide" [routerLink]="['case-studies', study.slug.current]">
+          <a class="case-study-slide" [routerLink]="['/case-studies', study.slug.current]">
             <picture *ngIf="study.heroImage" class="slide-image">
               <img
                 class="slide-thumbnail"

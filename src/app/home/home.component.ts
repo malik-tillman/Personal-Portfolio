@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
       disableOnInteraction: false,
     },
     loop: true,
+    preventClicks: false,
+    preventClicksPropagation: false,
   };
 
   /* Text to be typed */
