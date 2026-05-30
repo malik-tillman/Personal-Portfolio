@@ -28,16 +28,8 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'case-studies', component: CaseStudiesComponent },
   { path: 'case-studies/:slug', component: CaseStudyComponent },
-  {
-    path: 'works/project',
-    component: ProjectComponent,
-    children: [
-      {
-        path: ':id',
-        component: ProjectComponent
-      }
-    ]
-  },
+  { path: 'works/project', component: ProjectComponent },
+  { path: 'works/project/:slug', component: ProjectComponent },
   {
     path: 'works',
     component: WorksComponent,

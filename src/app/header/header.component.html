@@ -48,7 +48,7 @@
     <div class="works-slider">
       <swiper [config]="worksSliderConfig">
         <ng-template swiperSlide *ngFor="let work of worksList">
-          <a class="works-slide" [routerLink]="['/works', 'project']" [queryParams]="{ id: work.id }">
+          <a class="works-slide" [routerLink]="['/works/project', work.slug]">
             <picture *ngIf="work.thumbnail_src" class="slide-image">
               <img
                 class="slide-thumbnail"

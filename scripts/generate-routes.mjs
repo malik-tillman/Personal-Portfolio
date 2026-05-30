@@ -18,13 +18,13 @@ const client = createClient(sanityConfig);
 
 async function generateRoutes() {
   try {
-    console.log('Fetching project IDs from Sanity...');
-    const query = '*[_type == "project"]{_id}';
+    console.log('Fetching project slugs from Sanity...');
+    const query = '*[_type == "project"]{_id, slug}';
     const projects = await client.fetch(query);
 
     const projectRoutes = projects.map(p => {
-      const id = p._id.replace('project-', '');
-      return `/works/project/${id}`;
+      const slug = p.slug?.current || p._id.replace('project-', '');
+      return `/works/project/${slug}`;
     });
 
     console.log('Fetching case study slugs from Sanity...');

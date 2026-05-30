@@ -3,15 +3,16 @@
     <h1>Digital Solutions</h1>
 
     <p class="description">
-      Custom web applications, rapid prototypes, and freelance client builds
-      demonstrating agile engineering and modern web development practices.
+      Web projects and freelance client builds
+      demonstrating my agility as an engineer and capabilities
+      to build modern web applications.
     </p>
   </div>
 
   <div class="works-list">
     <div class="works-container">
       <ng-container *ngFor="let work of this.worksList">
-        <a class="work-card" [routerLink]="['/works/project']" [queryParams]="{ id: work.id }">
+        <a class="work-card" [routerLink]="['/works/project', work.slug]">
           <picture *ngIf="work.thumbnail_src" class="thumbnail-container aspect-ratio{{work.aspectRatio}}">
             <img
               class="thumbnail"

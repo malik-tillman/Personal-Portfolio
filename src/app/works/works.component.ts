@@ -61,10 +61,14 @@ export class WorksComponent implements OnInit, AfterViewInit {
     this.emptyProjects = false;
 
     this.projectService.fetchList().then( projects => {
+      console.log("Projects", projects)
+
       this.worksCount = projects.length;
       this.worksList = this.condensed ? projects.slice(0, 3) : projects;
 
-      this.shuffle(this.worksList);
+      if(!this.condensed) {
+        this.shuffle(this.worksList);
+      }
 
       if (this.worksList.length === 0)
         this.emptyProjects = true;

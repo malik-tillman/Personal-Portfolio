@@ -45,21 +45,27 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.activatedRouterSubscription = this.activatedRoute.queryParams.subscribe(queryParams => {
-      const id = this.activatedRoute.snapshot.paramMap.get('id') || queryParams['id'];
+    this.activatedRouterSubscription = this.activatedRoute.params.subscribe(params => {
+      const slug = params['slug'];
+      const queryId = this.activatedRoute.snapshot.queryParams['id'];
       this.projectNotFound = false;
 
-      if (!id) return;
+      let fetchPromise: Promise<any>;
 
-      const projectId = isNaN(Number(id)) ? id : Number(id);
-      this.projectService.fetchProject(projectId as any).then(data => {
+      if (slug) {
+        fetchPromise = this.projectService.fetchProjectBySlug(slug);
+      } else if (queryId) {
+        const projectId = isNaN(Number(queryId)) ? queryId : Number(queryId);
+        fetchPromise = this.projectService.fetchProject(projectId as any);
+      } else {
+        return;
+      }
+
+      fetchPromise.then(data => {
         this.work = data;
 
         if (this.work) {
-          const isPathParam = !!this.activatedRoute.snapshot.paramMap.get('id');
-          const projectUrl = isPathParam
-            ? `${environment.siteUrl}/works/project/${this.work.id}`
-            : `${environment.siteUrl}/works/project?id=${this.work.id}`;
+          const projectUrl = `${environment.siteUrl}/works/project/${this.work.slug || this.work.id}`;
 
           this.seo.update({
             title: this.work.title,
@@ -78,6 +84,8 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
               'url': projectUrl
             }
           });
+        } else {
+          this.projectNotFound = true;
         }
 
         this.initializeViewer(this.galleryImage);

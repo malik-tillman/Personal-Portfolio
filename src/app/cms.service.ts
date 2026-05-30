@@ -44,6 +44,7 @@ export class CMSService {
       aspectRatio: sanityProject.aspectRatio,
       role: sanityProject.role,
       timeline: sanityProject.timeline,
+      slug: sanityProject.slug.current,
     };
 
     if (sanityProject.mainImage) {
@@ -82,6 +83,21 @@ export class CMSService {
       }
     } catch (error) {
       console.error('Sanity fetchProject error:', error);
+    }
+    return null;
+  }
+
+  /**
+   * Returns project data by slug
+   * */
+  public async fetchProjectBySlug(slug: string): Promise<ProjectAttributes> {
+    try {
+      const data = await this.sanity.fetch<any>(`*[_type == "project" && slug.current == $slug][0]`, { slug });
+      if (data) {
+        return this.__formatSanityProject__(data, true);
+      }
+    } catch (error) {
+      console.error('Sanity fetchProjectBySlug error:', error);
     }
     return null;
   }
@@ -257,6 +273,8 @@ export interface ProjectAttributes {
   aspectRatio?: string
   role?: string,
   timeline?: string
+
+  slug?: string
 }
 
 export interface _File {
