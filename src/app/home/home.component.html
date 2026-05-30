@@ -2,16 +2,22 @@
   <three></three>
 
   <div class="right-panel">
-    <swiper-showcase
-      [loop]="true"
-      [perPage]="1"
-      [spacing]="0"
-      [autoplay]="false"
-      [delay]="5000"
-      [hideTitle]="true"
-      [arrows]="false"
-      [width]="250"
-    ></swiper-showcase>
+    <div class="case-study-slider" *ngIf="caseStudiesList.length">
+      <swiper [config]="caseStudySliderConfig">
+        <ng-template swiperSlide *ngFor="let study of caseStudiesList">
+          <a class="case-study-slide" [routerLink]="['case-studies', study.slug.current]">
+            <picture *ngIf="study.heroImage" class="slide-image">
+              <img
+                class="slide-thumbnail"
+                [src]="study.heroImage"
+                [alt]="study.title"
+              />
+            </picture>
+            <h3 class="slide-title">{{ study.title }}</h3>
+          </a>
+        </ng-template>
+      </swiper>
+    </div>
 
     <contact-info alignment="end"></contact-info>
   </div>

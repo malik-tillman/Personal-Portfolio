@@ -9,12 +9,27 @@ import { isPlatformBrowser } from '@angular/common';
 import Typed from 'typed.js';
 import { SeoService } from '../seo.service';
 import { environment } from '../../environments/environment';
+import { CMSService } from '../cms.service';
+import SwiperCore, { Autoplay, SwiperOptions } from 'swiper';
+SwiperCore.use([Autoplay]);
 
 @Component({
     selector: 'home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss'],
     standalone: false
 })
 export class HomeComponent implements OnInit {
+  public caseStudiesList: any[] = [];
+  public caseStudySliderConfig: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 12,
+    speed: 400,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    loop: true,
+  };
+
   /* Text to be typed */
   typedText = [
     'System Design',
@@ -36,7 +51,10 @@ export class HomeComponent implements OnInit {
     'IOS Development'
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private seo: SeoService, private cmsService: CMSService) {
+    this.cmsService.fetchCaseStudiesList().then(studies => {
+      this.caseStudiesList = studies;
+    });
     const skillsString = this.typedText.join(', ');
 
     this.seo.update({
