@@ -59,6 +59,7 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
   private particleGeometry: BufferGeometry | null = null;
   private particleMaterial: PointsMaterial | null = null;
   private logoMaterial: MeshPhysicalMaterial | null = null;
+  private eventAbortController: AbortController | null = null;
 
   /* Getter for canvas native element */
   private get canvas(): HTMLCanvasElement {
@@ -69,6 +70,12 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
+      // 0. Abort all canvas event listeners
+      if (this.eventAbortController) {
+        this.eventAbortController.abort();
+        this.eventAbortController = null;
+      }
+
       // 1. Cancel the animation frame loop
       if (this.animationFrameId) {
         cancelAnimationFrame(this.animationFrameId);
@@ -437,6 +444,9 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
       };
 
       // Handle hover cursor (Desktop only)
+      this.eventAbortController = new AbortController();
+      const signal = this.eventAbortController.signal;
+
       this.canvas.addEventListener('mousemove', (event) => {
         if (!logo || isAnimating) {
           this.canvas.style.cursor = 'default';
@@ -455,12 +465,12 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
         const intersects = raycaster.intersectObjects(logo.CHUNKS, true);
 
         this.canvas.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
-      });
+      }, { signal });
 
       // Desktop Double Click
       this.canvas.addEventListener('dblclick', (event) => {
         triggerEasterEgg(event.clientX, event.clientY);
-      });
+      }, { signal });
 
       // Mobile Drag & Double Tap
       let lastTap = 0;
@@ -484,7 +494,7 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
           previousTouch.y = event.touches[0].clientY;
         }
         lastTap = currentTime;
-      }, { passive: false });
+      }, { passive: false, signal });
 
       this.canvas.addEventListener('touchmove', (event) => {
         if (!isDragging || !logo || isAnimating) return;
@@ -506,14 +516,14 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
         previousTouch.y = event.touches[0].clientY;
 
         event.preventDefault(); // Prevent page scrolling while rotating the logo
-      }, { passive: false });
+      }, { passive: false, signal });
 
       this.canvas.addEventListener('touchend', () => {
         isDragging = false;
-      });
+      }, { signal });
       this.canvas.addEventListener('touchcancel', () => {
         isDragging = false;
-      });
+      }, { signal });
     }))
 
     /* Post-processing (Bloom) */

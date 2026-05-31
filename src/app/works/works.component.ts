@@ -4,15 +4,11 @@
  *
  * 2020
  * */
-import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID, Input } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef, Inject, PLATFORM_ID, Input } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CMSService, ProjectAttributes} from '../cms.service';
 import { SeoService } from '../seo.service';
 import { environment } from '../../environments/environment';
-let Lottie: any;
-if (typeof window !== 'undefined') {
-  Lottie = require('lottie-web');
-}
 
 @Component({
     selector: 'app-works',
@@ -21,7 +17,7 @@ if (typeof window !== 'undefined') {
     standalone: false,
     host: { 'ngSkipHydration': 'true' }
 })
-export class WorksComponent implements OnInit, AfterViewInit {
+export class WorksComponent implements OnInit {
   @Input() public condensed: boolean = false;
 
   /* Track which cards have expanded tags */
@@ -29,9 +25,6 @@ export class WorksComponent implements OnInit, AfterViewInit {
   public overflowingTags = new Set<number>();
 
   @ViewChildren('tagsContainer') tagsContainers: QueryList<ElementRef>;
-
-  /* Child Ref for image loader animation */
-  @ViewChildren('image_loader') imageLoader: QueryList<ElementRef>;
 
   /* Lazy load default image */
   public default_image = 'assets/lazy-thumb.jpg';
@@ -83,25 +76,6 @@ export class WorksComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.checkTagsOverflow(), 100);
       }
     })
-  }
-
-  ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) return;
-    /* Initiate loader animation in lazy loaded cards */
-    let _loaderSubscription = this.imageLoader.changes.subscribe((queryList:QueryList<ElementRef>) => {
-      queryList.toArray().forEach(loader => {
-        Lottie.loadAnimation({
-          container: loader.nativeElement,
-          path: 'assets/logo-load-data.json',
-          renderer: 'svg',
-          loop: true,
-          autoplay: true
-        })
-      })
-
-      _loaderSubscription.unsubscribe();
-    })
-
   }
 
   private checkTagsOverflow() {

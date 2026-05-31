@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CMSService } from '../cms.service';
 import { SeoService } from '../seo.service';
 import { toHTML } from '@portabletext/to-html';
-import imageUrlBuilder from '@sanity/image-url';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-case-study',
@@ -13,11 +11,12 @@ import { environment } from '../../environments/environment';
   encapsulation: ViewEncapsulation.None,
   standalone: false
 })
-export class CaseStudyComponent implements OnInit {
+export class CaseStudyComponent implements OnInit, OnDestroy {
   public caseStudy: any;
   public portableTextHtml: string = '';
   public prevStudy: any = null;
   public nextStudy: any = null;
+  private paramMapSub: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +25,7 @@ export class CaseStudyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.paramMapSub = this.route.paramMap.subscribe(params => {
       const slug = params.get('slug');
       if (slug) {
         this.prevStudy = null;
@@ -61,5 +60,12 @@ export class CaseStudyComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.paramMapSub) {
+      this.paramMapSub.unsubscribe();
+      this.paramMapSub = null;
+    }
   }
 }

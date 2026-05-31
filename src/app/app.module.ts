@@ -16,7 +16,6 @@ import { WorksComponent } from './works/works.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
-import { LoaderComponent } from './loader/loader.component';
 import { SocialIconsComponent } from './social-icons/social-icons.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SwiperToolboxComponent } from './swiper-toolbox/toolbox.component';
@@ -37,7 +36,6 @@ import { CaseStudyComponent } from './case-study/case-study.component';
         AboutComponent,
         ContactComponent,
         FooterComponent,
-        LoaderComponent,
         SocialIconsComponent,
         NotFoundComponent,
         SwiperToolboxComponent,

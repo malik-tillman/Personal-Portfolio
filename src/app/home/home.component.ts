@@ -4,7 +4,7 @@
  *
  * 2020
  * */
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import Typed from 'typed.js';
 import { SeoService } from '../seo.service';
@@ -17,7 +17,8 @@ SwiperCore.use([Autoplay]);
     selector: 'home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss'],
     standalone: false
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private typedInstance: any = null;
   public caseStudiesList: any[] = [];
   public caseStudySliderConfig: SwiperOptions = {
     slidesPerView: 1,
@@ -86,7 +87,7 @@ export class HomeComponent implements OnInit {
 
     if (isPlatformBrowser(this.platformId)) {
       /* Initiate Typed object */
-          new Typed('#typed', {
+          this.typedInstance = new Typed('#typed', {
           strings: this.typedText,
           typeSpeed: 75,
           backSpeed: 100,
@@ -97,7 +98,15 @@ export class HomeComponent implements OnInit {
           autoInsertCss: true,
           loop: true,
           shuffle: true,
-          }).start();
+          });
+          this.typedInstance.start();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.typedInstance) {
+      this.typedInstance.destroy();
+      this.typedInstance = null;
     }
   }
 

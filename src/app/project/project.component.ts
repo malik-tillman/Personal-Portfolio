@@ -37,6 +37,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
 
   /* Error Page Toggle */
   public projectNotFound = false;
+  private viewerInstance: any = null;
 
   constructor(
     private router: Router,
@@ -105,13 +106,20 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     if(this.activatedRouterSubscription) this.activatedRouterSubscription.unsubscribe();
+    if (this.viewerInstance) {
+      this.viewerInstance.destroy();
+      this.viewerInstance = null;
+    }
   }
 
   initializeViewer(list) {
     if (!isPlatformBrowser(this.platformId)) return;
     if(list) {
       const _subscription = list.changes.subscribe((queryList:QueryList<ElementRef>) => {
-        const gallery = new Viewer(this.galleryContainer.nativeElement, {
+        if (this.viewerInstance) {
+          this.viewerInstance.destroy();
+        }
+        this.viewerInstance = new Viewer(this.galleryContainer.nativeElement, {
         });
 
         _subscription.unsubscribe();
