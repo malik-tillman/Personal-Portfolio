@@ -65,10 +65,6 @@ export class WorksComponent implements OnInit {
         ? projects.filter(project => favoriteProjects.includes(project.slug))
         : projects;
 
-      if(!this.condensed) {
-        this.shuffle(this.worksList);
-      }
-
       if (this.worksList.length === 0)
         this.emptyProjects = true;
 

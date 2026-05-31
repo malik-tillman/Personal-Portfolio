@@ -279,6 +279,10 @@
 
     @media (max-width: 630px) {
       flex-direction: column;
+
+      .nav-link.next {
+        margin-left: unset;
+      }
     }
   }
 }
