@@ -18,8 +18,7 @@ if (typeof window !== 'undefined') {
     selector: 'app-works',
     templateUrl: './works.component.html',
     styleUrls: ['./works.component.scss'],
-    standalone: false,
-    host: { 'ngSkipHydration': 'true' }
+    standalone: false
 })
 export class WorksComponent implements OnInit, AfterViewInit {
   @Input() public condensed: boolean = false;

@@ -139,6 +139,17 @@
     </div>
   </ng-container>
 
+  <nav class="prev-next-nav" *ngIf="prevWork || nextWork">
+    <a *ngIf="prevWork" [routerLink]="['/works/project', prevWork.slug]" class="nav-link prev">
+      <span class="nav-label">← Previous</span>
+      <span class="nav-title">{{ prevWork.title }}</span>
+    </a>
+    <a *ngIf="nextWork" [routerLink]="['/works/project', nextWork.slug]" class="nav-link next">
+      <span class="nav-label">Next →</span>
+      <span class="nav-title">{{ nextWork.title }}</span>
+    </a>
+  </nav>
+
   <div class="links-section">
     <links [contact]="true" [projects]="true" [about]="true"></links>
   </div>

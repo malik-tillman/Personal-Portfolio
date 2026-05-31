@@ -18,6 +18,8 @@ export class CMSService {
   private _quotes: _FormattedQuote[];
   private _errorMedia: _File[];
   private _successMedia: _File[];
+  private _projectsList: ProjectAttributes[];
+  private _caseStudiesList: any[];
 
   constructor(private sanity: SanityService) {}
 
@@ -106,10 +108,13 @@ export class CMSService {
    * Resolves full work list.
    * */
   public async fetchList(): Promise<ProjectAttributes[]> {
+    if (this._projectsList) return this._projectsList;
+
     try {
       const sanityData = await this.sanity.fetch<any[]>('*[_type == "project"] | order(publishedAt desc)');
       if (sanityData) {
-        return sanityData.map(sp => this.__formatSanityProject__(sp));
+        this._projectsList = sanityData.map(sp => this.__formatSanityProject__(sp));
+        return this._projectsList;
       }
     } catch (error) {
       console.error('Sanity fetchList error:', error);
@@ -140,15 +145,18 @@ export class CMSService {
   }
 
   public async fetchCaseStudiesList(): Promise<any[]> {
+    if (this._caseStudiesList) return this._caseStudiesList;
+
     try {
       const sanityData = await this.sanity.fetch<any[]>('*[_type == "caseStudy"] | order(_createdAt desc)');
       if (sanityData) {
-        return sanityData.map(study => ({
+        this._caseStudiesList = sanityData.map(study => ({
           ...study,
           heroImage: study.heroImage
             ? this.sanity.getImageUrl(study.heroImage).width(800).quality(80).auto('format').url()
             : null
         }));
+        return this._caseStudiesList;
       }
     } catch (error) {
       console.error('Sanity fetchCaseStudiesList error:', error);

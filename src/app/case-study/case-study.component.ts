@@ -16,6 +16,8 @@ import { environment } from '../../environments/environment';
 export class CaseStudyComponent implements OnInit {
   public caseStudy: any;
   public portableTextHtml: string = '';
+  public prevStudy: any = null;
+  public nextStudy: any = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,13 +29,22 @@ export class CaseStudyComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const slug = params.get('slug');
       if (slug) {
+        this.prevStudy = null;
+        this.nextStudy = null;
+
         this.cmsService.fetchCaseStudy(slug).then(data => {
           this.caseStudy = data;
           this.seo.update({
             title: `${data.title} | Case Study`,
             description: `Case study for ${data.title}`
           });
-          
+
+          this.cmsService.fetchCaseStudiesList().then(studies => {
+            const idx = studies.findIndex(s => s.slug.current === slug);
+            if (idx > 0) this.prevStudy = studies[idx - 1];
+            if (idx < studies.length - 1) this.nextStudy = studies[idx + 1];
+          });
+
           if (data.body) {
             this.portableTextHtml = toHTML(data.body, {
               components: {

@@ -44,6 +44,17 @@
 
   <div class="body-content" [innerHTML]="portableTextHtml"></div>
 
+  <nav class="prev-next-nav" *ngIf="prevStudy || nextStudy">
+    <a *ngIf="prevStudy" [routerLink]="['/case-studies', prevStudy.slug.current]" class="nav-link prev">
+      <span class="nav-label">← Previous</span>
+      <span class="nav-title">{{ prevStudy.title }}</span>
+    </a>
+    <a *ngIf="nextStudy" [routerLink]="['/case-studies', nextStudy.slug.current]" class="nav-link next">
+      <span class="nav-label">Next →</span>
+      <span class="nav-title">{{ nextStudy.title }}</span>
+    </a>
+  </nav>
+
   <links
     [contact]="true"
     [projects]="false"

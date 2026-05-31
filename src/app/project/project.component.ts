@@ -28,6 +28,8 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
 
   /* Project Object */
   public work: any;
+  public prevWork: any = null;
+  public nextWork: any = null;
 
   /* Media URIs */
   public imgURIs = [];
@@ -49,6 +51,8 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
       const slug = params['slug'];
       const queryId = this.activatedRoute.snapshot.queryParams['id'];
       this.projectNotFound = false;
+      this.prevWork = null;
+      this.nextWork = null;
 
       let fetchPromise: Promise<any>;
 
@@ -83,6 +87,12 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
               'dateCreated': this.work.createdAt,
               'url': projectUrl
             }
+          });
+          this.projectService.fetchList().then(projects => {
+            const currentSlug = this.work.slug;
+            const idx = projects.findIndex(p => p.slug === currentSlug);
+            if (idx > 0) this.prevWork = projects[idx - 1];
+            if (idx < projects.length - 1) this.nextWork = projects[idx + 1];
           });
         } else {
           this.projectNotFound = true;
