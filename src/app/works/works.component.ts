@@ -18,7 +18,8 @@ if (typeof window !== 'undefined') {
     selector: 'app-works',
     templateUrl: './works.component.html',
     styleUrls: ['./works.component.scss'],
-    standalone: false
+    standalone: false,
+    host: { 'ngSkipHydration': 'true' }
 })
 export class WorksComponent implements OnInit, AfterViewInit {
   @Input() public condensed: boolean = false;
@@ -60,8 +61,6 @@ export class WorksComponent implements OnInit, AfterViewInit {
     this.emptyProjects = false;
 
     this.projectService.fetchList().then( projects => {
-      console.log("Projects", projects)
-
       const favoriteProjects = [
         'goshi',
         'rita-hazan',
