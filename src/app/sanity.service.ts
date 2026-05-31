@@ -48,7 +48,6 @@ export class SanityService {
     // On the browser, check if prerendered data exists in TransferState
     if (this.isBrowser && this.transferState.hasKey(stateKey)) {
       const data = this.transferState.get(stateKey, null as unknown as T);
-      this.transferState.remove(stateKey);
       return data;
     }
 
