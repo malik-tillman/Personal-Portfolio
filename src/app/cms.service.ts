@@ -19,7 +19,10 @@ export class CMSService {
   private _errorMedia: _File[];
   private _successMedia: _File[];
   private _projectsList: ProjectAttributes[];
+  private _projectsBySlug = new Map<string, ProjectAttributes>();
+  private _projectsById = new Map<string, ProjectAttributes>();
   private _caseStudiesList: any[];
+  private _caseStudyBySlug = new Map<string, any>();
 
   constructor(private sanity: SanityService) {}
 
@@ -77,11 +80,17 @@ export class CMSService {
    * Returns project data by ID
    * */
   public async fetchProject(id: number | string): Promise<ProjectAttributes> {
+    const cacheKey = String(id);
+    if (this._projectsById.has(cacheKey)) return this._projectsById.get(cacheKey);
+
     try {
       const sanityId = typeof id === 'number' ? `project-${id}` : id;
       const data = await this.sanity.fetch<any>(`*[_type == "project" && _id == $id][0]`, { id: sanityId });
       if (data) {
-        return this.__formatSanityProject__(data, true);
+        const project = this.__formatSanityProject__(data, true);
+        this._projectsById.set(cacheKey, project);
+        if (project.slug) this._projectsBySlug.set(project.slug, project);
+        return project;
       }
     } catch (error) {
       console.error('Sanity fetchProject error:', error);
@@ -93,10 +102,15 @@ export class CMSService {
    * Returns project data by slug
    * */
   public async fetchProjectBySlug(slug: string): Promise<ProjectAttributes> {
+    if (this._projectsBySlug.has(slug)) return this._projectsBySlug.get(slug);
+
     try {
       const data = await this.sanity.fetch<any>(`*[_type == "project" && slug.current == $slug][0]`, { slug });
       if (data) {
-        return this.__formatSanityProject__(data, true);
+        const project = this.__formatSanityProject__(data, true);
+        this._projectsBySlug.set(slug, project);
+        if (project.id != null) this._projectsById.set(String(project.id), project);
+        return project;
       }
     } catch (error) {
       console.error('Sanity fetchProjectBySlug error:', error);
@@ -165,15 +179,19 @@ export class CMSService {
   }
 
   public async fetchCaseStudy(slug: string): Promise<any> {
+    if (this._caseStudyBySlug.has(slug)) return this._caseStudyBySlug.get(slug);
+
     try {
       const data = await this.sanity.fetch<any>(`*[_type == "caseStudy" && slug.current == $slug][0]`, { slug });
       if (data) {
-        return {
+        const study = {
           ...data,
           heroImage: data.heroImage
             ? this.sanity.getImageUrl(data.heroImage).width(1200).quality(85).auto('format').url()
             : null
         };
+        this._caseStudyBySlug.set(slug, study);
+        return study;
       }
       return data;
     } catch (error) {
