@@ -80,11 +80,6 @@ export const projectType = defineType({
       type: 'datetime',
     }),
     defineField({
-      name: 'body',
-      type: 'array',
-      of: [{type: 'block'}],
-    }),
-    defineField({
         name: 'website',
         type: 'url',
         title: 'Website URL'
