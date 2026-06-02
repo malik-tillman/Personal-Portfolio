@@ -57,7 +57,7 @@ export class WorksComponent implements OnInit {
       const favoriteProjects = [
         'goshi',
         'rita-hazan',
-        'romeo-hunte-nyc'
+        'rugged-shark'
       ]
 
       this.worksCount = projects.length;
