@@ -55,15 +55,19 @@ export class WorksComponent implements OnInit {
 
     this.projectService.fetchList().then( projects => {
       const favoriteProjects = [
-        'goshi',
-        'rita-hazan',
-        'rugged-shark'
+        'pca-skin',
+        'auntflow',
+        'fluid-js'
       ]
+
+      console.log(projects)
 
       this.worksCount = projects.length;
       this.worksList = this.condensed
         ? projects.filter(project => favoriteProjects.includes(project.slug))
         : projects;
+
+      console.log(this.worksList)
 
       if (this.worksList.length === 0)
         this.emptyProjects = true;

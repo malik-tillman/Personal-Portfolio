@@ -13,7 +13,7 @@
     <div class="works-container">
       <ng-container *ngFor="let work of this.worksList">
         <a class="work-card" [routerLink]="['/works/project', work.slug]">
-          <picture *ngIf="work.thumbnail_src" class="thumbnail-container aspect-ratio{{work.aspectRatio}}">
+          <picture *ngIf="work.thumbnail_src" class="thumbnail-container aspect-ratio-{{work.aspectRatio}}">
             <img
               class="thumbnail"
               fetchpriority="high"

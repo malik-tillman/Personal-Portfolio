@@ -82,19 +82,23 @@
 
     overflow: hidden;
 
-    &.aspect-ratio7\/8 {
+    &.aspect-ratio-7\/8, &.aspect-ratio-tall {
       aspect-ratio: 7/8;
+
+      @media screen and (max-width: 768px) {
+        aspect-ratio: 4/3;
+      }
     }
 
-    &.aspect-ratio1\/1 {
+    &.aspect-ratio-1\/1 {
       aspect-ratio: 1/1;
     }
 
-    &.aspect-ratio4\/3 {
+    &.aspect-ratio-4\/3 {
       aspect-ratio: 4/3;
     }
 
-    &.aspect-ratio16\/9 {
+    &.aspect-ratio-16\/9, &.aspect-ratio-wide {
       aspect-ratio: 16/9;
     }
 

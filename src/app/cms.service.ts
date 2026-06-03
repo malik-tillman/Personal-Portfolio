@@ -49,7 +49,7 @@ export class CMSService {
       aspectRatio: sanityProject.aspectRatio,
       role: sanityProject.role,
       timeline: sanityProject.timeline,
-      slug: sanityProject.slug.current,
+      slug: sanityProject.slug?.current || '',
     };
 
     if (sanityProject.mainImage) {
