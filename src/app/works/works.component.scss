@@ -136,6 +136,8 @@
       overflow: hidden;
       max-height: 44px;
 
+      display: none;
+
       &.expanded {
         max-height: none;
       }
