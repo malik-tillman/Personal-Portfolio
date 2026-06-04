@@ -21,8 +21,8 @@ export class WorksComponent implements OnInit {
   @Input() public condensed: boolean = false;
 
   /* Track which cards have expanded tags */
-  public expandedTags = new Set<number>();
-  public overflowingTags = new Set<number>();
+  public expandedTags = new Set<string>();
+  public overflowingTags = new Set<string>();
 
   @ViewChildren('tagsContainer') tagsContainers: QueryList<ElementRef>;
 
@@ -79,40 +79,38 @@ export class WorksComponent implements OnInit {
   }
 
   private checkTagsOverflow() {
-    if (!this.tagsContainers) return;
+    if (!this.tagsContainers) {
+      return;
+    }
+
     const updated = new Set(this.overflowingTags);
+
     this.tagsContainers.forEach((ref: ElementRef) => {
       const el = ref.nativeElement as HTMLElement;
-      const id = Number(el.getAttribute('data-work-id'));
-      if (isNaN(id)) return;
+      const id = el.getAttribute('data-work-id');
+
+      if (!id) {
+        return;
+      }
+
       if (el.scrollHeight > el.clientHeight) {
         updated.add(id);
       } else if (!this.expandedTags.has(id)) {
         updated.delete(id);
       }
     });
+
     this.overflowingTags = updated;
   }
 
-  toggleTags(workId: number, event: Event) {
+  toggleTags(workId: string, event: Event) {
     event.preventDefault();
     event.stopPropagation();
+
     if (this.expandedTags.has(workId)) {
       this.expandedTags.delete(workId);
     } else {
       this.expandedTags.add(workId);
-    }
-  }
-
-  shuffle(array) {
-    let currentIndex = array.length;
-
-    while (currentIndex != 0) {
-
-      let randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
   }
 }

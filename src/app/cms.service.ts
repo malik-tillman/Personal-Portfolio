@@ -33,7 +33,7 @@ export class CMSService {
     const rawId = sanityProject._id.replace('project-', '');
     const numericId = parseInt(rawId);
 
-    const project: ProjectAttributes = {
+    const project: ProjectAttributes  = {
       title: sanityProject.title,
       date: sanityProject.year || sanityProject.publishedAt, // Use the new year field, fallback to published date
       description: sanityProject.description,
@@ -43,7 +43,7 @@ export class CMSService {
       website: sanityProject.website || '',
       createdAt: sanityProject._createdAt || sanityProject.publishedAt,
       updatedAd: sanityProject._updatedAt || sanityProject.publishedAt,
-      id: isNaN(numericId) ? rawId : numericId,
+      id: sanityProject._id,
       fromSanity: true,
       year: sanityProject.year,
       aspectRatio: sanityProject.aspectRatio,
@@ -290,7 +290,7 @@ export interface ProjectAttributes {
   createdAt: string,
   updatedAd: string,
 
-  id?: number | string,
+  id: string,
   fromSanity?: boolean,
   thumbnail_src?: _File
   image_src?: _File[],
