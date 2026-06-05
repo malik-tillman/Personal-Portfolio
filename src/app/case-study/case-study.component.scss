@@ -47,16 +47,8 @@
       }
     }
 
-    .title {
-      font-family: 'Josefin Sans Thin', sans-serif;
-      font-size: 45px;
-      position: relative;
-      color: white;
+    .content-title {
       text-align: center;
-
-      @media screen and (max-width: 768px) {
-        font-size: 32px;
-      }
     }
 
     .excerpt {

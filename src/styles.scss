@@ -382,3 +382,14 @@ contact-form {
     border-radius: 15px;
   }
 }
+
+.content-title {
+  font-family: 'Josefin Sans Thin', sans-serif;
+  font-size: 45px;
+  position: relative;
+  line-height: 1.2;
+
+  @media screen and (max-width: 768px) {
+    font-size: 32px;
+  }
+}

@@ -2,33 +2,34 @@
   <!-- Thumbnail Hero Scroll to Content -->
   <ng-container *ngIf="work.thumbnail || work.thumbnail_src">
     <div class="thumb-container" (click)="scrollToContent()">
-      <picture>
-        <img
-          class="thumbnail"
-          title="{{ work.title }}"
-          src="{{ work.thumbnail_src.url }}"
-          alt="{{ work.thumbnail_src.alt ? work.thumbnail_src.alt : work.title + ' thumbnail image' }}" >
-      </picture>
+      <div class="content-container">
+        <picture class="image-container">
+          <img
+            class="thumbnail"
+            title="{{ work.title }}"
+            src="{{ work.thumbnail_src.url }}"
+            alt="{{ work.thumbnail_src.alt ? work.thumbnail_src.alt : work.title + ' thumbnail image' }}" >
+        </picture>
 
-      <h1 class="project-title">{{ work.title }}</h1>
+        <h3 class="date">{{ work.date }}</h3>
 
-      <p>(Scroll)</p>
+        <h1 class="content-title">{{ work.title }}</h1>
 
-      <svg class="down_arrow" viewBox="0 0 100 101">
-        <path d="M26.6965455,36.1163636 L23.4941818,32.914 L5,51.4081818 L23.4941818,69.904 L26.6965455,66.7016364 L13.6694545,53.6729091 L94.9999986,53.6729089 L95,49.1450905 L13.6694545,49.1450909 L26.6965455,36.1163636 Z"
-              transform="translate(50.000000, 51.409000) scale(1, -1) rotate(-270.000000) translate(-50.000000, -51.409000) ">
-        </path>
-      </svg>
+        <h2 class="role">{{ work.role }}</h2>
+
+        <svg class="down-arrow" viewBox="0 0 100 101">
+          <path d="M26.6965455,36.1163636 L23.4941818,32.914 L5,51.4081818 L23.4941818,69.904 L26.6965455,66.7016364 L13.6694545,53.6729091 L94.9999986,53.6729089 L95,49.1450905 L13.6694545,49.1450909 L26.6965455,36.1163636 Z"
+                transform="translate(50.000000, 51.409000) scale(1, -1) rotate(-270.000000) translate(-50.000000, -51.409000) ">
+          </path>
+        </svg>
+      </div>
     </div>
   </ng-container>
 
   <!-- Project Description -->
   <ng-container *ngIf="work.description">
-    <h2>About this project</h2>
 
     <div class="description-container">
-      <h3>{{ work.date }}</h3>
-
       <p>{{ work.description }}</p>
     </div>
 
@@ -105,9 +106,6 @@
   <!-- Image Gallery -->
   <ng-container *ngIf="work.image_src && work.image_src.length > 0">
     <div class="images-section">
-      <h2 *ngIf="work.image_src.length > 1">Gallery</h2>
-      <h2 *ngIf="work.image_src.length === 1">Media</h2>
-
       <div class="gallery-intrinsic__container">
         <ul #galleryContainer class="images-container">
           <li #galleryImage class="image" *ngFor="let image of work.image_src">
