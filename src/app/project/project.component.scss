@@ -16,6 +16,8 @@
     width: 100%;
     height: calc(100vh - 100px);
 
+    padding: 0 25px;
+
     gap: 25px;
 
     margin-top: 100px;
@@ -47,6 +49,10 @@
         width: 100%;
         border-radius: var(--border-radius);
       }
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
     }
 
     .down-arrow {
@@ -70,6 +76,7 @@
     font-size: .9em;
     color: #b4b4b4;
     text-align: center;
+    line-height: 1.5;
   }
 
   .content-title {
@@ -78,6 +85,8 @@
   }
 
   .description-container {
+    padding: 0 25px;
+
     p {
       white-space: pre-line;
     }
@@ -165,7 +174,6 @@
     overflow: hidden;
 
     max-width: var(--max-width);
-    margin: 50px auto auto;
 
     .links__container {
       display: flex;

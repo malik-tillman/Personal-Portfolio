@@ -1,75 +1,56 @@
 .links__container {
   display: flex;
-  flex-direction: column;
-  max-width: 500px;
-  margin: 25px auto auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 0 10.5px;
+  transition: padding 300ms ease;
+
+  margin: 50px auto 0;
+
+  &:hover {
+    padding: 0;
+  }
 
   a.project-link {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    gap: 0;
 
-    margin-bottom: 15px;
-    margin-top: 15px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
     text-decoration: none;
-    max-height: 25px;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 14px;
+    transition: border-color 300ms ease, background 300ms ease, transform 200ms ease, gap 300ms ease;
 
-    transform: scale(1);
-    will-change: transform;
-    transition: transform .5s ease;
+    &::before {
+      content: ' →';
+      display: inline-block;
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+      transition: opacity 300ms ease, width 300ms ease;
+    }
 
-    svg {
-      width: 25px;
-      height: unset;
-      fill: white;
-      margin-right: 10px;
-      padding: 0 0 5px;
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+      gap: 5px;
+
+      &::before {
+        opacity: 1;
+        width: 16px;
+      }
     }
 
     h2 {
       margin: 0;
-      color: white;
-
-      position: relative;
-      padding: 0 0 3px;
-
-      font-size: 18px;
-      font-family: josefin Sans light, sans-serif;
-
-      &::before {
-        content: "";
-
-        position: absolute;
-        height: 2px;
-        width: 0;
-        left: 0;
-        bottom: 0;
-        background: transparent;
-        border-bottom: 2px solid #ffffff;
-        border-radius: var(--border-radius);
-        display: block;
-
-        transition: width 500ms ease;
-      }
-    }
-
-    &:hover {
-      transform: scale(1.05);
-
-      h2::before {
-        width: 100%;
-      }
-    }
-
-    &.small {
-      h2 {
-        font-size: 16px;
-      }
-
-      svg {
-        width: 15px;
-      }
+      font-size: inherit;
+      font-weight: 300;
+      font-family: inherit;
     }
   }
 }
-
