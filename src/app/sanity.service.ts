@@ -1,4 +1,4 @@
-import { Injectable, Inject, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, TransferState, makeStateKey, PendingTasks } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { createClient, SanityClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
@@ -14,7 +14,8 @@ export class SanityService {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private transferState: TransferState
+    private transferState: TransferState,
+    private pendingTasks: PendingTasks
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
 
@@ -42,24 +43,30 @@ export class SanityService {
    * @param query GROQ query string
    * @param params Optional query parameters
    */
-  async fetch<T>(query: string, params = {}): Promise<T> {
+  fetch<T>(query: string, params = {}): Promise<T> {
     const stateKey = this.getStateKey<T>(query, params);
 
     // On the browser, check if prerendered data exists in TransferState
     if (this.isBrowser && this.transferState.hasKey(stateKey)) {
       const data = this.transferState.get(stateKey, null as unknown as T);
-      return data;
+      return Promise.resolve(data);
     }
 
-    // Fetch from Sanity (during prerender or if no cached data)
-    const result = await this.client.fetch<T>(query, params);
+    // Wrap in a promise that PendingTasks tracks so prerender waits for it
+    const resultPromise = new Promise<T>((resolve, reject) => {
+      this.pendingTasks.run(async () => {
+        const result = await this.client.fetch<T>(query, params);
 
-    // On the server/prerender, store data in TransferState for the client
-    if (!this.isBrowser) {
-      this.transferState.set(stateKey, result);
-    }
+        // On the server/prerender, store data in TransferState for the client
+        if (!this.isBrowser) {
+          this.transferState.set(stateKey, result);
+        }
 
-    return result;
+        resolve(result);
+      });
+    });
+
+    return resultPromise;
   }
 
   /**

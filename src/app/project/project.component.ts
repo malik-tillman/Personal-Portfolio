@@ -4,7 +4,7 @@
  *
  * 2020
  * */
-import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef, ViewChildren, QueryList, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, ViewChildren, QueryList, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CMSService, ProjectAttributes } from '../cms.service';
@@ -18,7 +18,7 @@ import Viewer from "viewerjs"
     selector: 'project', templateUrl: './project.component.html', styleUrls: ['./project.component.scss'],
     standalone: false
 })
-export class ProjectComponent implements OnDestroy, AfterViewInit {
+export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
   /* Unsubscribe when component destroys */
   public activatedRouterSubscription: Subscription;
 
@@ -48,7 +48,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.activatedRouterSubscription = this.activatedRoute.params.subscribe(params => {
       const slug = params['slug'];
       const queryId = this.activatedRoute.snapshot.queryParams['id'];
@@ -99,10 +99,12 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
         } else {
           this.projectNotFound = true;
         }
-
-        this.initializeViewer(this.galleryImage);
       })
     })
+  }
+
+  ngAfterViewInit() {
+    this.initializeViewer(this.galleryImage);
   }
 
   ngOnDestroy() {
