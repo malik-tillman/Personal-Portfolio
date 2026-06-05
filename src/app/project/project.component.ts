@@ -58,7 +58,9 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let fetchPromise: Promise<any>;
 
-      if (slug) {
+      if (slug && !isNaN(Number(slug))) {
+        fetchPromise = this.projectService.fetchProject(Number(slug));
+      } else if (slug) {
         fetchPromise = this.projectService.fetchProjectBySlug(slug);
       } else if (queryId) {
         const projectId = isNaN(Number(queryId)) ? queryId : Number(queryId);
