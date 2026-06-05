@@ -1,10 +1,22 @@
 <div class="links__container" *ngIf="this.about || this.projects || this.contact">
-  <a class="project-link small" routerLink="/about" *ngIf="this.about">
-    <h2>My Background & Expertise</h2>
+  <a class="project-link small" routerLink="/case-studies" *ngIf="this.caseStudies">
+    <h2>More Case Studies</h2>
+  </a>
+
+  <a class="project-link small" routerLink="/case-studies" *ngIf="this.seeCaseStudies">
+    <h2>View Case Studies</h2>
   </a>
 
   <a class="project-link small" routerLink="/works" *ngIf="this.projects">
     <h2>More Digital Solutions</h2>
+  </a>
+
+  <a class="project-link small" routerLink="/works" *ngIf="this.seeDigitalSolutions">
+    <h2>View Digital Solutions</h2>
+  </a>
+
+  <a class="project-link small" routerLink="/about" *ngIf="this.about">
+    <h2>My Background & Expertise</h2>
   </a>
 
   <a class="project-link small" routerLink="/contact" *ngIf="this.contact">

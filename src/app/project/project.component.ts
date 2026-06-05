@@ -25,6 +25,7 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
   /* Dom refs */
   @ViewChildren('galleryImage') private galleryImage: QueryList<ElementRef>;
   @ViewChild('galleryContainer') private galleryContainer: ElementRef;
+  @ViewChild('mainContent') private mainContent: ElementRef;
 
   /* Project Object */
   public work: any;
@@ -135,11 +136,9 @@ export class ProjectComponent implements OnDestroy, AfterViewInit {
    * when triggered, sets window scroll down a full height of the view (100vh)
    * */
   scrollToContent() {
-    if (isPlatformBrowser(this.platformId)) {
-      window.scrollTo({
-        top: window.innerHeight,
-        behavior: 'smooth'
-      })
+    if (isPlatformBrowser(this.platformId) && this.mainContent) {
+      const top = this.mainContent.nativeElement.getBoundingClientRect().top + window.scrollY - 200;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   }
 }

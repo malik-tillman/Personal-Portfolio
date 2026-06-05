@@ -10,6 +10,10 @@ export class LinksComponent {
   @Input() projects: boolean;
   @Input() contact: boolean;
   @Input() about: boolean;
+  @Input() caseStudies: boolean;
+  @Input() digitalSolutions: boolean;
+  @Input() seeCaseStudies: boolean;
+  @Input() seeDigitalSolutions: boolean;
 
   constructor() {}
 }
