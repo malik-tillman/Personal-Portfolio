@@ -35,7 +35,7 @@
 
       &:hover {
         .down-arrow {
-          fill: var(--primary-color);
+          fill: #b4b4b4;
         }
       }
     }
@@ -63,6 +63,10 @@
       animation: upDown 2s ease-in-out infinite;
 
       transition: fill 250ms ease;
+
+      @media (max-width: 768px) {
+        fill: #b4b4b4;
+      }
     }
   }
 
