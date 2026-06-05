@@ -6,8 +6,6 @@
       {{caseStudy.excerpt}}
     </p>
 
-    <img *ngIf="caseStudy.heroImage" [src]="caseStudy.heroImage" [alt]="caseStudy.title" class="hero-image"/>
-
     <div class="meta-pills" *ngIf="caseStudy?.role || caseStudy?.timeline">
       <p *ngIf="caseStudy?.role" class="role">
         <span class="meta-label">Role:</span> {{caseStudy.role}}
@@ -16,6 +14,8 @@
         <span class="meta-label">Timeline:</span> {{caseStudy.timeline}}
       </p>
     </div>
+
+    <img *ngIf="caseStudy.heroImage" [src]="caseStudy.heroImage" [alt]="caseStudy.title" class="hero-image"/>
 
     <ul class="tags">
       <li *ngFor="let tag of caseStudy.tags">

@@ -117,7 +117,7 @@
 
     gap: 15px;
 
-    padding: 25px 0;
+    margin-top: 25px;
 
     font-family: 'Lato', sans-serif;
 
@@ -163,6 +163,10 @@
       text-transform: uppercase;
       cursor: pointer;
       align-self: flex-start;
+    }
+
+    .role {
+      line-height: 1.2;
     }
   }
 }

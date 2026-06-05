@@ -343,10 +343,23 @@ about contact-info, contact contact-info {
 
 .role {
   font-family: "Josefin Sans Bold", sans-serif;
-  font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
   color: #f8edcd;
+
+  display: inline-block;
+  padding: 6px 14px !important;
+  border: 1px solid var(--secondary-color, #f8edcd);
+  border-radius: 50px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  background: rgba(248, 237, 205, 0.06);
+
+  width: fit-content;
+
+  .meta-label {
+    opacity: 0.45;
+    font-weight: normal;
+  }
 }
 
 :root {
