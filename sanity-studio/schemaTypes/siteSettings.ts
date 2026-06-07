@@ -10,13 +10,10 @@ export const siteSettingsType = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'description',
-      type: 'text',
-    }),
-    defineField({
       name: 'about',
-      type: 'text',
-      title: 'About Me'
+      type: 'array',
+      title: 'About Me',
+      of: [{type: 'block'}]
     }),
     defineField({
       name: 'email',

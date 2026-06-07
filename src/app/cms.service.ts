@@ -14,7 +14,7 @@ export class CMSService {
    * */
   public readonly DEFAULTS = [1, 22, 23, 4];
 
-  private _about: string[];
+  private _about: any[];
   private _quotes: _FormattedQuote[];
   private _errorMedia: _File[];
   private _successMedia: _File[];
@@ -204,13 +204,13 @@ export class CMSService {
     return this.sanity.getImageUrl(source);
   }
 
-  public async fetchAbout(): Promise<string[]> {
+  public async fetchAbout(): Promise<any[]> {
     if (this._about) return this._about;
 
     try {
       const data = await this.sanity.fetch<any>('*[_type == "siteSettings"][0]{about}');
       if (data && data.about) {
-        this._about = data.about.split("\n").filter(_p => _p !== "");
+        this._about = data.about;
         return this._about;
       }
     } catch (error) {

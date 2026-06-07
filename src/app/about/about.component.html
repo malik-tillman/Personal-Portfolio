@@ -2,104 +2,19 @@
   <div class="text-container">
     <div class="image-copy__container">
       <div class="image--container">
-        <img src="/assets/headshot.jpg" alt="headshot" class="headshot">
+        <img src="/assets/headshot_1.jpg" alt="headshot" class="headshot">
       </div>
 
-
       <div class="about-copy__container">
-        <h1>Background & Expertise</h1>
+        <h1 class="title">
+          Background & Expertise
+        </h1>
 
-        <ng-container *ngFor="let paragraph of aboutCopy; let last = last">
-          <p class="about-copy">
-            {{ paragraph }}
-          </p>
-
-          <br *ngIf="!last">
-        </ng-container>
+        <div class="about-copy body-content" [innerHTML]="aboutHtml"></div>
       </div>
     </div>
 
     <contact-info></contact-info>
-
-    <swiper-toolbox [centered]="true"></swiper-toolbox>
-
-    <div class="toolbox-container" *ngIf="false">
-      <a href="https://angular.io/" target="_blank" rel="noopener noreferrer">
-        <img src="assets/tag-icons/angular.png" alt="Angular Icon">
-      </a>
-
-      <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/react.png" alt="React Icon">
-      </a>
-
-      <a href="https://www.shopify.com/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/shopify-logo.png" alt="Shopify Icon">
-      </a>
-
-      <a href="https://www.python.org/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/python.png" alt="Python Icon">
-      </a>
-
-      <a href="https://developer.mozilla.org/en-US/docs/Web/javascript" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/javascript.png" alt="Javascript Icon">
-      </a>
-
-      <a href="https://sass-lang.com/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/scss.png" alt="SCSS Icon">
-      </a>
-
-      <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/typescript.png" alt="TypeScript Icon">
-      </a>
-
-      <a href="https://docs.oracle.com/javase/7/docs/api/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/java.png" alt="Java Icon">
-      </a>
-
-      <a href="https://docs.microsoft.com/en-us/cpp/?view=vs-2019" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/c++.png" alt="C++ Icon">
-      </a>
-
-      <a href="https://docs.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/csharp.png" alt="C# Icon">
-      </a>
-
-      <a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/node.png" alt="Node JS Icon">
-      </a>
-
-      <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/postgre.png" alt="Postgre SQL Icon">
-      </a>
-
-      <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/mysql.png" alt="MySQL Icon">
-      </a>
-
-      <a href="https://www.adobe.com/products/photoshop.html" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/photoshop.png" alt="Photoshop Icon">
-      </a>
-
-      <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/ae.png" alt="After Effects Icon">
-      </a>
-
-      <a href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/premiere.png" alt="Premiere Pro Icon">
-      </a>
-
-      <a href="https://www.maxon.net/en-us/products/cinema-4d/overview/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/cinema.png" alt="Cinema 4d Icon">
-      </a>
-
-      <a href="https://docs.unity3d.com/Manual/index.html" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/unity.png" alt="Unity Icon">
-      </a>
-
-      <a href="https://reactnative.dev/" target="_blank" rel="noopener noreferrer" >
-        <img src="assets/tag-icons/react-native.png" alt="React Native Icon">
-      </a>
-    </div>
 
     <links [contact]="true" [projects]="true" [about]="false"></links>
   </div>

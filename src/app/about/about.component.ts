@@ -7,13 +7,14 @@
 import { Component } from '@angular/core';
 import { CMSService } from '../cms.service';
 import { SeoService } from '../seo.service';
+import { toHTML } from '@portabletext/to-html';
 
 @Component({
     selector: 'about', templateUrl: './about.component.html', styleUrls: ['./about.component.scss'],
     standalone: false
 })
 export class AboutComponent {
-  public aboutCopy: string[];
+  public aboutHtml: string = '';
 
   constructor(private cms: CMSService, private seo: SeoService) {
     this.seo.update({
@@ -31,6 +32,8 @@ export class AboutComponent {
       }
     });
 
-    cms.fetchAbout().then((copy: string[]) => this.aboutCopy = copy)
+    cms.fetchAbout().then((blocks: any[]) => {
+      this.aboutHtml = toHTML(blocks);
+    })
   }
 }
