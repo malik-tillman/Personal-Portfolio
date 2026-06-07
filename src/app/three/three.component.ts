@@ -597,17 +597,16 @@ export class ThreeComponent implements AfterViewInit, OnDestroy {
     function resizeRenderer(renderer) {
       /* Declare variables */
       const canvas = renderer.domElement;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
+      const dpr = renderer.getPixelRatio();
+      const width = Math.floor(canvas.clientWidth * dpr);
+      const height = Math.floor(canvas.clientHeight * dpr);
 
       /* Determine if renderer needs resize */
       const needsResize = canvas.width !== width || canvas.height !== height;
 
       /* Resize renderer */
       if (needsResize) {
-        renderer.width = width;
-        renderer.height = height;
-        renderer.setSize(width, height, false)
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
       }
 
       /* Return resize boolean */
