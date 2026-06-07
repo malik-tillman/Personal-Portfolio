@@ -10,6 +10,10 @@
 
   margin: 150px 0 50px;
 
+  @media screen and (max-width: 768px) {
+    margin: 100px 0 50px;
+  }
+
   h2, h1 {
     font-family: 'Josefin Sans Thin', sans-serif;
     font-size: 75px;
@@ -44,7 +48,11 @@
 
   contact-info {
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 0;
+
+    @media screen and (max-width: 768px) {
+      margin-top: 0;
+    }
   }
 
   .links__container {
