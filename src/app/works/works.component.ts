@@ -60,14 +60,10 @@ export class WorksComponent implements OnInit {
         'fluid-js'
       ]
 
-      console.log(projects)
-
       this.worksCount = projects.length;
       this.worksList = this.condensed
         ? projects.filter(project => favoriteProjects.includes(project.slug))
         : projects;
-
-      console.log(this.worksList)
 
       if (this.worksList.length === 0)
         this.emptyProjects = true;
