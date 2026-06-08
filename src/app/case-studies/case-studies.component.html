@@ -40,7 +40,7 @@
 
           <ul #tagsContainer [attr.data-study-slug]="study.slug.current" class="tags" [class.expanded]="expandedTags.has(study.slug.current)">
             <li *ngFor="let tag of study.tags">
-              {{tag}}
+              {{ tag }}
             </li>
           </ul>
 
@@ -50,7 +50,7 @@
             (click)="toggleTags(study.slug.current, $event)"
             aria-label="Show more tags"
           >
-            {{ expandedTags.has(study.slug.current) ? 'Less' : 'More' }}
+            {{ expandedTags.has(study.slug.current) ? 'Collapse' : 'Show All' }}
           </button>
         </div>
       </a>
